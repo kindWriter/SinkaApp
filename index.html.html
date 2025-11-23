@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шиномонтаж "Шинка" - Запись онлайн</title>
+    <meta name="description" content="Онлайн запись в шиномонтаж Шинка - Горячий Ключ">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #555;
+            margin: 25px 0 15px;
+            font-size: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+        }
+        .contact-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        .contact-info p {
+            margin: 8px 0;
+            font-size: 15px;
+        }
+        .contact-info a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid rgba(255,255,255,0.5);
+            transition: border-color 0.3s;
+        }
+        .contact-info a:hover {
+            border-bottom-color: #fff;
+        }
+        .admin-panel {
+            background: #fff8e1;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ffc107;
+            display: none;
+        }
+        .admin-panel.active {
+            display: block;
+        }
+        .admin-toggle {
+            background: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 15px;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        .admin-toggle:hover {
+            background: #5a6268;
+        }
+        .error-message {
+            color: #f44336;
+            font-size: 13px;
+            margin-top: 5px;
+            display: block;
+        }
+        .success-message {
+            color: #4CAF50;
+            font-size: 13px;
+            margin-top: 5px;
+            display: block;
+        }
+        .info-message {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 14px;
+            border-left: 4px solid #2196F3;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .service-info {
+            font-size: 12px;
+            color: #888;
+            margin-top: 3px;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 15px;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .record {
+            border: 2px solid #667eea;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+            background: #f8f9ff;
+            transition: transform 0.2s;
+        }
+        .record:hover {
+            transform: translateX(5px);
+        }
+        .record.canceled {
+            border-color: #f44336;
+            background: #ffebee;
+            opacity: 0.8;
+        }
+        .record.rescheduled {
+            border-color: #FF9800;
+            background: #fff8e1;
+        }
+        .record p {
+            margin: 8px 0;
+            font-size: 15px;
+        }
+        .record-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        .record-actions button {
+            width: auto;
+            flex: 1;
+            padding: 10px 15px;
+            margin: 0;
+        }
+        .btn-cancel {
+            background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
+        }
+        .btn-cancel:hover {
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+        }
+        .btn-reschedule {
+            background: linear-gradient(135deg, #2196F3 0%, #00bcd4 100%);
+        }
+        .btn-reschedule:hover {
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+        .no-records {
+            color: #999;
+            font-style: italic;
+            padding: 30px;
+            text-align: center;
+            font-size: 15px;
+        }
+        .time-slot-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .time-slot {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            background: white;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        .time-slot:hover:not(.occupied) {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        .time-slot.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+        .time-slot.occupied {
+            background: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .time-slot-selector {
+                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Шиномонтаж "Шинка"</h1>
+        <p class="subtitle">Онлайн запись на услуги</p>
+        
+        <div class="contact-info">
+            <p><strong>📍 Адрес:</strong> Краснодарский край, г. Горячий Ключ, ул. Ярославского 123/1</p>
+            <p><strong>📞 Телефон:</strong> <a href="tel:+79277117886" id="contactPhone">+7 927 711-78-86</a></p>
+            <p><strong>🕐 Режим работы:</strong> 9:00 - 18:00</p>
+        </div>
+
+        <button class="admin-toggle" onclick="toggleAdminPanel()">⚙️ Панель администратора</button>
+        
+        <div class="admin-panel" id="adminPanel">
+            <h3>⚙️ Настройки (для администратора)</h3>
+            <label for="adminPassword">Пароль администратора:</label>
+            <input type="password" id="adminPassword" placeholder="Введите пароль">
+            <span id="adminError" class="error-message"></span>
+            <span id="adminSuccess" class="success-message"></span>
+            
+            <div id="adminSettings" style="display: none;">
+                <label for="adminPhone">Номер телефона для связи:</label>
+                <input type="tel" id="adminPhone" placeholder="+7 XXX XXX-XX-XX" maxlength="16">
+                <button onclick="updateContactPhone()">Обновить телефон</button>
+            </div>
+            <button onclick="authenticateAdmin()">Войти</button>
+        </div>
+
+        <h2>📝 Новая запись</h2>
+        
+        <form id="bookingForm">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" required placeholder="Введите ваше имя" maxlength="50">
+            <span id="nameError" class="error-message"></span>
+            
+            <label for="phone">Телефон:</label>
+            <input type="tel" id="phone" required placeholder="+7 XXX XXX-XX-XX" maxlength="16">
+            <span id="phoneError" class="error-message"></span>
+            
+            <label for="service">Услуга:</label>
+            <select id="service" required onchange="updateServiceInfo()">
+                <option value="Шиномонтаж" data-duration="40">Шиномонтаж</option>
+                <option value="Проточка тормозных дисков" data-duration="60">Проточка тормозных дисков</option>
+                <option value="Диагностика кондиционеров" data-duration="30">Диагностика кондиционеров</option>
+                <option value="Заправка кондиционеров" data-duration="30">Заправка кондиционеров</option>
+                <option value="Заказ запчастей" data-duration="30">Заказ запчастей</option>
+                <option value="Правка колесных дисков" data-duration="60">Правка колесных дисков</option>
+            </select>
+            <span id="serviceInfo" class="service-info">⏱️ Длительность: 40 минут</span>
+            
+            <label for="date">Дата:</label>
+            <input type="date" id="date" required min="" onchange="generateTimeSlots()">
+            <span id="dateError" class="error-message"></span>
+            
+            <label>Выберите удобное время:</label>
+            <div id="timeSlotsContainer" class="time-slot-selector"></div>
+            <input type="hidden" id="selectedTime">
+            <span id="timeError" class="error-message"></span>
+            
+            <button type="submit">Записаться</button>
+        </form>
+
+        <h2>📋 Мои записи</h2>
+        <div id="recordsList"></div>
+        
+        <h2>📱 QR-код для быстрого доступа</h2>
+        <div style="background: white; padding: 20px; border-radius: 10px; text-align: center; margin-top: 20px;">
+            <p style="margin-bottom: 15px; color: #666;">Отсканируйте QR-код для быстрого доступа к приложению</p>
+            <canvas id="qrcode" style="margin: 0 auto; max-width: 100%;"></canvas>
+            <p style="margin-top: 15px; font-size: 12px; color: #888;">Сохраните страницу в закладки или на главный экран телефона</p>
+            <button onclick="downloadQR()" style="margin-top: 10px; background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);">
+                💾 Скачать QR-код
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Константы
+        const ADMIN_PASSWORD = 'shinka2025';
+        const WORK_START = 9;
+        const WORK_END = 18;
+        
+        const SERVICE_DURATIONS = {
+            'Шиномонтаж': 40,
+            'Проточка тормозных дисков': 60,
+            'Диагностика кондиционеров': 30,
+            'Заправка кондиционеров': 30,
+            'Заказ запчастей': 30,
+            'Правка колесных дисков': 60
+        };
+        
+        let records = JSON.parse(localStorage.getItem('records')) || [];
+        let contactPhone = localStorage.getItem('contactPhone') || '+79277117886';
+        let isAdminAuthenticated = false;
+        let selectedTimeSlot = null;
+        
+        // Установка минимальной даты
+        document.getElementById('date').min = new Date().toISOString().split('T')[0];
+        
+        // Функция экранирования HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Валидация
+        function validatePhone(phone) {
+            const cleaned = phone.replace(/[\s\-\(\)]/g, '');
+            return /^[\+]?[78][\d]{10}$/.test(cleaned);
+        }
+        
+        function validateName(name) {
+            return name.length >= 2 && name.length <= 50;
+        }
+        
+        function getServiceDuration(service) {
+            return SERVICE_DURATIONS[service] || 30;
+        }
+        
+        function timeToMinutes(time) {
+            const [hours, minutes] = time.split(':').map(Number);
+            return hours * 60 + minutes;
+        }
+        
+        function minutesToTime(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+        }
+        
+        function timeRangesOverlap(start1, end1, start2, end2) {
+            return start1 < end2 && start2 < end1;
+        }
+        
+        // Генерация временных слотов
+        function generateTimeSlots() {
+            const date = document.getElementById('date').value;
+            const service = document.getElementById('service').value;
+            const container = document.getElementById('timeSlotsContainer');
+            
+            if (!date) {
+                container.innerHTML = '<p style="color: #999; font-size: 14px;">Сначала выберите дату</p>';
+                return;
+            }
+            
+            const duration = getServiceDuration(service);
+            const slots = [];
+            
+            // Генерируем слоты с 9:00 до 18:00 с шагом 30 минут
+            for (let minutes = WORK_START * 60; minutes < WORK_END * 60; minutes += 30) {
+                const time = minutesToTime(minutes);
+                const endMinutes = minutes + duration;
+                
+                // Проверяем, не выходит ли за рабочее время
+                if (endMinutes > WORK_END * 60) continue;
+                
+                // Проверяем занятость слота
+                const isOccupied = records.some(record => {
+                    if (record.status !== 'created' || record.date !== date) return false;
+                    
+                    const recordStart = timeToMinutes(record.time);
+                    const recordEnd = recordStart + getServiceDuration(record.service);
+                    
+                    return timeRangesOverlap(minutes, endMinutes, recordStart, recordEnd);
+                });
+                
+                slots.push({ time, isOccupied });
+            }
+            
+            container.innerHTML = slots.map(slot => `
+                <div class="time-slot ${slot.isOccupied ? 'occupied' : ''} ${selectedTimeSlot === slot.time ? 'selected' : ''}" 
+                     onclick="${slot.isOccupied ? '' : `selectTimeSlot('${slot.time}')`}">
+                    ${slot.time}
+                </div>
+            `).join('');
+        }
+        
+        function selectTimeSlot(time) {
+            selectedTimeSlot = time;
+            document.getElementById('selectedTime').value = time;
+            document.getElementById('timeError').textContent = '';
+            generateTimeSlots();
+        }
+        
+        function updateServiceInfo() {
+            const service = document.getElementById('service').value;
+            const duration = getServiceDuration(service);
+            document.getElementById('serviceInfo').textContent = `⏱️ Длительность: ${duration} минут`;
+            generateTimeSlots();
+        }
+        
+        // Админ-функции
+        function toggleAdminPanel() {
+            document.getElementById('adminPanel').classList.toggle('active');
+        }
+        
+        function authenticateAdmin() {
+            const password = document.getElementById('adminPassword').value;
+            const errorDiv = document.getElementById('adminError');
+            const successDiv = document.getElementById('adminSuccess');
+            
+            errorDiv.textContent = '';
+            successDiv.textContent = '';
+            
+            if (password === ADMIN_PASSWORD) {
+                isAdminAuthenticated = true;
+                successDiv.textContent = '✓ Вход выполнен успешно';
+                document.getElementById('adminSettings').style.display = 'block';
+                document.getElementById('adminPassword').disabled = true;
+            } else {
+                errorDiv.textContent = '✗ Неверный пароль';
+            }
+        }
+        
+        function updateContactPhone() {
+            if (!isAdminAuthenticated) {
+                alert('Требуется аутентификация');
+                return;
+            }
+            
+            const newPhone = document.getElementById('adminPhone').value;
+            const errorDiv = document.getElementById('adminError');
+            const successDiv = document.getElementById('adminSuccess');
+            
+            errorDiv.textContent = '';
+            successDiv.textContent = '';
+            
+            if (!validatePhone(newPhone)) {
+                errorDiv.textContent = '✗ Неверный формат телефона';
+                return;
+            }
+            
+            contactPhone = newPhone;
+            localStorage.setItem('contactPhone', newPhone);
+            document.getElementById('contactPhone').textContent = newPhone;
+            document.getElementById('contactPhone').href = `tel:${newPhone}`;
+            successDiv.textContent = '✓ Телефон обновлен!';
+        }
+        
+        // Инициализация контакта
+        document.getElementById('contactPhone').textContent = contactPhone;
+        document.getElementById('contactPhone').href = `tel:${contactPhone}`;
+        document.getElementById('adminPhone').value = contactPhone;
+        
+        // Отображение записей
+        function displayRecords() {
+            const recordsList = document.getElementById('recordsList');
+            
+            if (records.length === 0) {
+                recordsList.innerHTML = '<div class="no-records">Записей пока нет</div>';
+                return;
+            }
+            
+            const sortedRecords = [...records].sort((a, b) => {
+                const dateA = new Date(`${a.date}T${a.time}`);
+                const dateB = new Date(`${b.date}T${b.time}`);
+                return dateB - dateA;
+            });
+            
+            recordsList.innerHTML = sortedRecords.map((record, index) => {
+                const originalIndex = records.indexOf(record);
+                const duration = getServiceDuration(record.service);
+                return `
+                    <div class="record ${record.status}">
+                        <p><strong>Услуга:</strong> ${escapeHtml(record.service)} (${duration} мин)</p>
+                        <p><strong>Дата и время:</strong> ${escapeHtml(record.date)} в ${escapeHtml(record.time)}</p>
+                        <p><strong>Имя:</strong> ${escapeHtml(record.name)}</p>
+                        <p><strong>Телефон:</strong> ${escapeHtml(record.phone)}</p>
+                        <p><strong>Статус:</strong> ${getStatusText(record.status)}</p>
+                        ${record.status === 'created' ? `
+                            <div class="record-actions">
+                                <button class="btn-cancel" onclick="cancelRecord(${originalIndex})">Отменить</button>
+                                <button class="btn-reschedule" onclick="rescheduleRecord(${originalIndex})">Перенести</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function getStatusText(status) {
+            return {
+                'created': '✓ Активна',
+                'canceled': '✗ Отменена',
+                'rescheduled': '↻ Перенесена'
+            }[status] || status;
+        }
+        
+        // Создание записи
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('phoneError').textContent = '';
+            document.getElementById('dateError').textContent = '';
+            document.getElementById('timeError').textContent = '';
+            
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const service = document.getElementById('service').value;
+            const date = document.getElementById('date').value;
+            const time = selectedTimeSlot;
+            
+            if (!validateName(name)) {
+                document.getElementById('nameError').textContent = '✗ Имя должно содержать от 2 до 50 символов';
+                return;
+            }
+            
+            if (!validatePhone(phone)) {
+                document.getElementById('phoneError').textContent = '✗ Неверный формат телефона';
+                return;
+            }
+            
+            if (!time) {
+                document.getElementById('timeError').textContent = '✗ Выберите время из доступных слотов';
+                return;
+            }
+            
+            const selectedDate = new Date(`${date}T${time}`);
+            if (selectedDate < new Date()) {
+                document.getElementById('dateError').textContent = '✗ Нельзя записаться на прошедшее время';
+                return;
+            }
+            
+            const record = {
+                id: Date.now(),
+                name,
+                phone,
+                service,
+                date,
+                time,
+                status: 'created',
+                createdAt: new Date().toISOString()
+            };
+            
+            records.push(record);
+            localStorage.setItem('records', JSON.stringify(records));
+            
+            const duration = getServiceDuration(service);
+            alert(`✓ Запись успешно создана!\n\nУслуга: ${service}\nДата: ${date}\nВремя: ${time}\nДлительность: ${duration} мин\n\nМы ждем вас!`);
+            
+            this.reset();
+            selectedTimeSlot = null;
+            displayRecords();
+            generateTimeSlots();
+        });
+        
+        // Отмена записи
+        function cancelRecord(index) {
+            if (confirm('Вы уверены, что хотите отменить запись?')) {
+                records[index].status = 'canceled';
+                localStorage.setItem('records', JSON.stringify(records));
+                alert('✓ Запись отменена');
+                displayRecords();
+                generateTimeSlots();
+            }
+        }
+        
+        // Перенос записи
+        function rescheduleRecord(index) {
+            const record = records[index];
+            const newDate = prompt('Введите новую дату (YYYY-MM-DD):', record.date);
+            if (!newDate) return;
+            
+            // Временно генерируем слоты для новой даты
+            const tempDate = document.getElementById('date').value;
+            document.getElementById('date').value = newDate;
+            
+            const availableSlots = [];
+            const duration = getServiceDuration(record.service);
+            
+            for (let minutes = WORK_START * 60; minutes < WORK_END * 60; minutes += 30) {
+                const time = minutesToTime(minutes);
+                const endMinutes = minutes + duration;
+                if (endMinutes > WORK_END * 60) continue;
+                
+                const tempRecords = records.filter((_, i) => i !== index);
+                const isOccupied = tempRecords.some(r => {
+                    if (r.status !== 'created' || r.date !== newDate) return false;
+                    const rStart = timeToMinutes(r.time);
+                    const rEnd = rStart + getServiceDuration(r.service);
+                    return timeRangesOverlap(minutes, endMinutes, rStart, rEnd);
+                });
+                
+                if (!isOccupied) availableSlots.push(time);
+            }
+            
+            document.getElementById('date').value = tempDate;
+            
+            if (availableSlots.length === 0) {
+                alert('✗ На выбранную дату нет свободных слотов');
+                return;
+            }
+            
+            const newTime = prompt(`Доступное время: ${availableSlots.join(', ')}\n\nВведите время (HH:MM):`, record.time);
+            if (!newTime) return;
+            
+            if (!availableSlots.includes(newTime)) {
+                alert('✗ Выбранное время недоступно');
+                return;
+            }
+            
+            const selectedDate = new Date(`${newDate}T${newTime}`);
+            if (selectedDate < new Date()) {
+                alert('✗ Нельзя перенести на прошедшее время');
+                return;
+            }
+            
+            records[index].date = newDate;
+            records[index].time = newTime;
+            records[index].status = 'rescheduled';
+            localStorage.setItem('records', JSON.stringify(records));
+            
+            alert(`✓ Запись перенесена на ${newDate} в ${newTime}`);
+            displayRecords();
+            generateTimeSlots();
+        }
+        
+        // Инициализация
+        displayRecords();
+        updateServiceInfo();
+        
+        // Генерация QR-кода
+        function generateQRCode() {
+            const canvas = document.getElementById('qrcode');
+            const ctx = canvas.getContext('2d');
+            const url = window.location.href;
+            
+            // Простая генерация QR-кода с помощью API
+            const qrSize = 250;
+            canvas.width = qrSize;
+            canvas.height = qrSize;
+            
+            // Используем бесплатный API для генерации QR-кода
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(url)}`;
+            
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0, qrSize, qrSize);
+            };
+            img.src = qrApiUrl;
+        }
+        
+        // Скачивание QR-кода
+        function downloadQR() {
+            const canvas = document.getElementById('qrcode');
+            const link = document.createElement('a');
+            link.download = 'shinka-qrcode.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Генерируем QR-код при загрузке страницы
+        window.addEventListener('load', generateQRCode);
+    </script>
+</body>
+</html>
