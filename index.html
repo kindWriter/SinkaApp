@@ -24,12 +24,13 @@
         
         header {
             position: relative;
-            height: 250px;
-            background: linear-gradient(135deg, rgba(0,0,0,0.2), rgba(0,0,0,0.1)), url('image.jpg') center center/cover no-repeat;
+            height: 280px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.15)), url('image.jpg') center center/cover no-repeat;
+            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             overflow: hidden;
         }
         
@@ -37,26 +38,63 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             z-index: 10;
             text-align: center;
+            animation: slideDown 0.6s ease-out;
         }
         
-        .header-logo img {
-            width: 80px;
-            height: 80px;
-            filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.5));
-            background: rgba(255,255,255,0.9);
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo-img {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
+            background: rgba(255,255,255,0.95);
             padding: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.08) rotate(-5deg);
+        }
+        
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
         
         header h1 {
             color: white;
-            font-size: 48px;
-            font-weight: 700;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-            letter-spacing: 2px;
+            font-size: 52px;
+            font-weight: 800;
+            text-shadow: 3px 3px 12px rgba(0,0,0,0.7);
+            letter-spacing: 3px;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
         main {
@@ -73,21 +111,24 @@
             margin-bottom: 20px;
             text-align: center;
             font-size: 24px;
+            font-weight: 700;
         }
         
         .services-list {
-            background: #f0f8ff;
-            padding: 15px;
-            border-left: 4px solid #0078D7;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+            padding: 18px;
+            border-left: 5px solid #0078D7;
             margin-bottom: 25px;
-            border-radius: 6px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,120,215,0.1);
         }
         
         .services-list strong {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: #0078D7;
             font-size: 16px;
+            font-weight: 700;
         }
         
         .services-list ul {
@@ -96,15 +137,17 @@
         }
         
         .services-list li {
-            padding: 6px 0;
+            padding: 8px 0;
             color: #555;
+            font-weight: 500;
         }
         
         .services-list li:before {
             content: "✓ ";
             color: #0078D7;
             font-weight: bold;
-            margin-right: 8px;
+            margin-right: 10px;
+            font-size: 16px;
         }
         
         form {
@@ -113,8 +156,14 @@
             gap: 18px;
         }
         
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
         label {
-            font-weight: 600;
+            font-weight: 700;
             color: #333;
             font-size: 14px;
             text-transform: uppercase;
@@ -124,8 +173,8 @@
         input, select, textarea {
             padding: 12px 14px;
             font-size: 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             transition: all 0.3s ease;
             font-family: inherit;
         }
@@ -133,7 +182,8 @@
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #0078D7;
-            box-shadow: 0 0 0 3px rgba(0,120,215,0.1);
+            box-shadow: 0 0 0 4px rgba(0,120,215,0.15);
+            background-color: #f8fbff;
         }
         
         textarea {
@@ -146,12 +196,17 @@
             gap: 15px;
             align-items: center;
             flex-wrap: wrap;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #eee;
         }
         
         input[type="checkbox"] {
             width: 20px;
             height: 20px;
             cursor: pointer;
+            accent-color: #0078D7;
         }
         
         .checkbox-group label {
@@ -161,58 +216,77 @@
             align-items: center;
             gap: 8px;
             font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
         }
         
         button {
-            padding: 14px;
+            padding: 16px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             color: white;
             background: linear-gradient(135deg, #0078D7, #106EBE);
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(0,120,215,0.25);
         }
         
         button:hover {
             background: linear-gradient(135deg, #106EBE, #0056b3);
-            box-shadow: 0 4px 12px rgba(0,120,215,0.3);
+            box-shadow: 0 6px 20px rgba(0,120,215,0.4);
             transform: translateY(-2px);
         }
         
         button:active {
             transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0,120,215,0.25);
         }
         
         .qr-section {
-            margin-top: 35px;
+            margin-top: 40px;
             text-align: center;
-            padding-top: 25px;
+            padding-top: 30px;
             border-top: 2px solid #eee;
         }
         
+        .qr-section strong {
+            display: block;
+            margin-bottom: 15px;
+            color: #0078D7;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
         .qr-section img {
-            max-width: 150px;
+            max-width: 160px;
             height: auto;
-            margin: 15px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 15px auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 2px solid #f0f0f0;
+            transition: transform 0.3s ease;
+        }
+        
+        .qr-section img:hover {
+            transform: scale(1.05);
         }
         
         .qr-section p {
             color: #666;
             font-size: 14px;
             margin-top: 10px;
+            font-weight: 500;
         }
         
         .admin-link {
             text-align: center;
-            margin-top: 20px;
-            padding-top: 20px;
+            margin-top: 25px;
+            padding-top: 25px;
             border-top: 1px solid #eee;
         }
         
@@ -220,58 +294,101 @@
             color: #0078D7;
             text-decoration: none;
             font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
         }
         
         .admin-link a:hover {
+            color: #106EBE;
             text-decoration: underline;
         }
         
         footer {
-            background: #222;
+            background: linear-gradient(135deg, #222 0%, #1a1a1a 100%);
             color: #ccc;
             text-align: center;
-            padding: 25px;
+            padding: 30px 20px;
             font-size: 13px;
             margin-top: 50px;
+        }
+        
+        footer strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        footer p {
+            margin: 6px 0;
         }
         
         footer a {
             color: #0078D7;
             text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
         }
         
         footer a:hover {
+            color: #4fa3f5;
             text-decoration: underline;
         }
         
         .success-message {
             display: none;
-            background: #d4edda;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
             color: #155724;
-            padding: 15px;
-            border-radius: 6px;
+            padding: 16px;
+            border-radius: 8px;
             margin-bottom: 20px;
-            border-left: 4px solid #28a745;
+            border-left: 5px solid #28a745;
+            font-weight: 600;
+            animation: slideIn 0.4s ease-out;
         }
         
         .error-message {
             display: none;
-            background: #f8d7da;
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
             color: #721c24;
-            padding: 15px;
-            border-radius: 6px;
+            padding: 16px;
+            border-radius: 8px;
             margin-bottom: 20px;
-            border-left: 4px solid #f5c6cb;
+            border-left: 5px solid #f5c2c7;
+            font-weight: 600;
+            animation: slideIn 0.4s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         
         @media (max-width: 600px) {
-            header h1 {
-                font-size: 36px;
+            header {
+                height: 220px;
             }
             
-            .header-logo img {
-                width: 60px;
-                height: 60px;
+            header h1 {
+                font-size: 36px;
+                letter-spacing: 2px;
+            }
+            
+            .logo-img {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .header-logo {
+                gap: 15px;
             }
             
             main {
@@ -282,111 +399,111 @@
             h2 {
                 font-size: 20px;
             }
+            
+            footer {
+                padding: 20px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="header-logo">
-            <img src="favicon.png" alt="Логотип Шинка">
-            <h1>[translate:ШИНКА]</h1>
+            <div class="logo-img">
+                <img src="favicon.png" alt="Логотип Шинка">
+            </div>
+            <h1>ШИНКА</h1>
         </div>
     </header>
     
     <main>
-        <h2>[translate:Запись на услуги шиномонтажа]</h2>
+        <h2>📋 Запись на услуги шиномонтажа</h2>
         
         <div class="success-message" id="successMessage">
-            ✓ [translate:Спасибо за запись! Мы свяжемся с вами в ближайшее время.]
+            ✓ Спасибо за запись! Мы свяжемся с вами в ближайшее время.
         </div>
         
         <div class="error-message" id="errorMessage">
-            ⚠ [translate:Ошибка! Проверьте правильность введённых данных.]
+            ⚠ Ошибка! Проверьте правильность введённых данных.
         </div>
         
         <div class="services-list">
-            <strong>🔧 [translate:Доступные услуги:]</strong>
+            <strong>🔧 Доступные услуги:</strong>
             <ul>
-                <li>[translate:Сезонная замена шин]</li>
-                <li>[translate:Балансировка колёс]</li>
-                <li>[translate:Ремонт шин]</li>
-                <li>[translate:Продажа новых шин]</li>
-                <li>[translate:Диагностика ходовой части]</li>
-                <li>[translate:Смазка и обслуживание]</li>
+                <li>Сезонная замена шин</li>
+                <li>Балансировка колёс</li>
+                <li>Ремонт шин</li>
+                <li>Продажа новых шин</li>
+                <li>Диагностика ходовой части</li>
+                <li>Смазка и обслуживание</li>
             </ul>
         </div>
         
         <form id="bookingForm">
-            <div>
-                <label for="name">[translate:Ваше имя] *</label>
-                <input type="text" id="name" name="name" placeholder="[translate:Иван Иванов]" required />
+            <div class="form-group">
+                <label for="name">Ваше имя *</label>
+                <input type="text" id="name" name="name" placeholder="Иван Иванов" required />
             </div>
             
-            <div>
-                <label for="phone">[translate:Номер телефона] *</label>
+            <div class="form-group">
+                <label for="phone">Номер телефона *</label>
                 <input type="tel" id="phone" name="phone" placeholder="+7 (999) 999-99-99" required pattern="[0-9+\-\s()]+" />
             </div>
             
-            <div>
-                <label for="email">[translate:Ваш email]</label>
-                <input type="email" id="email" name="email" placeholder="example@mail.ru" />
-            </div>
-            
-            <div>
-                <label for="service">[translate:Выберите услугу] *</label>
+            <div class="form-group">
+                <label for="service">Выберите услугу *</label>
                 <select id="service" name="service" required>
-                    <option value="" disabled selected>[translate:-- Выберите услугу --]</option>
-                    <option>[translate:Сезонная замена шин]</option>
-                    <option>[translate:Балансировка колёс]</option>
-                    <option>[translate:Ремонт шин]</option>
-                    <option>[translate:Продажа новых шин]</option>
-                    <option>[translate:Диагностика ходовой части]</option>
-                    <option>[translate:Смазка и обслуживание]</option>
+                    <option value="" disabled selected>-- Выберите услугу --</option>
+                    <option>Сезонная замена шин</option>
+                    <option>Балансировка колёс</option>
+                    <option>Ремонт шин</option>
+                    <option>Продажа новых шин</option>
+                    <option>Диагностика ходовой части</option>
+                    <option>Смазка и обслуживание</option>
                 </select>
             </div>
             
-            <div>
-                <label for="date">[translate:Выберите удобную дату] *</label>
+            <div class="form-group">
+                <label for="date">Выберите удобную дату *</label>
                 <input type="date" id="date" name="date" required />
             </div>
             
-            <div>
-                <label for="time">[translate:Выберите время]</label>
+            <div class="form-group">
+                <label for="time">Выберите время</label>
                 <input type="time" id="time" name="time" />
             </div>
             
-            <div>
-                <label for="comment">[translate:Дополнительная информация]</label>
-                <textarea id="comment" name="comment" placeholder="[translate:Опишите вашу проблему...]"></textarea>
+            <div class="form-group">
+                <label for="comment">Дополнительная информация</label>
+                <textarea id="comment" name="comment" placeholder="Опишите вашу проблему или пожелания..."></textarea>
             </div>
-            
+
             <div class="checkbox-group">
                 <input type="checkbox" id="whatsapp" name="whatsapp" checked>
-                <label for="whatsapp">[translate:Уведомить в WhatsApp]</label>
-                
-                <input type="checkbox" id="email-notify" name="email-notify">
-                <label for="email-notify">[translate:Уведомить на Email]</label>
+                <label for="whatsapp">✓ Уведомить в WhatsApp</label>
             </div>
             
-            <button type="submit">📅 [translate:Записаться на услугу]</button>
+            <button type="submit">📅 Записаться на услугу</button>
         </form>
         
         <div class="qr-section">
-            <strong>[translate:Поделитесь ссылкой:]</strong>
+            <strong>Поделитесь ссылкой:</strong>
             <img src="qrcode.png" alt="QR код для быстрого доступа к приложению Шинка" />
-            <p>[translate:Отсканируйте для быстрого доступа к приложению]</p>
+            <p>Отсканируйте для быстрого доступа к приложению</p>
         </div>
         
         <div class="admin-link">
-            <a href="#" onclick="openAdminPanel()">[translate:Администратор]</a>
+            <a href="#" onclick="openAdminPanel(); return false;">👤 Администратор</a>
         </div>
     </main>
     
     <footer>
-        <p><strong>© 2025 [translate:Шиномонтаж "Шинка"]</strong></p>
-        <p>📞 [translate:Телефон:] +7 927 711-78-86</p>
-        <p>📍 [translate:Адрес:] [translate:Краснодарский край, г. Горячий Ключ, ул. Ярославского 123/1]</p>
-        <p>💬 <a href="https://wa.me/79277117886" target="_blank">[translate:WhatsApp]</a> | <a href="mailto:info@shinka.ru">[translate:Email]</a></p>
+        <strong>© 2025 Шиномонтаж "Шинка"</strong>
+        <p>📞 Телефон: <strong>+7 927 711-78-86</strong></p>
+        <p>📍 Адрес: Краснодарский край, г. Горячий Ключ, ул. Ярославского 123/1</p>
+        <p>🕐 Режим работы: 9:00 - 18:00</p>
+        <p><a href="https://wa.me/79277117886" target="_blank">💬 Напишите нам в WhatsApp</a></p>
     </footer>
 
     <script>
@@ -399,33 +516,26 @@
         document.getElementById('bookingForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
             const service = document.getElementById('service').value;
             const date = document.getElementById('date').value;
             const time = document.getElementById('time').value;
-            const comment = document.getElementById('comment').value;
+            const comment = document.getElementById('comment').value.trim();
             const whatsapp = document.getElementById('whatsapp').checked;
-            const emailNotify = document.getElementById('email-notify').checked;
 
-            // Валидация
             if (!name || !phone || !service || !date) {
                 showError();
                 return;
             }
 
-            // Создаём объект записи
             const booking = {
-                name: name,
-                phone: phone,
-                email: email,
-                service: service,
-                date: date,
-                time: time,
-                comment: comment,
-                whatsapp: whatsapp,
-                emailNotify: emailNotify,
+                name, 
+                phone, 
+                service, 
+                date, 
+                time, 
+                comment,
                 timestamp: new Date().toLocaleString('ru-RU')
             };
 
@@ -434,23 +544,14 @@
             bookings.push(booking);
             localStorage.setItem('bookings', JSON.stringify(bookings));
 
-            // Отправляем в WhatsApp если выбрано
+            // WhatsApp уведомление
             if (whatsapp) {
                 sendWhatsApp(booking);
             }
 
-            // Отправляем email если выбрано
-            if (emailNotify && email) {
-                sendEmail(booking);
-            }
-
-            // Показываем сообщение об успехе
             showSuccess();
-
-            // Очищаем форму
             this.reset();
 
-            // Скрываем сообщение через 5 секунд
             setTimeout(() => {
                 document.getElementById('successMessage').style.display = 'none';
             }, 5000);
@@ -461,40 +562,38 @@
         function showSuccess() {
             document.getElementById('successMessage').style.display = 'block';
             document.getElementById('errorMessage').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function showError() {
             document.getElementById('errorMessage').style.display = 'block';
             document.getElementById('successMessage').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Отправка в WhatsApp
         function sendWhatsApp(booking) {
-            const message = `Новая запись:
-Имя: ${booking.name}
-Телефон: ${booking.phone}
-Услуга: ${booking.service}
-Дата: ${booking.date}
-Время: ${booking.time || 'Не указано'}
-Комментарий: ${booking.comment || 'Нет'}`;
-            
+            const message = 
+`📱 *НОВАЯ ЗАПИСЬ В "ШИНКА"*
+
+👤 *Имя:* ${booking.name}
+📞 *Телефон:* ${booking.phone}
+🔧 *Услуга:* ${booking.service}
+📅 *Дата:* ${booking.date}
+⏰ *Время:* ${booking.time || 'Не указано'}
+💬 *Комментарий:* ${booking.comment || 'Нет'}
+🕐 *Время заявки:* ${booking.timestamp}`;
+
             const encodedMsg = encodeURIComponent(message);
             const whatsappUrl = `https://wa.me/79277117886?text=${encodedMsg}`;
             window.open(whatsappUrl, '_blank');
-        }
-
-        // Отправка email (требует серверной части)
-        function sendEmail(booking) {
-            console.log('Email уведомление отправлено на:', booking.email);
-            // Здесь нужна серверная часть для отправки email
         }
 
         function openAdminPanel() {
             const password = prompt('Введите пароль администратора:');
             if (password === 'admin123') {
                 window.location.href = 'admin.html';
-            } else {
-                alert('Неверный пароль!');
+            } else if (password !== null) {
+                alert('❌ Неверный пароль!');
             }
         }
 
