@@ -1,3 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0078D7">
+    <title>Шинка - Онлайн запись в шиномонтаж</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; color: #333; }
+        header {
+            position: relative;
+            height: 280px;
+            background: linear-gradient(135deg,rgba(0,0,0,0.15),rgba(0,0,0,0.1)), url('image.jpg') center center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        .header-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            text-align: center;
+            z-index: 2;
+        }
+        .logo-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.97);
+            padding: 8px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+        }
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        header h1 {
+            color: white;
+            font-size: 50px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,.5);
+        }
+        main { max-width: 700px; margin: 30px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);}
+        h2 { color: #0078D7; margin-bottom: 20px; text-align: center; font-size: 24px; font-weight:700;}
+        .services-list {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+            padding: 18px;
+            border-left: 5px solid #0078D7;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,120,215,0.1);
+        }
+        .services-list strong { display: block; margin-bottom: 12px; color: #0078D7; font-size: 16px; font-weight: 700;}
+        .services-list ul { list-style: none; padding-left: 0; }
+        .services-list li { padding: 8px 0; color: #555; font-weight: 500; }
+        .services-list li:before {
+            content: "✓ ";
+            color: #0078D7;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        form { display: flex; flex-direction: column; gap: 18px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        label {
+            font-weight: 700;
+            color: #333;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        input, select, textarea {
+            padding: 12px 14px;
+            font-size: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none; border-color: #0078D7;
+            box-shadow: 0 0 0 4px rgba(0,120,215,0.15);
+            background-color: #f8fbff;
+        }
+        textarea { resize: vertical; min-height: 80px; }
+        .checkbox-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+        input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; accent-color: #0078D7; }
+        .checkbox-group label { margin: 0; text-transform: none; display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; font-weight: 500;}
+        button {
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #0078D7, #106EBE);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(0,120,215,0.25);
+        }
+        button:hover { background: linear-gradient(135deg, #106EBE, #0056b3); transform: translateY(-2px);}
+        .qr-section { margin-top: 40px; text-align: center; padding-top: 30px; border-top: 2px solid #eee; }
+        .qr-section strong { display: block; margin-bottom: 15px; color: #0078D7; font-size: 16px; font-weight: 700;}
+        .qr-section img { max-width: 160px; height: auto; margin: 15px auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #f0f0f0;}
+        .qr-section p { color: #666; font-size: 14px; margin-top: 10px; font-weight: 500;}
+        .admin-link { text-align: center; margin-top: 25px; padding-top: 25px; border-top: 1px solid #eee;}
+        .admin-link a { color: #0078D7; text-decoration: none; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .admin-link a:hover { color: #106EBE; text-decoration: underline; }
+        footer {
+            background: linear-gradient(135deg, #222 0%, #1a1a1a 100%);
+            color: #ccc;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 13px;
+            margin-top: 50px;
+        }
+        footer strong { color: #fff; display: block; margin-bottom: 8px; font-size: 14px;}
+        footer p { margin: 6px 0;}
+        footer a { color: #0078D7; text-decoration: none; font-weight: 600;}
+        footer a:hover { color: #4fa3f5; text-decoration: underline;}
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #28a745;
+            font-weight: 600;
+        }
+        .error-message {
+            display: none;
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f5c2c7;
+            font-weight: 600;
+        }
+        @media (max-width:600px){
+            header{height:180px;}
+            header h1{font-size:30px;}
+            .logo-img{width: 64px;height: 64px;}
+            main{margin:10px;padding:10px;}
+            h2{font-size:18px;}
+            footer{padding:16px;font-size:12px;}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-logo">
+            <div class="logo-img">
+                <img src="favicon.png" alt="Логотип Шинка">
+            </div>
+            <h1>ШИНКА</h1>
+        </div>
+    </header>
+    <main>
+        <h2>📋 Запись на услуги шиномонтажа</h2>
+        <div class="success-message" id="successMessage">
+            ✓ Спасибо за запись! Мы свяжемся с вами в ближайшее время.
+        </div>
+        <div class="error-message" id="errorMessage">
+            ⚠ Ошибка! Проверьте правильность введённых данных.
+        </div>
         <div class="services-list">
             <strong>🔧 Доступные услуги:</strong>
             <ul>
@@ -9,3 +197,139 @@
                 <li>Проточка тормозных дисков</li>
             </ul>
         </div>
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="name">Ваше имя *</label>
+                <input type="text" id="name" name="name" placeholder="Иван Иванов" required />
+            </div>
+            <div class="form-group">
+                <label for="phone">Номер телефона *</label>
+                <input type="tel" id="phone" name="phone" placeholder="+7 (999) 999-99-99" required pattern="[0-9+\-\s()]+" />
+            </div>
+            <div class="form-group">
+                <label for="service">Выберите услугу *</label>
+                <select id="service" name="service" required>
+                    <option value="" disabled selected>-- Выберите услугу --</option>
+                    <option>Сезонная замена шин</option>
+                    <option>Балансировка колёс</option>
+                    <option>Ремонт шин</option>
+                    <option>Диагностика кондиционера</option>
+                    <option>Заправка кондиционера</option>
+                    <option>Проточка тормозных дисков</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">Выберите удобную дату *</label>
+                <input type="date" id="date" name="date" required />
+            </div>
+            <div class="form-group">
+                <label for="time">Выберите время</label>
+                <input type="time" id="time" name="time" />
+            </div>
+            <div class="form-group">
+                <label for="comment">Дополнительная информация</label>
+                <textarea id="comment" name="comment" placeholder="Опишите вашу проблему или пожелания..."></textarea>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="whatsapp" name="whatsapp" checked>
+                <label for="whatsapp">✓ Уведомить в WhatsApp</label>
+            </div>
+            <button type="submit">📅 Записаться на услугу</button>
+        </form>
+        <div class="qr-section">
+            <strong>Поделитесь ссылкой:</strong>
+            <img src="qrcode.png" alt="QR код для быстрого доступа к приложению Шинка" />
+            <p>Отсканируйте для быстрого доступа к приложению</p>
+        </div>
+        <div class="admin-link">
+            <a href="#" onclick="openAdminPanel(); return false;">👤 Администратор</a>
+        </div>
+    </main>
+    <footer>
+        <strong>© 2025 Шиномонтаж "Шинка"</strong>
+        <p>📞 Телефон: <strong>+7 927 711-78-86</strong></p>
+        <p>📍 Адрес: Краснодарский край, г. Горячий Ключ, ул. Ярославского 123/1</p>
+        <p>🕐 Режим работы: 9:00 - 18:00</p>
+        <p><a href="https://wa.me/79277117886" target="_blank">💬 Напишите нам в WhatsApp</a></p>
+    </footer>
+    <script>
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+
+        document.getElementById('bookingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const service = document.getElementById('service').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const comment = document.getElementById('comment').value.trim();
+            const whatsapp = document.getElementById('whatsapp').checked;
+
+            if (!name || !phone || !service || !date) {
+                showError();
+                return;
+            }
+
+            const booking = {
+                name, phone, service, date, time, comment,
+                timestamp: new Date().toLocaleString('ru-RU')
+            };
+
+            let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            bookings.push(booking);
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+
+            if (whatsapp) sendWhatsApp(booking);
+
+            showSuccess();
+            this.reset();
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
+        });
+
+        function showSuccess() {
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function showError() {
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function sendWhatsApp(booking) {
+            const message =
+`📱 *НОВАЯ ЗАПИСЬ В "ШИНКА"*
+
+👤 *Имя:* ${booking.name}
+📞 *Телефон:* ${booking.phone}
+🔧 *Услуга:* ${booking.service}
+📅 *Дата:* ${booking.date}
+⏰ *Время:* ${booking.time || 'Не указано'}
+💬 *Комментарий:* ${booking.comment || 'Нет'}
+🕐 *Время заявки:* ${booking.timestamp}`;
+            const encodedMsg = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/79277117886?text=${encodedMsg}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        function openAdminPanel() {
+            const password = prompt('Введите пароль администратора:');
+            if (password === 'admin123') {
+                window.location.href = 'admin.html';
+            } else if (password !== null) {
+                alert('❌ Неверный пароль!');
+            }
+        }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js').catch(err => {
+                    console.log('Service Worker регистрация не удалась:', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
