@@ -39,34 +39,29 @@
       background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.1));
     }
     .hero-title-wrap {
-  position: absolute;
-  left: 20px;
-  bottom: 22px;
-  pointer-events: none;
-}
-
-/* «теневой» текст (серый, снизу) */
-.hero-title-shadow {
-  position: absolute;
-  left: 0;
-  top: 4px;           /* смещение вниз */
-  font-size: 40px;
-  font-weight: 800;
-  letter-spacing: 3px;
-  color: rgba(0,0,0,0.45); /* тёмно-серый */
-  filter: blur(0.5px);
-}
-
-/* основной яркий текст (сверху) */
-.hero-title-main {
-  position: relative;
-  font-size: 40px;
-  font-weight: 800;
-  letter-spacing: 3px;
-  color: #ffffff;
-  text-shadow: 0 3px 10px rgba(0,0,0,0.6);
-}
-
+      position: absolute;
+      left: 20px;
+      bottom: 22px;
+      pointer-events: none;
+    }
+    .hero-title-shadow {
+      position: absolute;
+      left: 0;
+      top: 4px;
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: rgba(0,0,0,0.45);
+      filter: blur(0.5px);
+    }
+    .hero-title-main {
+      position: relative;
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: #ffffff;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.6);
+    }
 
     /* content wrapper */
     main {
@@ -101,7 +96,6 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.08);
     }
     .tab-button:active { transform: scale(0.97); }
-
     .tab-underline {
       position: absolute;
       bottom: -3px;
@@ -125,7 +119,6 @@
       transform: translateY(0);
     }
 
-    /* section titles */
     h2 {
       font-size: 18px;
       font-weight: 700;
@@ -141,7 +134,6 @@
       margin: 16px 0 8px;
     }
 
-    /* services list */
     .services-list {
       background: #f7f9fc;
       border-radius: 14px;
@@ -171,7 +163,6 @@
       color: #2ea44f;
     }
 
-    /* form */
     form {
       margin-top: 4px;
       display: flex;
@@ -211,7 +202,6 @@
     }
     .field input::placeholder { color: #b7b7b7; }
 
-    /* button */
     .submit-row {
       display: flex;
       align-items: center;
@@ -258,7 +248,6 @@
       object-fit: contain;
     }
 
-    /* prices & sales */
     .prices-list,
     .sales-list {
       list-style: none;
@@ -281,7 +270,6 @@
       color: #2b9152;
     }
 
-    /* messages */
     .success-message,
     .error-message {
       display: none;
@@ -301,7 +289,6 @@
       border: 1px solid #f6c2c7;
     }
 
-    /* contacts */
     .contacts {
       margin-top: 20px;
       font-size: 13px;
@@ -350,18 +337,24 @@
       text-decoration: none;
       color: #25D366;
     }
+
+    @media (max-width:600px){
+      .hero { height: 200px; }
+      .hero-title-shadow,
+      .hero-title-main { font-size: 32px; }
+      main{padding:14px;}
+    }
   </style>
 </head>
 <body>
   <div class="app">
     <header class="hero">
-  <div class="hero-overlay"></div>
-  <div class="hero-title-wrap">
-    <span class="hero-title hero-title-shadow">ШИНКА</span>
-    <span class="hero-title hero-title-main">ШИНКА</span>
-  </div>
-</header>
-
+      <div class="hero-overlay"></div>
+      <div class="hero-title-wrap">
+        <span class="hero-title-shadow">ШИНКА</span>
+        <span class="hero-title-main">ШИНКА</span>
+      </div>
+    </header>
 
     <main>
       <!-- Tabs -->
@@ -491,7 +484,7 @@
   </div>
 
   <script>
-    // минимальная дата = сегодня
+    // минимальная дата
     const dateInput = document.getElementById('date');
     if (dateInput) {
       const today = new Date().toISOString().split('T')[0];
