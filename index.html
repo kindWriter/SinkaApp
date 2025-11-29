@@ -38,16 +38,35 @@
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.1));
     }
-    .hero-title {
-      position: absolute;
-      left: 20px;
-      bottom: 20px;
-      font-size: 40px;
-      font-weight: 800;
-      letter-spacing: 3px;
-      color: #fff;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.7);
-    }
+    .hero-title-wrap {
+  position: absolute;
+  left: 20px;
+  bottom: 22px;
+  pointer-events: none;
+}
+
+/* «теневой» текст (серый, снизу) */
+.hero-title-shadow {
+  position: absolute;
+  left: 0;
+  top: 4px;           /* смещение вниз */
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: rgba(0,0,0,0.45); /* тёмно-серый */
+  filter: blur(0.5px);
+}
+
+/* основной яркий текст (сверху) */
+.hero-title-main {
+  position: relative;
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.6);
+}
+
 
     /* content wrapper */
     main {
@@ -336,9 +355,13 @@
 <body>
   <div class="app">
     <header class="hero">
-      <div class="hero-overlay"></div>
-      <div class="hero-title">ШИНКА</div>
-    </header>
+  <div class="hero-overlay"></div>
+  <div class="hero-title-wrap">
+    <span class="hero-title hero-title-shadow">ШИНКА</span>
+    <span class="hero-title hero-title-main">ШИНКА</span>
+  </div>
+</header>
+
 
     <main>
       <!-- Tabs -->
