@@ -3,357 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
   <title>Шинка – Онлайн запись</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" href="icon-192x192.png">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f2f3f5;
-      color: #222;
-      display: flex;
-      justify-content: center;
-      padding: 10px;
-    }
-    .app {
-      width: 100%;
-      max-width: 430px;
-      background: #f5f5f5;
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-      overflow: hidden;
-    }
-
-    /* header */
-    .hero {
-      position: relative;
-      height: 220px;
-      background: url("image.jpg") center/cover no-repeat;
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.1));
-    }
-    .hero-title-wrap {
-      position: absolute;
-      left: 20px;
-      bottom: 22px;
-      pointer-events: none;
-    }
-    .hero-title-main {
-      position: relative;
-      font-size: 40px;
-      font-weight: 800;
-      letter-spacing: 3px;
-      color: #ffffff;
-      text-shadow: 0 3px 10px rgba(0,0,0,0.6);
-    }
-
-    /* content wrapper */
-    main {
-      padding: 18px 18px 24px;
-      background: #f5f5f5;
-    }
-
-    /* tabs */
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-    .tab-button {
-      padding: 8px 18px;
-      border-radius: 999px;
-      border: 1px solid #e2e2e2;
-      background: #ffffff;
-      font-size: 12px;
-      font-weight: 600;
-      color: #777;
-      cursor: pointer;
-      transition: all 0.22s ease;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.04);
-    }
-    .tab-button.active {
-      color: #ff7a00;
-      border-color: #ff7a00;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-    }
-    .tab-button:active { transform: scale(0.97); }
-
-    .tab-content {
-      display: none;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-    }
-    .tab-content.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    h2 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #2d2d2d;
-    }
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #8a8a8a;
-      margin: 16px 0 8px;
-    }
-
-    .services-list {
-      background: #f7f9fc;
-      border-radius: 14px;
-      padding: 14px 14px 10px;
-      border: 1px solid #e4e7ee;
-      margin-bottom: 14px;
-    }
-    .services-list strong {
-      font-size: 13px;
-      color: #3b4a5a;
-    }
-    .services-list ul {
-      list-style: none;
-      margin-top: 8px;
-    }
-    .services-list li {
-      font-size: 14px;
-      padding: 4px 0;
-      color: #4a4a4a;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .services-list li::before {
-      content: "✓";
-      font-size: 12px;
-      color: #2ea44f;
-    }
-
-    form {
-      margin-top: 4px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: #8a8a8a;
-      margin-bottom: 4px;
-    }
-    .field {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 8px 10px;
-      border: 1px solid #e3e3e3;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-      display: flex;
-      flex-direction: column;
-    }
-    .field input,
-    .field select {
-      border: none;
-      outline: none;
-      font-size: 14px;
-      padding: 2px 0 0;
-      background: transparent;
-      color: #2b2b2b;
-      font-family: inherit;
-    }
-    .field input::placeholder { color: #b7b7b7; }
-
-    .submit-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 12px;
-      gap: 10px;
-    }
-    .btn-primary {
-      flex: 1;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg,#00b35c,#03a04e);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 13px 16px;
-      cursor: pointer;
-      box-shadow: 0 8px 16px rgba(0,179,92,0.35);
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.7px;
-    }
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 18px rgba(0,179,92,0.45);
-    }
-    .btn-primary:active {
-      transform: translateY(1px);
-      box-shadow: 0 5px 10px rgba(0,179,92,0.3);
-    }
-    .qr-mini {
-      width: 56px;
-      height: 56px;
-      border-radius: 12px;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    }
-    .qr-mini img {
-      width: 46px;
-      height: 46px;
-      object-fit: contain;
-    }
-
-    .prices-list,
-    .sales-list {
-      list-style: none;
-      margin-top: 8px;
-    }
-    .prices-list li,
-    .sales-list li {
-      padding: 8px 10px;
-      border-radius: 10px;
-      background: #ffffff;
-      border: 1px solid #e5e5e5;
-      margin-bottom: 6px;
-      font-size: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .prices-list li span:last-child {
-      font-weight: 600;
-      color: #2b9152;
-    }
-    .sales-list li {
-      font-size: 13px;
-    }
-
-    .success-message,
-    .error-message {
-      display: none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-    }
-    .success-message {
-      background: #e5f7ea;
-      color: #176b36;
-      border: 1px solid #c7edd4;
-    }
-    .error-message {
-      background: #fde8ea;
-      color: #8b2730;
-      border: 1px solid #f6c2c7;
-    }
-
-    .contacts {
-      margin-top: 20px;
-      font-size: 13px;
-    }
-    .contacts-title {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #8a8a8a;
-      margin-bottom: 8px;
-    }
-    .contacts p { 
-      margin-bottom: 4px;
-      color: #555;
-    }
-    .bottom-bar {
-      margin-top: 10px;
-      border-radius: 14px;
-      background: #ffffff;
-      padding: 8px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border: 1px solid #e4e4e4;
-    }
-    .bottom-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      color: #555;
-    }
-    .bottom-left-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 10px;
-      background: #f3f3f3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-    }
-    .bottom-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 18px;
-    }
-    .bottom-right a {
-      text-decoration: none;
-      color: #25D366;
-    }
-
-    @media (max-width: 600px) {
-      .hero { height: 200px; }
-      .hero-title-main { font-size: 32px; }
-      main { padding: 14px; }
-      .tab-button { font-size: 11px; padding: 7px 14px; }
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f2f3f5; display: flex; justify-content: center; padding: 10px; }
+    .app { width: 100%; max-width: 430px; background: #f5f5f5; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); overflow: hidden; }
+    .hero { position: relative; height: 220px; background: url("image.jpg") center/cover no-repeat; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.1)); }
+    .hero-title { position: absolute; left: 20px; bottom: 20px; font-size: 40px; font-weight: 800; letter-spacing: 3px; color: #fff; text-shadow: 0 4px 12px rgba(0,0,0,0.7); margin: 0; }
+    main { padding: 18px 18px 24px; }
+    .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; }
+    .tab-button { padding: 8px 18px; border-radius: 999px; border: 1px solid #ddd; background: #fff; font-size: 12px; font-weight: 600; color: #666; cursor: pointer; transition: all 0.3s; }
+    .tab-button.active { color: #ff7a00; border-color: #ff7a00; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    h2 { font-size: 18px; font-weight: 700; margin: 0 0 12px 0; }
+    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #8a8a8a; margin: 16px 0 8px 0; }
+    .services-list { background: #f7f9fc; border-radius: 12px; padding: 12px; border: 1px solid #e4e7ee; margin-bottom: 14px; }
+    .services-list strong { display: block; font-size: 13px; color: #3b4a5a; margin-bottom: 8px; }
+    .services-list ul { list-style: none; }
+    .services-list li { font-size: 13px; color: #555; padding: 4px 0; display: flex; gap: 6px; }
+    .services-list li::before { content: "✓"; color: #2ea44f; font-weight: bold; }
+    form { display: flex; flex-direction: column; gap: 12px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .field { display: flex; flex-direction: column; }
+    label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #8a8a8a; margin-bottom: 4px; }
+    input, select, textarea { border: 1px solid #ddd; border-radius: 10px; padding: 10px; font-size: 14px; font-family: inherit; color: #333; background: #fff; }
+    input::placeholder { color: #bbb; }
+    .submit-row { display: flex; gap: 10px; margin-top: 10px; }
+    .btn-primary { flex: 1; border: none; border-radius: 999px; background: linear-gradient(135deg, #00b35c, #03a04e); color: #fff; padding: 13px 16px; font-size: 13px; font-weight: 700; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 12px rgba(0,179,92,0.3); }
+    .btn-primary:hover { box-shadow: 0 6px 16px rgba(0,179,92,0.4); transform: translateY(-1px); }
+    .qr-mini { width: 56px; height: 56px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .qr-mini img { width: 50px; height: 50px; object-fit: contain; }
+    .prices-list, .sales-list { list-style: none; }
+    .prices-list li, .sales-list li { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 10px; margin-bottom: 8px; font-size: 13px; }
+    .prices-list li { display: flex; justify-content: space-between; }
+    .prices-list li span:last-child { color: #2b9152; font-weight: 600; }
+    .success-message, .error-message { display: none; padding: 10px; border-radius: 8px; font-size: 12px; margin-top: 10px; }
+    .success-message { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+    .error-message { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+    .contacts { margin-top: 20px; font-size: 13px; color: #555; }
+    .contacts-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #8a8a8a; margin-bottom: 8px; }
+    .bottom-bar { margin-top: 12px; background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 10px; display: flex; justify-content: space-between; }
+    .bottom-left { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+    .bottom-left-icon { width: 28px; height: 28px; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
   </style>
 </head>
 <body>
   <div class="app">
     <header class="hero">
       <div class="hero-overlay"></div>
-      <div class="hero-title-wrap">
-        <span class="hero-title-main">ШИНКА</span>
-      </div>
+      <h1 class="hero-title">ШИНКА</h1>
     </header>
 
     <main>
-      <!-- Tabs -->
       <div class="tabs">
         <button class="tab-button active" data-tab="services">УСЛУГИ</button>
         <button class="tab-button" data-tab="prices">ЦЕНЫ</button>
         <button class="tab-button" data-tab="sales">АКЦИИ</button>
       </div>
 
-      <!-- Tab: services -->
-      <div class="tab-content active" id="tab-services">
+      <div id="tab-services" class="tab-content active">
         <div class="section-label">Форма записи</div>
-
         <div class="services-list">
           <strong>Доступные услуги:</strong>
           <ul>
@@ -370,29 +81,29 @@
           <div class="row">
             <div class="field">
               <label for="name">Имя</label>
-              <input id="name" name="name" type="text" placeholder="Иван" required>
+              <input id="name" type="text" placeholder="Иван" required>
             </div>
             <div class="field">
               <label for="phone">Телефон</label>
-              <input id="phone" name="phone" type="tel" placeholder="+7 9.." required>
+              <input id="phone" type="tel" placeholder="+7 9.." required>
             </div>
           </div>
 
           <div class="row">
             <div class="field">
               <label for="date">Дата</label>
-              <input id="date" name="date" type="date" required>
+              <input id="date" type="date" required>
             </div>
             <div class="field">
               <label for="time">Время</label>
-              <input id="time" name="time" type="time" step="1800">
+              <input id="time" type="time" step="1800" required>
             </div>
           </div>
 
           <div class="field">
             <label for="service">Тип услуги</label>
-            <select id="service" name="service" required>
-              <option value="" disabled selected>Выберите услугу</option>
+            <select id="service" required>
+              <option value="">Выберите услугу</option>
               <option>Сезонная замена шин</option>
               <option>Балансировка колёс</option>
               <option>Ремонт шин</option>
@@ -404,27 +115,22 @@
 
           <div class="field">
             <label for="comment">Комментарий</label>
-            <input id="comment" name="comment" type="text" placeholder="Госномер,Марка авто, размер шин и т.п.">
+            <textarea id="comment" placeholder="Марка авто, размер шин и т.п." rows="2"></textarea>
           </div>
 
           <div class="submit-row">
             <button type="submit" class="btn-primary">Подтвердить запись</button>
             <div class="qr-mini">
-              <img src="qrcode.png" alt="QR код">
+              <img src="qrcode.png" alt="QR">
             </div>
           </div>
 
-          <div class="success-message" id="successMessage">
-            Заявка отправлена в WhatsApp. Мы свяжемся с вами.
-          </div>
-          <div class="error-message" id="errorMessage">
-            Заполните обязательные поля: имя, телефон, дата и тип услуги.
-          </div>
+          <div class="success-message" id="successMessage">✓ Заявка отправлена в WhatsApp.</div>
+          <div class="error-message" id="errorMessage">✗ Заполните все обязательные поля.</div>
         </form>
       </div>
 
-      <!-- Tab: prices -->
-      <div class="tab-content" id="tab-prices">
+      <div id="tab-prices" class="tab-content">
         <h2>Цены</h2>
         <ul class="prices-list">
           <li><span>Сезонная замена шин</span><span>от 800 ₽</span></li>
@@ -436,17 +142,15 @@
         </ul>
       </div>
 
-      <!-- Tab: sales -->
-      <div class="tab-content" id="tab-sales">
+      <div id="tab-sales" class="tab-content">
         <h2>Акции</h2>
         <ul class="sales-list">
-          <li>Замена шин + балансировка — скидка 10%.</li>
-          <li>При заправке кондиционера — диагностика бесплатно.</li>
-          <li>Третье посещение — скидка 15% на работы.</li>
+          <li>✓ Замена шин + балансировка — скидка 10%.</li>
+          <li>✓ При заправке кондиционера — диагностика бесплатно.</li>
+          <li>✓ Третье посещение — скидка 15% на работы.</li>
         </ul>
       </div>
 
-      <!-- contacts -->
       <div class="contacts">
         <div class="contacts-title">Контакты</div>
         <p>+7 927 711-78-86</p>
@@ -458,25 +162,21 @@
           <div class="bottom-left-icon">@</div>
           <div>
             <div>telegram</div>
-            <div>info@shinka.ru</div>
+            <div style="font-size: 11px; color: #999;">info@shinka.ru</div>
           </div>
         </div>
-        <div class="bottom-right">
-          <a href="https://wa.me/79277117886" aria-label="WhatsApp">🟢</a>
+        <div style="font-size: 20px;">
+          <a href="https://wa.me/79277117886" style="text-decoration: none; color: #25d366;">💬</a>
         </div>
       </div>
     </main>
   </div>
 
   <script>
-    // минимальная дата
     const dateInput = document.getElementById('date');
-    if (dateInput) {
-      const today = new Date().toISOString().split('T')[0];
-      dateInput.min = today;
-    }
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
 
-    // вкладки
     const tabs = document.querySelectorAll('.tab-button');
     const contents = document.querySelectorAll('.tab-content');
 
@@ -485,60 +185,35 @@
         tabs.forEach(b => b.classList.remove('active'));
         contents.forEach(c => c.classList.remove('active'));
         btn.classList.add('active');
-        const id = 'tab-' + btn.dataset.tab;
-        document.getElementById(id).classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
       });
     });
 
-    // форма + WhatsApp
     const form = document.getElementById('bookingForm');
-    if (form) {
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        const name = document.getElementById('name').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const service = document.getElementById('service').value;
-        const date = document.getElementById('date').value;
-        const time = document.getElementById('time').value;
-        const comment = document.getElementById('comment').value.trim();
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const service = document.getElementById('service').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const comment = document.getElementById('comment').value.trim();
 
-        if (!name || !phone || !service || !date) {
-          document.getElementById('errorMessage').style.display = 'block';
-          document.getElementById('successMessage').style.display = 'none';
-          return;
-        }
+      if (!name || !phone || !service || !date || !time) {
+        document.getElementById('errorMessage').style.display = 'block';
+        document.getElementById('successMessage').style.display = 'none';
+        return;
+      }
 
-        const booking = {
-          name, phone, service, date, time, comment,
-          timestamp: new Date().toLocaleString('ru-RU')
-        };
+      const msg = `📱 НОВАЯ ЗАПИСЬ В "ШИНКА"\n\nИмя: ${name}\nТелефон: ${phone}\nУслуга: ${service}\nДата: ${date}\nВремя: ${time}\nКомментарий: ${comment || 'нет'}`;
 
-        const msg =
-`📱 НОВАЯ ЗАПИСЬ В "ШИНКА"
+      window.open(`https://wa.me/79277117886?text=${encodeURIComponent(msg)}`, '_blank');
 
-Имя: ${booking.name}
-Телефон: ${booking.phone}
-Услуга: ${booking.service}
-Дата: ${booking.date}
-Время: ${booking.time || 'не указано'}
-Комментарий: ${booking.comment || 'нет'}
-Время заявки: ${booking.timestamp}`;
-
-        const url = `https://wa.me/79277117886?text=${encodeURIComponent(msg)}`;
-        window.open(url, '_blank');
-
-        document.getElementById('errorMessage').style.display = 'none';
-        document.getElementById('successMessage').style.display = 'block';
-        form.reset();
-      });
-    }
-
-    // PWA service worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(console.error);
-      });
-    }
+      document.getElementById('errorMessage').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'block';
+      form.reset();
+    });
   </script>
 </body>
 </html>
