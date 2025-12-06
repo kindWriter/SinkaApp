@@ -44,16 +44,6 @@
       bottom: 22px;
       pointer-events: none;
     }
-    .hero-title-shadow {
-      position: absolute;
-      left: 0;
-      top: 4px;
-      font-size: 40px;
-      font-weight: 800;
-      letter-spacing: 3px;
-      color: rgba(0,0,0,0.45);
-      filter: blur(0.5px);
-    }
     .hero-title-main {
       position: relative;
       font-size: 40px;
@@ -74,16 +64,14 @@
       display: flex;
       justify-content: center;
       gap: 10px;
-      position: relative;
       margin-bottom: 18px;
     }
     .tab-button {
-      position: relative;
-      padding: 8px 22px;
+      padding: 8px 18px;
       border-radius: 999px;
       border: 1px solid #e2e2e2;
       background: #ffffff;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: #777;
       cursor: pointer;
@@ -92,20 +80,10 @@
     }
     .tab-button.active {
       color: #ff7a00;
-      border-color: #ffcf9c;
+      border-color: #ff7a00;
       box-shadow: 0 4px 14px rgba(0,0,0,0.08);
     }
     .tab-button:active { transform: scale(0.97); }
-    .tab-underline {
-      position: absolute;
-      bottom: -3px;
-      height: 2px;
-      background: #ff7a00;
-      border-radius: 999px;
-      width: 0;
-      transform: translateX(0);
-      transition: transform 0.25s ease, width 0.25s ease;
-    }
 
     .tab-content {
       display: none;
@@ -199,6 +177,7 @@
       padding: 2px 0 0;
       background: transparent;
       color: #2b2b2b;
+      font-family: inherit;
     }
     .field input::placeholder { color: #b7b7b7; }
 
@@ -215,7 +194,7 @@
       border: none;
       background: linear-gradient(135deg,#00b35c,#03a04e);
       color: #fff;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 700;
       padding: 13px 16px;
       cursor: pointer;
@@ -269,6 +248,9 @@
       font-weight: 600;
       color: #2b9152;
     }
+    .sales-list li {
+      font-size: 13px;
+    }
 
     .success-message,
     .error-message {
@@ -299,9 +281,12 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       color: #8a8a8a;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
-    .contacts p { margin-bottom: 3px; }
+    .contacts p { 
+      margin-bottom: 4px;
+      color: #555;
+    }
     .bottom-bar {
       margin-top: 10px;
       border-radius: 14px;
@@ -324,7 +309,9 @@
       height: 22px;
       border-radius: 10px;
       background: #f3f3f3;
-      display:flex;align-items:center;justify-content:center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 12px;
     }
     .bottom-right {
@@ -338,11 +325,11 @@
       color: #25D366;
     }
 
-    @media (max-width:600px){
+    @media (max-width: 600px) {
       .hero { height: 200px; }
-      .hero-title-shadow,
       .hero-title-main { font-size: 32px; }
-      main{padding:14px;}
+      main { padding: 14px; }
+      .tab-button { font-size: 11px; padding: 7px 14px; }
     }
   </style>
 </head>
@@ -351,7 +338,6 @@
     <header class="hero">
       <div class="hero-overlay"></div>
       <div class="hero-title-wrap">
-        <span class="hero-title-shadow">ШИНКА</span>
         <span class="hero-title-main">ШИНКА</span>
       </div>
     </header>
@@ -362,7 +348,6 @@
         <button class="tab-button active" data-tab="services">УСЛУГИ</button>
         <button class="tab-button" data-tab="prices">ЦЕНЫ</button>
         <button class="tab-button" data-tab="sales">АКЦИИ</button>
-        <span class="tab-underline"></span>
       </div>
 
       <!-- Tab: services -->
@@ -389,7 +374,7 @@
             </div>
             <div class="field">
               <label for="phone">Телефон</label>
-              <input id="phone" name="phone" type="tel" placeholder="+7 9.." required pattern="[0-9+()\\s-]+">
+              <input id="phone" name="phone" type="tel" placeholder="+7 9.." required>
             </div>
           </div>
 
@@ -398,12 +383,10 @@
               <label for="date">Дата</label>
               <input id="date" name="date" type="date" required>
             </div>
-           <div class="field">
-  <label for="time">Время</label>
-  <input id="time" name="time" type="time" step="1800">
-</div>
-
-           </div>
+            <div class="field">
+              <label for="time">Время</label>
+              <input id="time" name="time" type="time" step="1800">
+            </div>
           </div>
 
           <div class="field">
@@ -421,7 +404,7 @@
 
           <div class="field">
             <label for="comment">Комментарий</label>
-            <input id="comment" name="comment" type="text" placeholder="госномер,марка авто, размер шин и т.п.">
+            <input id="comment" name="comment" type="text" placeholder="Госномер,Марка авто, размер шин и т.п.">
           </div>
 
           <div class="submit-row">
@@ -459,7 +442,7 @@
         <ul class="sales-list">
           <li>Замена шин + балансировка — скидка 10%.</li>
           <li>При заправке кондиционера — диагностика бесплатно.</li>
-          
+          <li>Третье посещение — скидка 15% на работы.</li>
         </ul>
       </div>
 
@@ -496,15 +479,6 @@
     // вкладки
     const tabs = document.querySelectorAll('.tab-button');
     const contents = document.querySelectorAll('.tab-content');
-    const underline = document.querySelector('.tab-underline');
-
-    function updateUnderline(btn) {
-      if (!btn || !underline) return;
-      const rect = btn.getBoundingClientRect();
-      const parentRect = btn.parentElement.getBoundingClientRect();
-      underline.style.width = rect.width + 'px';
-      underline.style.transform = `translateX(${rect.left - parentRect.left}px)`;
-    }
 
     tabs.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -513,13 +487,7 @@
         btn.classList.add('active');
         const id = 'tab-' + btn.dataset.tab;
         document.getElementById(id).classList.add('active');
-        updateUnderline(btn);
       });
-    });
-
-    window.addEventListener('load', () => {
-      const active = document.querySelector('.tab-button.active');
-      updateUnderline(active);
     });
 
     // форма + WhatsApp
