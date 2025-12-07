@@ -39,28 +39,34 @@
             text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red), 0 0 30px var(--neon-red);
             color: white;
         }
+        /* ШАПКА С ИЗОБРАЖЕНИЕМ */
         .app-header {
             background: linear-gradient(135deg, rgba(255, 0, 255, 0.9) 0%, rgba(0, 255, 255, 0.9) 100%);
-            padding: 20px;
-            text-align: center;
+            padding: 0;
             position: sticky;
             top: 0;
             z-index: 100;
             box-shadow: 0 0 30px var(--neon-purple), 0 4px 12px rgba(0,0,0,0.8);
             border-bottom: 3px solid var(--neon-yellow);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
-        .logo {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: white;
-            margin-bottom: 5px;
-            text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-red), 0 0 30px var(--neon-red), 0 0 40px var(--neon-red);
-            letter-spacing: 1px;
+        .header-image-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .tagline {
-            font-size: 0.95rem;
-            opacity: 0.95;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        .header-image {
+            width: 100%;
+            height: auto;
+            max-height: 100%;
+            object-fit: cover;
+            filter: brightness(0.95);
         }
         .app-nav {
             display: flex;
@@ -333,9 +339,11 @@
     </style>
 </head>
 <body>
+    <!-- ШАПКА С ИЗОБРАЖЕНИЕМ -->
     <div class="app-header">
-        <div class="logo neon-text">ШИНКА</div>
-        <div class="tagline">шиномонтаж</div>
+        <div class="header-image-container">
+            <img src="https://i.imgur.com/9ZzL1Xs.png" alt="Шинка - шиномонтаж" class="header-image">
+        </div>
     </div>
     
     <div class="app-nav">
@@ -490,6 +498,7 @@
       document.addEventListener('DOMContentLoaded', () => {
         const today = new Date().toISOString().split('T')[0];
         const dateInput = document.getElementById('bookingDate');
+        if (!dateInput) return;
         dateInput.min = today;
         dateInput.value = today;
         selectedDate = today;
@@ -512,6 +521,7 @@
 
       function generateTimeSlots() {
         const container = document.getElementById('timeSlots');
+        if (!container) return;
         container.innerHTML = '';
         if (!selectedDate) return;
 
@@ -563,6 +573,7 @@
 
       function generateBookingServices() {
         const container = document.getElementById('servicesList');
+        if (!container) return;
         container.innerHTML = '';
         SERVICES.forEach(service => {
           const el = document.createElement('div');
@@ -578,9 +589,9 @@
       }
 
       async function submitBooking() {
-        const name = document.getElementById('clientName').value.trim();
-        const phone = document.getElementById('clientPhone').value.trim();
-        const comment = document.getElementById('comment').value.trim();
+        const name = document.getElementById('clientName')?.value?.trim();
+        const phone = document.getElementById('clientPhone')?.value?.trim();
+        const comment = document.getElementById('comment')?.value?.trim();
         
         if (!name || !phone || !selectedDate || !selectedTime || !selectedService) {
           showNotification('Заполните все поля!', true);
@@ -614,6 +625,7 @@
 
       function showNotification(text, isError = false) {
         const n = document.getElementById('notification');
+        if (!n) return;
         n.innerHTML = `<h3><i class="fas fa-${isError ? 'exclamation-triangle' : 'check-circle'}"></i> ${isError ? 'Ошибка' : 'Успех!'}</h3><p>${text}</p>`;
         n.style.background = isError ? '#ff3366' : 'linear-gradient(135deg, #39ff14, #00ff80)';
         n.classList.add('show');
@@ -632,6 +644,7 @@
       async function showAdminPanel() {
         const panel = document.getElementById('adminPanel');
         const content = document.getElementById('adminContent');
+        if (!panel || !content) return;
         
         const { data, error } = await supabase.from('bookings').select('*').order('created_at', { ascending: false });
         
