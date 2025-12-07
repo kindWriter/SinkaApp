@@ -1,219 +1,683 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Шинка – Онлайн запись</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f2f3f5; display: flex; justify-content: center; padding: 10px; }
-    .app { width: 100%; max-width: 430px; background: #f5f5f5; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); overflow: hidden; }
-    .hero { position: relative; height: 220px; background: url("image.jpg") center/cover no-repeat; }
-    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.1)); }
-    .hero-title { position: absolute; left: 20px; bottom: 20px; font-size: 40px; font-weight: 800; letter-spacing: 3px; color: #fff; text-shadow: 0 4px 12px rgba(0,0,0,0.7); margin: 0; }
-    main { padding: 18px 18px 24px; }
-    .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; }
-    .tab-button { padding: 8px 18px; border-radius: 999px; border: 1px solid #ddd; background: #fff; font-size: 12px; font-weight: 600; color: #666; cursor: pointer; transition: all 0.3s; }
-    .tab-button.active { color: #ff7a00; border-color: #ff7a00; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    h2 { font-size: 18px; font-weight: 700; margin: 0 0 12px 0; }
-    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #8a8a8a; margin: 16px 0 8px 0; }
-    .services-list { background: #f7f9fc; border-radius: 12px; padding: 12px; border: 1px solid #e4e7ee; margin-bottom: 14px; }
-    .services-list strong { display: block; font-size: 13px; color: #3b4a5a; margin-bottom: 8px; }
-    .services-list ul { list-style: none; }
-    .services-list li { font-size: 13px; color: #555; padding: 4px 0; display: flex; gap: 6px; }
-    .services-list li::before { content: "✓"; color: #2ea44f; font-weight: bold; }
-    form { display: flex; flex-direction: column; gap: 12px; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .field { display: flex; flex-direction: column; }
-    label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #8a8a8a; margin-bottom: 4px; }
-    input, select, textarea { border: 1px solid #ddd; border-radius: 10px; padding: 10px; font-size: 14px; font-family: inherit; color: #333; background: #fff; }
-    input::placeholder { color: #bbb; }
-    .submit-row { display: flex; gap: 10px; margin-top: 10px; }
-    .btn-primary { flex: 1; border: none; border-radius: 999px; background: linear-gradient(135deg, #00b35c, #03a04e); color: #fff; padding: 13px 16px; font-size: 13px; font-weight: 700; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 12px rgba(0,179,92,0.3); }
-    .btn-primary:hover { box-shadow: 0 6px 16px rgba(0,179,92,0.4); transform: translateY(-1px); }
-    .qr-mini { width: 56px; height: 56px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .qr-mini img { width: 50px; height: 50px; object-fit: contain; }
-    .prices-list, .sales-list { list-style: none; }
-    .prices-list li, .sales-list li { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 10px; margin-bottom: 8px; font-size: 13px; }
-    .prices-list li { display: flex; justify-content: space-between; }
-    .prices-list li span:last-child { color: #2b9152; font-weight: 600; }
-    .success-message, .error-message { display: none; padding: 10px; border-radius: 8px; font-size: 12px; margin-top: 10px; }
-    .success-message { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
-    .error-message { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
-    .contacts { margin-top: 20px; font-size: 13px; color: #555; }
-    .contacts-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #8a8a8a; margin-bottom: 8px; }
-    .bottom-bar { margin-top: 12px; background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 10px; display: flex; justify-content: space-between; }
-    .bottom-left { display: flex; align-items: center; gap: 8px; font-size: 12px; }
-    .bottom-left-icon { width: 28px; height: 28px; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шинка – Онлайн запись</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        header {
+            background: linear-gradient(90deg, #e63946 0%, #ff6b6b 100%);
+            padding: 25px 40px;
+            text-align: center;
+            border-bottom: 5px solid #ffd166;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav a {
+            color: #ffd166;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+        
+        .nav a:hover {
+            background: rgba(255, 209, 102, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .services-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h2 {
+            color: #ffd166;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e63946;
+            font-size: 1.8rem;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 500px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .service-item {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #e63946;
+            transition: all 0.3s;
+        }
+        
+        .service-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(5px);
+        }
+        
+        .service-item i {
+            color: #ffd166;
+            margin-right: 10px;
+        }
+        
+        .form-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffd166;
+            font-weight: 600;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #e63946;
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        .datetime-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        
+        .time-slot {
+            padding: 12px 5px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            border: 2px solid transparent;
+        }
+        
+        .time-slot:hover {
+            background: rgba(230, 57, 70, 0.2);
+        }
+        
+        .time-slot.selected {
+            background: #e63946;
+            color: white;
+            border-color: #ffd166;
+            box-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
+        }
+        
+        .time-slot.booked {
+            background: rgba(255, 255, 255, 0.05);
+            color: #888;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(90deg, #e63946 0%, #ff6b6b 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(230, 57, 70, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .contacts {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .phone {
+            font-size: 1.8rem;
+            color: #ffd166;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        
+        .phone i {
+            margin-right: 10px;
+        }
+        
+        .working-hours {
+            color: #aaa;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        
+        .interval-notice {
+            background: rgba(255, 209, 102, 0.1);
+            border: 1px solid rgba(255, 209, 102, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .interval-notice i {
+            color: #ffd166;
+            margin-right: 8px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 20px 30px;
+            background: linear-gradient(90deg, #2a9d8f 0%, #4cc9f0 100%);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-width: 350px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification h3 {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .notification h3 i {
+            font-size: 1.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #aaa;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+    </style>
 </head>
 <body>
-  <div class="app">
-    <header class="hero">
-      <div class="hero-overlay"></div>
-      <h1 class="hero-title">ШИНКА</h1>
-    </header>
-
-    <main>
-      <div class="tabs">
-        <button class="tab-button active" data-tab="services">УСЛУГИ</button>
-        <button class="tab-button" data-tab="prices">ЦЕНЫ</button>
-        <button class="tab-button" data-tab="sales">АКЦИИ</button>
-      </div>
-
-      <div id="tab-services" class="tab-content active">
-        <div class="section-label">Форма записи</div>
-        <div class="services-list">
-          <strong>Доступные услуги:</strong>
-          <ul>
-            <li>Сезонная замена шин</li>
-            <li>Балансировка колёс</li>
-            <li>Ремонт шин</li>
-            <li>Диагностика кондиционера</li>
-            <li>Заправка кондиционера</li>
-            <li>Проточка тормозных дисков</li>
-          </ul>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-car"></i> ШИНКА</h1>
+            <p class="subtitle">Профессиональный шиномонтаж и автосервис</p>
+        </header>
+        
+        <nav class="nav">
+            <a href="#"><i class="fas fa-wrench"></i> УСЛУГИ</a>
+            <a href="#"><i class="fas fa-tag"></i> ЦЕНЫ</a>
+            <a href="#"><i class="fas fa-gift"></i> АКЦИИ</a>
+            <a href="#"><i class="fas fa-calendar-alt"></i> ФОРМА ЗАПИСИ</a>
+        </nav>
+        
+        <div class="main-content">
+            <div class="services-section">
+                <h2><i class="fas fa-check-circle"></i> Доступные услуги:</h2>
+                <div class="services-grid">
+                    <div class="service-item">
+                        <i class="fas fa-sync-alt"></i> Сезонная замена шин
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-balance-scale"></i> Балансировка колес
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-tools"></i> Ремонт шин
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-wind"></i> Диагностика кондиционера
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-gas-pump"></i> Заправка кондиционера
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-cogs"></i> Проточка тормозных дисков
+                    </div>
+                </div>
+                
+                <div class="interval-notice">
+                    <i class="fas fa-clock"></i>
+                    <strong>Внимание!</strong> Запись доступна с интервалом <strong>30 минут</strong>. 
+                    Выберите удобное время из доступных слотов.
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2><i class="fas fa-calendar-plus"></i> Форма записи</h2>
+                
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label for="clientName"><i class="fas fa-user"></i> ИМЯ</label>
+                        <input type="text" id="clientName" placeholder="Иван" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clientPhone"><i class="fas fa-phone"></i> ТЕЛЕФОН</label>
+                        <input type="tel" id="clientPhone" placeholder="+7 927 711-78-86" pattern="^\+7\s?[\(]?\d{3}[\)]?\s?\d{3}[\s-]?\d{2}[\s-]?\d{2}$" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-day"></i> ДАТА И ВРЕМЯ</label>
+                        <div class="datetime-container">
+                            <div>
+                                <input type="date" id="bookingDate" required>
+                            </div>
+                            <div>
+                                <input type="text" id="bookingTime" placeholder="10:42" readonly required>
+                            </div>
+                        </div>
+                        
+                        <div class="time-slots" id="timeSlots">
+                            <!-- Временные слоты будут сгенерированы здесь -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serviceType"><i class="fas fa-wrench"></i> ТИП УСЛУГИ</label>
+                        <select id="serviceType" required>
+                            <option value="">Выберите услугу</option>
+                            <option value="season_change">Сезонная замена шин</option>
+                            <option value="balancing">Балансировка колес</option>
+                            <option value="tire_repair">Ремонт шин</option>
+                            <option value="ac_diagnostic">Диагностика кондиционера</option>
+                            <option value="ac_refill">Заправка кондиционера</option>
+                            <option value="brake_turning">Проточка тормозных дисков</option>
+                            <option value="other">Другая услуга</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comment"><i class="fas fa-comment-alt"></i> КОММЕНТАРИЙ</label>
+                        <textarea id="comment" rows="4" placeholder="Госномер, Марка авто, размер шин и т.п."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-calendar-check"></i> ПОДТВЕРДИТЬ ЗАПИСЬ
+                    </button>
+                </form>
+            </div>
         </div>
-
-        <form id="bookingForm">
-          <div class="row">
-            <div class="field">
-              <label for="name">Имя</label>
-              <input id="name" type="text" placeholder="Иван" required>
+        
+        <div class="contacts">
+            <h3><i class="fas fa-address-book"></i> КОНТАКТЫ</h3>
+            <div class="phone">
+                <i class="fas fa-phone-alt"></i> +7 927 711-78-86
             </div>
-            <div class="field">
-              <label for="phone">Телефон</label>
-              <input id="phone" type="tel" placeholder="+7 9.." required>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="field">
-              <label for="date">Дата</label>
-              <input id="date" type="date" required>
-            </div>
-            <div class="field">
-              <label for="time">Время</label>
-              <input id="time" type="time" step="1800" required>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="service">Тип услуги</label>
-            <select id="service" required>
-              <option value="">Выберите услугу</option>
-              <option>Сезонная замена шин</option>
-              <option>Балансировка колёс</option>
-              <option>Ремонт шин</option>
-              <option>Диагностика кондиционера</option>
-              <option>Заправка кондиционера</option>
-              <option>Проточка тормозных дисков</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="comment">Комментарий</label>
-            <textarea id="comment" placeholder="Марка авто, размер шин и т.п." rows="2"></textarea>
-          </div>
-
-          <div class="submit-row">
-            <button type="submit" class="btn-primary">Подтвердить запись</button>
-            <div class="qr-mini">
-              <img src="qrcode.png" alt="QR">
-            </div>
-          </div>
-
-          <div class="success-message" id="successMessage">✓ Заявка отправлена в WhatsApp.</div>
-          <div class="error-message" id="errorMessage">✗ Заполните все обязательные поля.</div>
-        </form>
-      </div>
-
-      <div id="tab-prices" class="tab-content">
-        <h2>Цены</h2>
-        <ul class="prices-list">
-          <li><span>Сезонная замена шин</span><span>от 800 ₽</span></li>
-          <li><span>Балансировка колёс</span><span>от 600 ₽</span></li>
-          <li><span>Ремонт шин</span><span>от 500 ₽</span></li>
-          <li><span>Диагностика кондиционера</span><span>от 700 ₽</span></li>
-          <li><span>Заправка кондиционера</span><span>от 1500 ₽</span></li>
-          <li><span>Проточка тормозных дисков</span><span>от 2000 ₽</span></li>
-        </ul>
-      </div>
-
-      <div id="tab-sales" class="tab-content">
-        <h2>Акции</h2>
-        <ul class="sales-list">
-          <li>✓ Замена шин + балансировка — скидка 10%.</li>
-          <li>✓ При заправке кондиционера — диагностика бесплатно.</li>
-          <li>✓ Третье посещение — скидка 15% на работы.</li>
-        </ul>
-      </div>
-
-      <div class="contacts">
-        <div class="contacts-title">Контакты</div>
-        <p>+7 927 711-78-86</p>
-        <p>г. Горячий Ключ, ул. Ярославского 123/1</p>
-      </div>
-
-      <div class="bottom-bar">
-        <div class="bottom-left">
-          <div class="bottom-left-icon">@</div>
-          <div>
-            <div>telegram</div>
-            <div style="font-size: 11px; color: #999;">info@shinka.ru</div>
-          </div>
+            <p class="working-hours">
+                <i class="fas fa-clock"></i> Работаем: Пн-Пт 9:00-20:00, Сб 10:00-18:00, Вс 10:00-16:00
+            </p>
         </div>
-        <div style="font-size: 20px;">
-          <a href="https://wa.me/79277117886" style="text-decoration: none; color: #25d366;">💬</a>
-        </div>
-      </div>
-    </main>
-  </div>
+        
+        <footer>
+            <p>© 2024 Шинка – Профессиональный шиномонтаж. Все права защищены.</p>
+        </footer>
+    </div>
+    
+    <div class="notification" id="notification">
+        <h3><i class="fas fa-check-circle"></i> Запись подтверждена!</h3>
+        <p id="notificationText"></p>
+    </div>
+    
+    <script>
+        // Конфигурация системы
+        const CONFIG = {
+            workHours: { 
+                weekday: { start: 9, end: 20 },   // Пн-Пт: 9:00-20:00
+                saturday: { start: 10, end: 18 }, // Сб: 10:00-18:00
+                sunday: { start: 10, end: 16 }    // Вс: 10:00-16:00
+            },
+            interval: 30, // 30 минут интервал записи
+            breaks: [
+                { start: '13:00', end: '14:00' } // Обеденный перерыв
+            ]
+        };
 
-  <script>
-    const dateInput = document.getElementById('date');
-    const today = new Date().toISOString().split('T')[0];
-    dateInput.min = today;
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            initDatePicker();
+            generateTimeSlots();
+            loadBookedSlots();
+        });
 
-    const tabs = document.querySelectorAll('.tab-button');
-    const contents = document.querySelectorAll('.tab-content');
+        // Настройка выбора даты
+        function initDatePicker() {
+            const datePicker = document.getElementById('bookingDate');
+            const today = new Date();
+            
+            // Минимальная дата - сегодня
+            datePicker.min = today.toISOString().split('T')[0];
+            
+            // Максимальная дата - через 60 дней
+            const maxDate = new Date(today);
+            maxDate.setDate(maxDate.getDate() + 60);
+            datePicker.max = maxDate.toISOString().split('T')[0];
+            
+            // Установить завтрашнюю дату по умолчанию
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            datePicker.value = tomorrow.toISOString().split('T')[0];
+            
+            // Обновлять слоты при изменении даты
+            datePicker.addEventListener('change', generateTimeSlots);
+        }
 
-    tabs.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabs.forEach(b => b.classList.remove('active'));
-        contents.forEach(c => c.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-      });
-    });
+        // Генерация временных слотов с интервалом 30 минут
+        function generateTimeSlots() {
+            const dateStr = document.getElementById('bookingDate').value;
+            if (!dateStr) return;
+            
+            const date = new Date(dateStr);
+            const dayOfWeek = date.getDay(); // 0-воскресенье, 1-понедельник...
+            
+            // Определение рабочих часов для дня недели
+            let workHours;
+            if (dayOfWeek === 0) { // Воскресенье
+                workHours = CONFIG.workHours.sunday;
+            } else if (dayOfWeek === 6) { // Суббота
+                workHours = CONFIG.workHours.saturday;
+            } else { // Будни
+                workHours = CONFIG.workHours.weekday;
+            }
+            
+            const container = document.getElementById('timeSlots');
+            container.innerHTML = '';
+            
+            // Генерация слотов с 9:00 до 20:00 с интервалом 30 минут
+            for (let hour = workHours.start; hour < workHours.end; hour++) {
+                // Два слота в час: :00 и :30
+                ['00', '30'].forEach(minutes => {
+                    const timeString = `${hour.toString().padStart(2, '0')}:${minutes}`;
+                    
+                    // Проверка на обеденный перерыв
+                    let isBreak = false;
+                    CONFIG.breaks.forEach(breakTime => {
+                        if (timeString >= breakTime.start && timeString < breakTime.end) {
+                            isBreak = true;
+                        }
+                    });
+                    
+                    // Пропускаем слоты после 20:00
+                    if (hour === workHours.end && minutes === '30') return;
+                    
+                    const slot = document.createElement('div');
+                    slot.className = 'time-slot';
+                    slot.textContent = timeString;
+                    slot.dataset.time = timeString;
+                    
+                    if (isBreak) {
+                        slot.classList.add('booked');
+                        slot.title = 'Обеденный перерыв';
+                    } else {
+                        // Проверка, занят ли слот
+                        const isBooked = isTimeSlotBooked(dateStr, timeString);
+                        if (isBooked) {
+                            slot.classList.add('booked');
+                            slot.title = 'Время занято';
+                        } else {
+                            slot.addEventListener('click', function() {
+                                selectTimeSlot(timeString);
+                            });
+                        }
+                    }
+                    
+                    container.appendChild(slot);
+                });
+            }
+        }
 
-    const form = document.getElementById('bookingForm');
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const service = document.getElementById('service').value;
-      const date = document.getElementById('date').value;
-      const time = document.getElementById('time').value;
-      const comment = document.getElementById('comment').value.trim();
+        // Проверка, занят ли временной слот
+        function isTimeSlotBooked(date, time) {
+            const bookings = JSON.parse(localStorage.getItem('shinkaBookings') || '[]');
+            return bookings.some(booking => 
+                booking.date === date && booking.time === time
+            );
+        }
 
-      if (!name || !phone || !service || !date || !time) {
-        document.getElementById('errorMessage').style.display = 'block';
-        document.getElementById('successMessage').style.display = 'none';
-        return;
-      }
+        // Загрузка забронированных слотов
+        function loadBookedSlots() {
+            // В реальном приложении здесь будет запрос к серверу
+            const bookings = JSON.parse(localStorage.getItem('shinkaBookings') || '[]');
+            return bookings;
+        }
 
-      const msg = `📱 НОВАЯ ЗАПИСЬ В "ШИНКА"\n\nИмя: ${name}\nТелефон: ${phone}\nУслуга: ${service}\nДата: ${date}\nВремя: ${time}\nКомментарий: ${comment || 'нет'}`;
+        // Выбор временного слота
+        function selectTimeSlot(time) {
+            document.getElementById('bookingTime').value = time;
+            
+            // Снимаем выделение со всех слотов
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            
+            // Выделяем выбранный слот
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                if (slot.dataset.time === time && !slot.classList.contains('booked')) {
+                    slot.classList.add('selected');
+                }
+            });
+        }
 
-      window.open(`https://wa.me/79277117886?text=${encodeURIComponent(msg)}`, '_blank');
+        // Показать уведомление
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const textElement = document.getElementById('notificationText');
+            
+            textElement.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
 
-      document.getElementById('errorMessage').style.display = 'none';
-      document.getElementById('successMessage').style.display = 'block';
-      form.reset();
-    });
-  </script>
+        // Обработка отправки формы
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Сбор данных формы
+            const formData = {
+                name: document.getElementById('clientName').value.trim(),
+                phone: document.getElementById('clientPhone').value.trim(),
+                date: document.getElementById('bookingDate').value,
+                time: document.getElementById('bookingTime').value,
+                service: document.getElementById('serviceType').value,
+                serviceName: document.getElementById('serviceType').options[document.getElementById('serviceType').selectedIndex].text,
+                comment: document.getElementById('comment').value.trim(),
+                bookingId: 'SHINKA-' + Date.now()
+            };
+            
+            // Валидация
+            if (!formData.time) {
+                showNotification('Пожалуйста, выберите время записи');
+                return;
+            }
+            
+            if (!formData.service) {
+                showNotification('Пожалуйста, выберите услугу');
+                return;
+            }
+            
+            // Сохранение в localStorage (в реальном приложении - отправка на сервер)
+            const bookings = loadBookedSlots();
+            bookings.push(formData);
+            localStorage.setItem('shinkaBookings', JSON.stringify(bookings));
+            
+            // Показать подтверждение
+            const confirmationMessage = `Уважаемый(ая) ${formData.name}, вы записаны на ${formData.date} в ${formData.time}. Услуга: ${formData.serviceName}. Мы свяжемся с вами для подтверждения.`;
+            showNotification(confirmationMessage);
+            
+            // Очистка формы
+            document.getElementById('bookingForm').reset();
+            initDatePicker();
+            generateTimeSlots();
+            
+            // Вывод в консоль (для отладки)
+            console.log('Бронирование создано:', formData);
+            
+            // Здесь можно добавить отправку данных на сервер
+            // sendToServer(formData);
+        });
+
+        // Функция для отправки данных на сервер
+        function sendToServer(formData) {
+            fetch('https://ваш-сервер.ru/api/bookings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Успешно отправлено на сервер:', data);
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+        }
+
+        // Маска для телефона
+        document.getElementById('clientPhone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.startsWith('7') || value.startsWith('8')) {
+                value = '+7' + value.substring(1);
+            }
+            
+            if (value.length > 2) {
+                value = value.substring(0, 2) + ' ' + value.substring(2);
+            }
+            if (value.length > 6) {
+                value = value.substring(0, 6) + value.substring(6);
+            }
+            if (value.length > 10) {
+                value = value.substring(0, 10) + '-' + value.substring(10);
+            }
+            if (value.length > 13) {
+                value = value.substring(0, 13) + '-' + value.substring(13, 15);
+            }
+            
+            e.target.value = value;
+        });
+    </script>
 </body>
 </html>
