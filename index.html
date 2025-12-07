@@ -39,34 +39,47 @@
             text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red), 0 0 30px var(--neon-red);
             color: white;
         }
-        /* ШАПКА С ИЗОБРАЖЕНИЕМ */
+        /* ШАПКА С ЛОГОТИПОМ И ИЗОБРАЖЕНИЕМ */
         .app-header {
             background: linear-gradient(135deg, rgba(255, 0, 255, 0.9) 0%, rgba(0, 255, 255, 0.9) 100%);
-            padding: 0;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 100;
             box-shadow: 0 0 30px var(--neon-purple), 0 4px 12px rgba(0,0,0,0.8);
             border-bottom: 3px solid var(--neon-yellow);
-            height: 120px;
+        }
+        .header-logo {
             display: flex;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            gap: 10px;
         }
-        .header-image-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .header-image {
-            width: 100%;
-            height: auto;
-            max-height: 100%;
+        .header-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
             object-fit: cover;
-            filter: brightness(0.95);
+        }
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-red), 0 0 30px var(--neon-red);
+            letter-spacing: 1px;
+        }
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://i.imgur.com/9ZzL1Xs.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.3;
+            z-index: -1;
         }
         .app-nav {
             display: flex;
@@ -336,14 +349,36 @@
             background: rgba(255, 0, 255, 0.4);
             box-shadow: 0 0 15px var(--neon-purple);
         }
+        /* ЧЕКБОКСЫ ДЛЯ ДАТЫ И ВРЕМЕНИ */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 8px;
+        }
+        .checkbox-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--neon-yellow);
+        }
+        .checkbox-container label {
+            color: white;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
-    <!-- ШАПКА С ИЗОБРАЖЕНИЕМ -->
+    <!-- ШАПКА С ЛОГОТИПОМ И ИЗОБРАЖЕНИЕМ -->
     <div class="app-header">
-        <div class="header-image-container">
-            <img src="https://i.imgur.com/9ZzL1Xs.png" alt="Шинка - шиномонтаж" class="header-image">
+        <div class="header-logo">
+            <img src="https://i.imgur.com/9ZzL1Xs.png" alt="Логотип">
+            <div class="header-title">ШИНКА</div>
         </div>
+        <div class="header-bg"></div>
     </div>
     
     <div class="app-nav">
@@ -384,6 +419,15 @@
                 </div>
                 <div class="time-slots-container">
                     <div class="time-slots-grid" id="timeSlots"></div>
+                </div>
+                <!-- ЧЕКБОКСЫ -->
+                <div class="checkbox-container">
+                    <input type="checkbox" id="confirmDate" onchange="toggleDateCheckbox()">
+                    <label for="confirmDate">Подтвердить дату</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="confirmTime" onchange="toggleTimeCheckbox()">
+                    <label for="confirmTime">Подтвердить время</label>
                 </div>
             </div>
             
@@ -566,6 +610,8 @@
             document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
             btn.classList.add('selected');
             selectedTime = slot;
+            // Автоматически отмечаем чекбокс времени
+            document.getElementById('confirmTime').checked = true;
           };
           container.appendChild(btn);
         });
@@ -592,9 +638,15 @@
         const name = document.getElementById('clientName')?.value?.trim();
         const phone = document.getElementById('clientPhone')?.value?.trim();
         const comment = document.getElementById('comment')?.value?.trim();
+        const confirmDate = document.getElementById('confirmDate').checked;
+        const confirmTime = document.getElementById('confirmTime').checked;
         
         if (!name || !phone || !selectedDate || !selectedTime || !selectedService) {
           showNotification('Заполните все поля!', true);
+          return;
+        }
+        if (!confirmDate || !confirmTime) {
+          showNotification('Подтвердите дату и время!', true);
           return;
         }
 
@@ -616,10 +668,30 @@
           document.getElementById('clientName').value = '';
           document.getElementById('clientPhone').value = '';
           document.getElementById('comment').value = '';
+          document.getElementById('confirmDate').checked = false;
+          document.getElementById('confirmTime').checked = false;
           selectedTime = null;
           selectedService = null;
           document.querySelectorAll('.time-slot.selected, .service-card.selected').forEach(el => el.classList.remove('selected'));
           showNotification(`Запись подтверждена!\n${selectedDate} в ${selectedTime}`);
+        }
+      }
+
+      function toggleDateCheckbox() {
+        const checkbox = document.getElementById('confirmDate');
+        if (checkbox.checked) {
+          showNotification('Дата подтверждена', false);
+        } else {
+          showNotification('Дата отменена', true);
+        }
+      }
+
+      function toggleTimeCheckbox() {
+        const checkbox = document.getElementById('confirmTime');
+        if (checkbox.checked) {
+          showNotification('Время подтверждено', false);
+        } else {
+          showNotification('Время отменено', true);
         }
       }
 
