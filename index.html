@@ -7,15 +7,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <style>
-        /* СБРОС */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-        
-        /* НЕОНОВЫЕ ЦВЕТА */
         :root {
             --neon-red: #ff00ff;
             --neon-blue: #00ffff;
@@ -26,8 +23,6 @@
             --darker-bg: #050505;
             --card-bg: rgba(20, 20, 20, 0.8);
         }
-        
-        /* ОСНОВНЫЕ СТИЛИ */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--dark-bg);
@@ -41,23 +36,10 @@
                 radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 40% 40%, rgba(57, 255, 20, 0.05) 0%, transparent 30%);
         }
-        
-        /* НЕОНОВЫЕ ЭФФЕКТЫ */
         .neon-text {
             text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red), 0 0 30px var(--neon-red);
             color: white;
         }
-        
-        .neon-border {
-            border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 10px var(--neon-blue), inset 0 0 10px var(--neon-blue);
-        }
-        
-        .neon-glow {
-            box-shadow: 0 0 15px var(--neon-purple), 0 0 25px var(--neon-purple), 0 0 35px var(--neon-purple);
-        }
-        
-        /* ШАПКА */
         .app-header {
             background: linear-gradient(135deg, rgba(255, 0, 255, 0.9) 0%, rgba(0, 255, 255, 0.9) 100%);
             padding: 20px;
@@ -68,7 +50,6 @@
             box-shadow: 0 0 30px var(--neon-purple), 0 4px 12px rgba(0,0,0,0.8);
             border-bottom: 3px solid var(--neon-yellow);
         }
-        
         .logo {
             font-size: 2.2rem;
             font-weight: 900;
@@ -77,14 +58,11 @@
             text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-red), 0 0 30px var(--neon-red), 0 0 40px var(--neon-red);
             letter-spacing: 1px;
         }
-        
         .tagline {
             font-size: 0.95rem;
             opacity: 0.95;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
         }
-        
-        /* НАВИГАЦИЯ */
         .app-nav {
             display: flex;
             background: rgba(10, 10, 10, 0.95);
@@ -95,7 +73,6 @@
             z-index: 99;
             box-shadow: 0 0 15px var(--neon-blue);
         }
-        
         .nav-tab {
             flex: 1;
             padding: 16px 10px;
@@ -108,25 +85,20 @@
             font-size: 0.9rem;
             text-shadow: 0 0 5px currentColor;
         }
-        
         .nav-tab:hover {
             background: rgba(0, 255, 255, 0.1);
         }
-        
         .nav-tab.active {
             background: rgba(255, 0, 255, 0.15);
             border-bottom-color: var(--neon-yellow);
             color: var(--neon-yellow);
             text-shadow: 0 0 10px var(--neon-yellow);
         }
-        
-        /* КОНТЕНТ */
         .app-content {
             padding: 20px;
             max-width: 100%;
             margin: 0 auto;
         }
-        
         .section-card {
             background: var(--card-bg);
             backdrop-filter: blur(15px);
@@ -138,20 +110,6 @@
             position: relative;
             overflow: hidden;
         }
-        
-        .section-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--neon-red), var(--neon-blue), var(--neon-green));
-            z-index: -1;
-            border-radius: 17px;
-            opacity: 0.3;
-        }
-        
         .section-title {
             color: var(--neon-yellow);
             font-size: 1.4rem;
@@ -161,11 +119,9 @@
             gap: 12px;
             text-shadow: 0 0 10px var(--neon-yellow);
         }
-        
         .form-group {
             margin-bottom: 20px;
         }
-        
         .form-label {
             display: block;
             margin-bottom: 10px;
@@ -174,7 +130,6 @@
             font-size: 1rem;
             text-shadow: 0 0 5px var(--neon-blue);
         }
-        
         .form-input {
             width: 100%;
             padding: 16px;
@@ -186,28 +141,23 @@
             transition: all 0.3s;
             box-shadow: 0 0 10px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(0, 255, 255, 0.1);
         }
-        
         .form-input:focus {
             outline: none;
             border-color: var(--neon-yellow);
             background: rgba(0, 0, 0, 0.8);
             box-shadow: 0 0 20px var(--neon-yellow), inset 0 0 20px rgba(255, 255, 0, 0.1);
         }
-        
-        /* УСЛУГИ */
         .services-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-bottom: 20px;
         }
-        
         @media (max-width: 480px) {
             .services-container {
                 grid-template-columns: 1fr;
             }
         }
-        
         .service-card {
             background: rgba(30, 30, 30, 0.8);
             backdrop-filter: blur(10px);
@@ -219,26 +169,21 @@
             position: relative;
             overflow: hidden;
         }
-        
         .service-card.selected {
             border-left-color: var(--neon-yellow);
             box-shadow: 0 0 25px rgba(255, 255, 0, 0.4), inset 0 0 15px rgba(255, 255, 0, 0.1);
             background: rgba(57, 255, 20, 0.1);
         }
-        
         .service-name {
             font-weight: 700;
             margin-bottom: 8px;
             color: white;
         }
-        
         .service-price {
             color: var(--neon-green);
             font-weight: 700;
             font-size: 1.1rem;
         }
-        
-        /* ВРЕМЕННЫЕ СЛОТЫ */
         .time-info {
             background: rgba(57, 255, 20, 0.1);
             border: 1px solid var(--neon-green);
@@ -248,7 +193,6 @@
             text-align: center;
             box-shadow: 0 0 15px rgba(57, 255, 20, 0.3), inset 0 0 15px rgba(57, 255, 20, 0.1);
         }
-        
         .time-slots-container {
             max-height: 320px;
             overflow-y: auto;
@@ -259,19 +203,16 @@
             border: 1px solid rgba(0, 255, 255, 0.3);
             box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
         }
-        
         .time-slots-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
         }
-        
         @media (max-width: 480px) {
             .time-slots-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
-        
         .time-slot {
             padding: 16px 5px;
             text-align: center;
@@ -282,15 +223,12 @@
             font-weight: 600;
             border: 2px solid transparent;
         }
-        
         .time-slot.selected {
             background: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
             color: black;
             border-color: var(--neon-yellow);
             font-weight: 800;
         }
-        
-        /* КНОПКА */
         .submit-btn {
             width: 100%;
             padding: 22px;
@@ -309,8 +247,6 @@
             gap: 15px;
             box-shadow: 0 0 30px var(--neon-purple), 0 12px 35px rgba(255, 0, 255, 0.4);
         }
-        
-        /* КОНТАКТЫ */
         .contacts-section {
             text-align: center;
             padding: 35px 20px;
@@ -318,15 +254,12 @@
             margin-top: 40px;
             border-top: 2px solid var(--neon-red);
         }
-        
         .phone-number {
             font-size: 2rem;
             color: var(--neon-yellow);
             margin: 20px 0;
             font-weight: 800;
         }
-        
-        /* QR-КОД */
         .qr-section {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 20, 0.9) 100%);
             padding: 35px 20px;
@@ -335,12 +268,10 @@
             border-bottom: 2px solid var(--neon-blue);
             margin-top: 40px;
         }
-        
         .qr-container {
             max-width: 300px;
             margin: 0 auto;
         }
-        
         #qrcode {
             background: white;
             padding: 15px;
@@ -348,8 +279,6 @@
             box-shadow: 0 0 30px var(--neon-green), 0 10px 30px rgba(57, 255, 20, 0.3);
             border: 3px solid var(--neon-green);
         }
-        
-        /* УВЕДОМЛЕНИЕ */
         .notification {
             position: fixed;
             bottom: 20px;
@@ -365,12 +294,9 @@
             transition: transform 0.4s;
             border: 2px solid var(--neon-yellow);
         }
-        
         .notification.show {
             transform: translateY(0);
         }
-        
-        /* АДМИНКА */
         .admin-panel {
             background: rgba(10, 0, 30, 0.9);
             padding: 25px;
@@ -378,32 +304,26 @@
             border-top: 2px solid var(--neon-purple);
             display: none;
         }
-        
         .admin-title {
             color: var(--neon-purple);
             text-align: center;
             margin-bottom: 20px;
             font-size: 1.4rem;
         }
-        
         .bookings-table {
             width: 100%;
             border-collapse: collapse;
             color: white;
         }
-        
         .bookings-table th,
         .bookings-table td {
             padding: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: left;
         }
-        
         .bookings-table th {
             color: var(--neon-yellow);
         }
-        
-        /* FOOTER */
         .app-footer {
             text-align: center;
             padding: 20px;
@@ -412,7 +332,6 @@
             background: rgba(5, 5, 5, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
         .admin-btn {
             background: rgba(255, 0, 255, 0.2);
             color: var(--neon-purple);
@@ -427,7 +346,6 @@
             margin: 20px auto 0;
             transition: all 0.3s;
         }
-        
         .admin-btn:hover {
             background: rgba(255, 0, 255, 0.4);
             box-shadow: 0 0 15px var(--neon-purple);
@@ -435,13 +353,11 @@
     </style>
 </head>
 <body>
-    <!-- ШАПКА -->
     <div class="app-header">
         <div class="logo neon-text">ШИНКА</div>
         <div class="tagline">шиномонтаж</div>
     </div>
     
-    <!-- НАВИГАЦИЯ -->
     <div class="app-nav">
         <a href="#" class="nav-tab active" onclick="showTab('booking', event)">
             <i class="fas fa-calendar-alt"></i> ЗАПИСЬ
@@ -454,9 +370,7 @@
         </a>
     </div>
     
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <div class="app-content">
-        <!-- ВКЛАДКА ЗАПИСИ -->
         <div id="booking-tab" class="tab-content">
             <div class="section-card">
                 <h2 class="section-title"><i class="fas fa-user"></i> Ваши данные</h2>
@@ -502,7 +416,6 @@
             </button>
         </div>
         
-        <!-- ВКЛАДКА УСЛУГ -->
         <div id="services-tab" class="tab-content" style="display: none;">
             <div class="section-card">
                 <h2 class="section-title"><i class="fas fa-check-circle"></i> Наши услуги</h2>
@@ -535,7 +448,6 @@
             </div>
         </div>
         
-        <!-- ВКЛАДКА КОНТАКТОВ -->
         <div id="contacts-tab" class="tab-content" style="display: none;">
             <div class="contacts-section">
                 <h2 class="section-title"><i class="fas fa-address-book"></i> Контакты</h2>
@@ -560,7 +472,6 @@
         </div>
     </div>
     
-    <!-- QR-СЕКЦИЯ -->
     <div class="qr-section">
         <h2 class="qr-title"><i class="fas fa-qrcode"></i> СКАЧАТЬ ПРИЛОЖЕНИЕ</h2>
         <div class="qr-container">
@@ -571,7 +482,6 @@
         </div>
     </div>
     
-    <!-- АДМИНКА -->
     <div class="app-footer">
         <p>© 2025 Шинка – шиномонтаж. Все права защищены.</p>
         <button class="admin-btn" onclick="openAdmin()">
@@ -579,7 +489,6 @@
         </button>
     </div>
     
-    <!-- АДМИН-ПАНЕЛЬ (изначально скрыта) -->
     <div class="admin-panel" id="adminPanel">
         <h2 class="admin-title">ПАНЕЛЬ АДМИНИСТРАТОРА</h2>
         <div id="adminContent">
@@ -587,192 +496,216 @@
         </div>
     </div>
     
-    <!-- УВЕДОМЛЕНИЕ -->
     <div class="notification" id="notification"></div>
 
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // === STATE ===
-        let selectedDate = null;
-        let selectedTime = null;
-        let selectedService = null;
-        const SERVICES = [
-            { name: 'Сезонная замена шин', price: 'от 1500 руб.' },
-            { name: 'Балансировка колес', price: 'от 800 руб.' },
-            { name: 'Ремонт шин', price: 'от 500 руб.' },
-            { name: 'Диагностика кондиционера', price: 'от 1000 руб.' },
-            { name: 'Заправка кондиционера', price: 'от 2500 руб.' },
-            { name: 'Проточка тормозных дисков', price: 'от 1200 руб.' }
-        ];
+      // 🔑 Ваши Supabase-данные (уже подставлены!)
+      const supabaseUrl = 'https://ahdcfaaczxbkbqldzell.supabase.co';
+      const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoZGNmYWFjenhia2JxbGR6ZWxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMjM4NjAsImV4cCI6MjA4MDY5OTg2MH0.Ym239Oba2nmyU94qK8cf9-NtWbO876-eG2J_WtA7a-0';
+      const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-        // === INIT ===
-        document.addEventListener('DOMContentLoaded', () => {
-            const today = new Date().toISOString().split('T')[0];
-            const dateInput = document.getElementById('bookingDate');
-            dateInput.min = today;
-            dateInput.value = today;
-            selectedDate = today;
-            
-            dateInput.addEventListener('change', (e) => {
-                selectedDate = e.target.value;
-                generateTimeSlots();
-            });
-            
-            generateTimeSlots();
-            generateBookingServices();
-            generateQRCode();
+      let selectedDate = null;
+      let selectedTime = null;
+      let selectedService = null;
+      const SERVICES = [
+        { name: 'Сезонная замена шин', price: 'от 1500 руб.' },
+        { name: 'Балансировка колес', price: 'от 800 руб.' },
+        { name: 'Ремонт шин', price: 'от 500 руб.' },
+        { name: 'Диагностика кондиционера', price: 'от 1000 руб.' },
+        { name: 'Заправка кондиционера', price: 'от 2500 руб.' },
+        { name: 'Проточка тормозных дисков', price: 'от 1200 руб.' }
+      ];
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const today = new Date().toISOString().split('T')[0];
+        const dateInput = document.getElementById('bookingDate');
+        dateInput.min = today;
+        dateInput.value = today;
+        selectedDate = today;
+        dateInput.addEventListener('change', e => {
+          selectedDate = e.target.value;
+          generateTimeSlots();
         });
+        generateTimeSlots();
+        generateBookingServices();
+        generateQRCode();
+      });
 
-        // === TABS ===
-        function showTab(tabName, event) {
-            event.preventDefault();
-            document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            const tab = document.getElementById(tabName + '-tab');
-            if (tab) tab.style.display = 'block';
-            event.currentTarget.classList.add('active');
+      function showTab(tabName, event) {
+        event.preventDefault();
+        document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        const tab = document.getElementById(tabName + '-tab');
+        if (tab) tab.style.display = 'block';
+        event.currentTarget.classList.add('active');
+      }
+
+      function generateTimeSlots() {
+        const container = document.getElementById('timeSlots');
+        container.innerHTML = '';
+        if (!selectedDate) return;
+
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const selectedDateObj = new Date(selectedDate);
+        const isToday = selectedDateObj.getTime() === today.getTime();
+        const currentHours = now.getHours();
+        const currentMinutes = now.getMinutes();
+
+        const day = selectedDateObj.getDay();
+        let start, end;
+        if (day === 0) { start = 10; end = 16; }
+        else if (day === 6) { start = 10; end = 18; }
+        else { start = 9; end = 20; }
+
+        const slots = [];
+        for (let h = start; h < end; h++) {
+          slots.push(`${h.toString().padStart(2, '0')}:00`);
+          slots.push(`${h.toString().padStart(2, '0')}:30`);
         }
 
-        // === TIME SLOTS ===
-        function generateTimeSlots() {
-            const container = document.getElementById('timeSlots');
-            container.innerHTML = '';
-            const date = new Date(selectedDate);
-            const day = date.getDay();
-            
-            let start, end;
-            if (day === 0) { start = 10; end = 16; }
-            else if (day === 6) { start = 10; end = 18; }
-            else { start = 9; end = 20; }
+        const filteredSlots = isToday
+          ? slots.filter(slot => {
+              const [slotH, slotM] = slot.split(':').map(Number);
+              if (slotH < currentHours) return false;
+              if (slotH === currentHours && slotM <= currentMinutes) return false;
+              return true;
+            })
+          : slots;
 
-            for (let h = start; h < end; h++) {
-                ['00', '30'].forEach(min => {
-                    const slot = `${h.toString().padStart(2, '0')}:${min}`;
-                    const btn = document.createElement('div');
-                    btn.className = 'time-slot';
-                    btn.textContent = slot;
-                    btn.onclick = () => {
-                        document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
-                        btn.classList.add('selected');
-                        selectedTime = slot;
-                    };
-                    container.appendChild(btn);
-                });
-            }
+        if (filteredSlots.length === 0 && isToday) {
+          container.innerHTML = '<div style="color: var(--neon-yellow); text-align: center; padding: 20px;">Нет доступных слотов на сегодня</div>';
+          return;
         }
 
-        // === SERVICES IN FORM ===
-        function generateBookingServices() {
-            const container = document.getElementById('servicesList');
-            container.innerHTML = '';
-            SERVICES.forEach(service => {
-                const el = document.createElement('div');
-                el.className = 'service-card';
-                el.innerHTML = `<div class="service-name">${service.name}</div><div class="service-price">${service.price}</div>`;
-                el.onclick = () => {
-                    document.querySelectorAll('.service-card').forEach(s => s.classList.remove('selected'));
-                    el.classList.add('selected');
-                    selectedService = service;
-                };
-                container.appendChild(el);
-            });
+        filteredSlots.forEach(slot => {
+          const btn = document.createElement('div');
+          btn.className = 'time-slot';
+          btn.textContent = slot;
+          btn.onclick = () => {
+            document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedTime = slot;
+          };
+          container.appendChild(btn);
+        });
+      }
+
+      function generateBookingServices() {
+        const container = document.getElementById('servicesList');
+        container.innerHTML = '';
+        SERVICES.forEach(service => {
+          const el = document.createElement('div');
+          el.className = 'service-card';
+          el.innerHTML = `<div class="service-name">${service.name}</div><div class="service-price">${service.price}</div>`;
+          el.onclick = () => {
+            document.querySelectorAll('.service-card').forEach(s => s.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedService = service;
+          };
+          container.appendChild(el);
+        });
+      }
+
+      function generateQRCode() {
+        const url = window.location.href;
+        const qr = document.getElementById('qrcode');
+        QRCode.toCanvas(qr, url, { width: 200, height: 200 });
+        qr.onclick = () => {
+          const canvas = qr.querySelector('canvas');
+          if (canvas) {
+            const a = document.createElement('a');
+            a.href = canvas.toDataURL();
+            a.download = 'shinka-qrcode.png';
+            a.click();
+            showNotification('QR-код сохранён!');
+          }
+        };
+      }
+
+      async function submitBooking() {
+        const name = document.getElementById('clientName').value.trim();
+        const phone = document.getElementById('clientPhone').value.trim();
+        const comment = document.getElementById('comment').value.trim();
+        
+        if (!name || !phone || !selectedDate || !selectedTime || !selectedService) {
+          showNotification('Заполните все поля!', true);
+          return;
         }
 
-        // === QR CODE ===
-        function generateQRCode() {
-            const url = window.location.href;
-            const qr = document.getElementById('qrcode');
-            QRCode.toCanvas(qr, url, { width: 200, height: 200 });
-            qr.onclick = () => {
-                const canvas = qr.querySelector('canvas');
-                if (canvas) {
-                    const a = document.createElement('a');
-                    a.href = canvas.toDataURL();
-                    a.download = 'shinka-qrcode.png';
-                    a.click();
-                    showNotification('QR-код сохранён!');
-                }
-            };
+        const { error } = await supabase.from('bookings').insert([
+          {
+            name,
+            phone,
+            date: selectedDate,
+            time: selectedTime,
+            service: selectedService.name,
+            comment
+          }
+        ]);
+
+        if (error) {
+          console.error('Supabase error:', error);
+          showNotification('Ошибка отправки. Попробуйте позже.', true);
+        } else {
+          document.getElementById('clientName').value = '';
+          document.getElementById('clientPhone').value = '';
+          document.getElementById('comment').value = '';
+          selectedTime = null;
+          selectedService = null;
+          document.querySelectorAll('.time-slot.selected, .service-card.selected').forEach(el => el.classList.remove('selected'));
+          showNotification(`Запись подтверждена!\n${selectedDate} в ${selectedTime}`);
         }
+      }
 
-        // === SUBMIT ===
-        function submitBooking() {
-            const name = document.getElementById('clientName').value.trim();
-            const phone = document.getElementById('clientPhone').value.trim();
-            const comment = document.getElementById('comment').value.trim();
-            
-            if (!name || !phone || !selectedDate || !selectedTime || !selectedService) {
-                showNotification('Заполните все поля!', true);
-                return;
-            }
+      function showNotification(text, isError = false) {
+        const n = document.getElementById('notification');
+        n.innerHTML = `<h3><i class="fas fa-${isError ? 'exclamation-triangle' : 'check-circle'}"></i> ${isError ? 'Ошибка' : 'Успех!'}</h3><p>${text}</p>`;
+        n.style.background = isError ? '#ff3366' : 'linear-gradient(135deg, #39ff14, #00ff80)';
+        n.classList.add('show');
+        setTimeout(() => n.classList.remove('show'), 4000);
+      }
 
-            // Сохраняем в localStorage
-            const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
-            bookings.push({ name, phone, date: selectedDate, time: selectedTime, service: selectedService.name, comment, timestamp: Date.now() });
-            localStorage.setItem('bookings', JSON.stringify(bookings));
-
-            showNotification(`Запись подтверждена!\n${selectedDate} в ${selectedTime}`);
-            
-            // Сброс
-            document.getElementById('clientName').value = '';
-            document.getElementById('clientPhone').value = '';
-            document.getElementById('comment').value = '';
-            selectedTime = null;
-            selectedService = null;
-            document.querySelectorAll('.time-slot.selected, .service-card.selected').forEach(el => el.classList.remove('selected'));
+      function openAdmin() {
+        const password = prompt('Введите пароль администратора:');
+        if (password === 'НеонШинка') {
+          showAdminPanel();
+        } else if (password !== null) {
+          alert('Неверный пароль!');
         }
+      }
 
-        // === NOTIFICATION ===
-        function showNotification(text, isError = false) {
-            const n = document.getElementById('notification');
-            n.innerHTML = `<h3><i class="fas fa-${isError ? 'exclamation-triangle' : 'check-circle'}"></i> ${isError ? 'Ошибка' : 'Успех!'}</h3><p>${text}</p>`;
-            n.style.background = isError ? '#ff3366' : 'linear-gradient(135deg, #39ff14, #00ff80)';
-            n.classList.add('show');
-            setTimeout(() => n.classList.remove('show'), 4000);
+      async function showAdminPanel() {
+        const panel = document.getElementById('adminPanel');
+        const content = document.getElementById('adminContent');
+        
+        const { data, error } = await supabase.from('bookings').select('*').order('created_at', { ascending: false });
+        
+        if (error) {
+          content.innerHTML = `<p style="color: red;">Ошибка загрузки: ${error.message}</p>`;
+        } else if (!data || data.length === 0) {
+          content.innerHTML = '<p>Нет записей.</p>';
+        } else {
+          let html = `<table class="bookings-table">
+            <thead><tr>
+              <th>Дата</th><th>Время</th><th>Имя</th><th>Телефон</th><th>Услуга</th>
+            </tr></thead><tbody>`;
+          data.forEach(b => {
+            html += `<tr>
+              <td>${b.date}</td>
+              <td>${b.time}</td>
+              <td>${b.name}</td>
+              <td>${b.phone}</td>
+              <td>${b.service}</td>
+            </tr>`;
+          });
+          html += '</tbody></table>';
+          content.innerHTML = html;
         }
-
-        // === АДМИНКА ===
-        function openAdmin() {
-            const password = prompt('Введите пароль администратора:');
-            if (password === 'НеонШинка') {
-                showAdminPanel();
-            } else if (password !== null) {
-                alert('Неверный пароль!');
-            }
-        }
-
-        function showAdminPanel() {
-            const panel = document.getElementById('adminPanel');
-            const content = document.getElementById('adminContent');
-            
-            const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
-            if (bookings.length === 0) {
-                content.innerHTML = '<p>Нет записей.</p>';
-            } else {
-                let html = `<table class="bookings-table">
-                    <thead>
-                        <tr>
-                            <th>Дата</th>
-                            <th>Время</th>
-                            <th>Имя</th>
-                            <th>Телефон</th>
-                            <th>Услуга</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-                bookings.forEach(b => {
-                    html += `<tr>
-                        <td>${b.date}</td>
-                        <td>${b.time}</td>
-                        <td>${b.name}</td>
-                        <td>${b.phone}</td>
-                        <td>${b.service}</td>
-                    </tr>`;
-                });
-                html += '</tbody></table>';
-                content.innerHTML = html;
-            }
-            panel.style.display = 'block';
-        }
+        panel.style.display = 'block';
+      }
     </script>
 </body>
 </html>
