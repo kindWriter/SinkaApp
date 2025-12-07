@@ -2,681 +2,814 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Шинка – Онлайн запись</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sinka — Текстовый редактор</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #fff;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            height: 100vh;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
         
-        header {
-            background: linear-gradient(90deg, #e63946 0%, #ff6b6b 100%);
-            padding: 25px 40px;
+        /* Контейнер для мобильной адаптации */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Шапка */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
             text-align: center;
-            border-bottom: 5px solid #ffd166;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 10;
         }
         
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        .header h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
-        .subtitle {
-            font-size: 1.2rem;
+        .header p {
+            font-size: 0.9rem;
             opacity: 0.9;
         }
         
-        .nav {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .nav a {
-            color: #ffd166;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            padding: 8px 16px;
-            border-radius: 8px;
-        }
-        
-        .nav a:hover {
-            background: rgba(255, 209, 102, 0.1);
-            transform: translateY(-2px);
-        }
-        
+        /* Основная область текста */
         .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            padding: 40px;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
         }
         
-        @media (max-width: 900px) {
-            .main-content {
-                grid-template-columns: 1fr;
+        #editor {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            border: none;
+            resize: none;
+            font-size: 16px;
+            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: white;
+            color: #333;
+            outline: none;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        #editor:focus {
+            outline: none;
+        }
+        
+        /* Панель инструментов (мобильная версия) */
+        .mobile-toolbar {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            flex-shrink: 0;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+        }
+        
+        .tool-button {
+            background: none;
+            border: none;
+            color: #667eea;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 70px;
+        }
+        
+        .tool-button i {
+            font-size: 18px;
+        }
+        
+        .tool-button:hover {
+            background: #f0f0f0;
+        }
+        
+        .tool-button.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        /* Модальные окна для мобильных */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
             }
         }
         
-        .services-section {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
         
-        h2 {
-            color: #ffd166;
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e63946;
-            font-size: 1.8rem;
+        .modal-header h2 {
+            color: #333;
+            font-size: 1.3rem;
         }
         
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
         }
         
-        @media (max-width: 500px) {
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
+        .setting {
+            margin-bottom: 20px;
         }
         
-        .service-item {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #e63946;
-            transition: all 0.3s;
-        }
-        
-        .service-item:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateX(5px);
-        }
-        
-        .service-item i {
-            color: #ffd166;
-            margin-right: 10px;
-        }
-        
-        .form-section {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        label {
+        .setting label {
             display: block;
             margin-bottom: 8px;
-            color: #ffd166;
-            font-weight: 600;
-        }
-        
-        input, select, textarea {
-            width: 100%;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #e63946;
-            background: rgba(255, 255, 255, 0.12);
-        }
-        
-        .datetime-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .time-slots {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 10px;
-            max-height: 200px;
-            overflow-y: auto;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-        }
-        
-        .time-slot {
-            padding: 12px 5px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
+            color: #555;
             font-weight: 500;
-            border: 2px solid transparent;
         }
         
-        .time-slot:hover {
-            background: rgba(230, 57, 70, 0.2);
-        }
-        
-        .time-slot.selected {
-            background: #e63946;
-            color: white;
-            border-color: #ffd166;
-            box-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
-        }
-        
-        .time-slot.booked {
-            background: rgba(255, 255, 255, 0.05);
-            color: #888;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-        
-        .submit-btn {
+        select, input[type="range"], input[type="checkbox"] {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(90deg, #e63946 0%, #ff6b6b 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-            letter-spacing: 1px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
         }
         
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(230, 57, 70, 0.4);
-        }
-        
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-        
-        .contacts {
-            text-align: center;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.3);
-            margin-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .phone {
-            font-size: 1.8rem;
-            color: #ffd166;
-            margin: 15px 0;
-            font-weight: 600;
-        }
-        
-        .phone i {
+        input[type="checkbox"] {
+            width: auto;
             margin-right: 10px;
         }
         
-        .working-hours {
-            color: #aaa;
-            font-size: 1rem;
-            margin-top: 10px;
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
         }
         
-        .interval-notice {
-            background: rgba(255, 209, 102, 0.1);
-            border: 1px solid rgba(255, 209, 102, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-            text-align: center;
+        /* Статус бар */
+        .status-bar {
+            background: #f8f9fa;
+            padding: 8px 15px;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
         }
         
-        .interval-notice i {
-            color: #ffd166;
-            margin-right: 8px;
-        }
-        
+        /* Уведомления */
         .notification {
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 20px 30px;
-            background: linear-gradient(90deg, #2a9d8f 0%, #4cc9f0 100%);
+            background: #4CAF50;
             color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
             z-index: 1000;
-            transform: translateX(150%);
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            max-width: 350px;
+            max-width: 300px;
         }
         
-        .notification.show {
-            transform: translateX(0);
+        /* Навигация для широких экранов */
+        .desktop-nav {
+            display: none;
         }
         
-        .notification h3 {
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        /* Медиа запросы для адаптивности */
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 800px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .mobile-toolbar {
+                display: none;
+            }
+            
+            .desktop-nav {
+                display: flex;
+                background: white;
+                padding: 10px 20px;
+                border-bottom: 1px solid #e0e0e0;
+                gap: 20px;
+                flex-shrink: 0;
+            }
+            
+            .nav-button {
+                background: none;
+                border: none;
+                color: #667eea;
+                padding: 8px 15px;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            
+            .nav-button:hover {
+                background: #f0f0f0;
+            }
+            
+            #editor {
+                font-size: 18px;
+                padding: 30px;
+            }
         }
         
-        .notification h3 i {
-            font-size: 1.5rem;
+        @media (max-width: 480px) {
+            .header {
+                padding: 12px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .tool-button {
+                padding: 8px 10px;
+                min-width: 60px;
+                font-size: 12px;
+            }
+            
+            .tool-button i {
+                font-size: 16px;
+            }
+            
+            #editor {
+                padding: 15px;
+                font-size: 15px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+                margin: 10px;
+            }
         }
         
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: #aaa;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 40px;
+        /* Поддержка темной темы */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1a1a1a;
+            }
+            
+            .app-container {
+                background: #2d2d2d;
+                color: #fff;
+            }
+            
+            #editor {
+                background: #2d2d2d;
+                color: #fff;
+            }
+            
+            .mobile-toolbar {
+                background: #2d2d2d;
+                border-color: #404040;
+            }
+            
+            .tool-button {
+                color: #8a9eff;
+            }
+            
+            .modal-content {
+                background: #2d2d2d;
+                color: #fff;
+            }
+            
+            .modal-header h2 {
+                color: #fff;
+            }
+            
+            .setting label {
+                color: #ccc;
+            }
+            
+            select, input[type="range"] {
+                background: #404040;
+                color: #fff;
+                border-color: #555;
+            }
+            
+            .status-bar {
+                background: #252525;
+                color: #aaa;
+                border-color: #404040;
+            }
+        }
+        
+        /* iOS Safari специфичные стили */
+        @supports (-webkit-touch-callout: none) {
+            #editor {
+                font-size: 17px; /* Стандартный размер для iOS */
+            }
+            
+            .tool-button {
+                padding: 12px 15px; /* Больше для касания */
+            }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-car"></i> ШИНКА</h1>
-            <p class="subtitle">Профессиональный шиномонтаж и автосервис</p>
-        </header>
+    <div class="app-container">
+        <!-- Шапка -->
+        <div class="header">
+            <h1>Sinka</h1>
+            <p>Текстовый редактор с автосохранением</p>
+        </div>
         
-        <nav class="nav">
-            <a href="#"><i class="fas fa-wrench"></i> УСЛУГИ</a>
-            <a href="#"><i class="fas fa-tag"></i> ЦЕНЫ</a>
-            <a href="#"><i class="fas fa-gift"></i> АКЦИИ</a>
-            <a href="#"><i class="fas fa-calendar-alt"></i> ФОРМА ЗАПИСИ</a>
-        </nav>
+        <!-- Десктопная навигация -->
+        <div class="desktop-nav">
+            <button class="nav-button" onclick="showSettings()">
+                <i class="fas fa-cog"></i> Настройки
+            </button>
+            <button class="nav-button" onclick="showStats()">
+                <i class="fas fa-chart-bar"></i> Статистика
+            </button>
+            <button class="nav-button" onclick="exportText()">
+                <i class="fas fa-download"></i> Экспорт
+            </button>
+            <button class="nav-button" onclick="clearText()">
+                <i class="fas fa-trash"></i> Очистить
+            </button>
+        </div>
         
+        <!-- Основное содержимое -->
         <div class="main-content">
-            <div class="services-section">
-                <h2><i class="fas fa-check-circle"></i> Доступные услуги:</h2>
-                <div class="services-grid">
-                    <div class="service-item">
-                        <i class="fas fa-sync-alt"></i> Сезонная замена шин
-                    </div>
-                    <div class="service-item">
-                        <i class="fas fa-balance-scale"></i> Балансировка колес
-                    </div>
-                    <div class="service-item">
-                        <i class="fas fa-tools"></i> Ремонт шин
-                    </div>
-                    <div class="service-item">
-                        <i class="fas fa-wind"></i> Диагностика кондиционера
-                    </div>
-                    <div class="service-item">
-                        <i class="fas fa-gas-pump"></i> Заправка кондиционера
-                    </div>
-                    <div class="service-item">
-                        <i class="fas fa-cogs"></i> Проточка тормозных дисков
-                    </div>
-                </div>
-                
-                <div class="interval-notice">
-                    <i class="fas fa-clock"></i>
-                    <strong>Внимание!</strong> Запись доступна с интервалом <strong>30 минут</strong>. 
-                    Выберите удобное время из доступных слотов.
-                </div>
-            </div>
-            
-            <div class="form-section">
-                <h2><i class="fas fa-calendar-plus"></i> Форма записи</h2>
-                
-                <form id="bookingForm">
-                    <div class="form-group">
-                        <label for="clientName"><i class="fas fa-user"></i> ИМЯ</label>
-                        <input type="text" id="clientName" placeholder="Иван" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="clientPhone"><i class="fas fa-phone"></i> ТЕЛЕФОН</label>
-                        <input type="tel" id="clientPhone" placeholder="+7 927 711-78-86" pattern="^\+7\s?[\(]?\d{3}[\)]?\s?\d{3}[\s-]?\d{2}[\s-]?\d{2}$" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label><i class="fas fa-calendar-day"></i> ДАТА И ВРЕМЯ</label>
-                        <div class="datetime-container">
-                            <div>
-                                <input type="date" id="bookingDate" required>
-                            </div>
-                            <div>
-                                <input type="text" id="bookingTime" placeholder="10:42" readonly required>
-                            </div>
-                        </div>
-                        
-                        <div class="time-slots" id="timeSlots">
-                            <!-- Временные слоты будут сгенерированы здесь -->
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="serviceType"><i class="fas fa-wrench"></i> ТИП УСЛУГИ</label>
-                        <select id="serviceType" required>
-                            <option value="">Выберите услугу</option>
-                            <option value="season_change">Сезонная замена шин</option>
-                            <option value="balancing">Балансировка колес</option>
-                            <option value="tire_repair">Ремонт шин</option>
-                            <option value="ac_diagnostic">Диагностика кондиционера</option>
-                            <option value="ac_refill">Заправка кондиционера</option>
-                            <option value="brake_turning">Проточка тормозных дисков</option>
-                            <option value="other">Другая услуга</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="comment"><i class="fas fa-comment-alt"></i> КОММЕНТАРИЙ</label>
-                        <textarea id="comment" rows="4" placeholder="Госномер, Марка авто, размер шин и т.п."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-calendar-check"></i> ПОДТВЕРДИТЬ ЗАПИСЬ
-                    </button>
-                </form>
-            </div>
+            <textarea id="editor" placeholder="Начните писать здесь... Ваш текст автоматически сохраняется каждые 30 минут"></textarea>
         </div>
         
-        <div class="contacts">
-            <h3><i class="fas fa-address-book"></i> КОНТАКТЫ</h3>
-            <div class="phone">
-                <i class="fas fa-phone-alt"></i> +7 927 711-78-86
-            </div>
-            <p class="working-hours">
-                <i class="fas fa-clock"></i> Работаем: Пн-Пт 9:00-20:00, Сб 10:00-18:00, Вс 10:00-16:00
-            </p>
+        <!-- Мобильная панель инструментов -->
+        <div class="mobile-toolbar">
+            <button class="tool-button" onclick="showSettings()">
+                <i class="fas fa-cog"></i>
+                <span>Настройки</span>
+            </button>
+            <button class="tool-button" onclick="showStats()">
+                <i class="fas fa-chart-bar"></i>
+                <span>Статистика</span>
+            </button>
+            <button class="tool-button" onclick="exportText()">
+                <i class="fas fa-download"></i>
+                <span>Экспорт</span>
+            </button>
+            <button class="tool-button" onclick="clearText()">
+                <i class="fas fa-trash"></i>
+                <span>Очистить</span>
+            </button>
         </div>
         
-        <footer>
-            <p>© 2024 Шинка – Профессиональный шиномонтаж. Все права защищены.</p>
-        </footer>
+        <!-- Статус бар -->
+        <div class="status-bar">
+            <span id="charCount">0 символов</span>
+            <span id="saveStatus">Автосохранение каждые 30 минут</span>
+            <span id="lastSave">Сохранено только что</span>
+        </div>
     </div>
     
-    <div class="notification" id="notification">
-        <h3><i class="fas fa-check-circle"></i> Запись подтверждена!</h3>
-        <p id="notificationText"></p>
+    <!-- Модальное окно настроек -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-cog"></i> Настройки</h2>
+                <button class="close-modal" onclick="hideSettings()">&times;</button>
+            </div>
+            
+            <div class="setting">
+                <label>Тема:</label>
+                <select id="themeSelect">
+                    <option value="auto">Авто (системная)</option>
+                    <option value="light">Светлая</option>
+                    <option value="dark">Тёмная</option>
+                </select>
+            </div>
+            
+            <div class="setting">
+                <label>Интервал автосохранения:</label>
+                <select id="intervalSelect">
+                    <option value="1">1 минута</option>
+                    <option value="5">5 минут</option>
+                    <option value="15">15 минут</option>
+                    <option value="30" selected>30 минут</option>
+                    <option value="60">1 час</option>
+                </select>
+            </div>
+            
+            <div class="setting">
+                <label>Размер шрифта:</label>
+                <input type="range" id="fontSizeSlider" min="14" max="24" value="16">
+                <span id="fontSizeValue">16px</span>
+            </div>
+            
+            <div class="setting">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="autoSaveCheckbox" checked>
+                    Автосохранение
+                </label>
+            </div>
+            
+            <button onclick="saveSettings()" style="
+                width: 100%;
+                padding: 15px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border: none;
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                margin-top: 20px;
+            ">
+                Сохранить настройки
+            </button>
+        </div>
     </div>
+    
+    <!-- Модальное окно статистики -->
+    <div class="modal-overlay" id="statsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-chart-bar"></i> Статистика</h2>
+                <button class="close-modal" onclick="hideStats()">&times;</button>
+            </div>
+            
+            <div id="statsContent">
+                <p>Загружается статистика...</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Уведомление -->
+    <div class="notification" id="notification"></div>
     
     <script>
-        // Конфигурация системы
-        const CONFIG = {
-            workHours: { 
-                weekday: { start: 9, end: 20 },   // Пн-Пт: 9:00-20:00
-                saturday: { start: 10, end: 18 }, // Сб: 10:00-18:00
-                sunday: { start: 10, end: 16 }    // Вс: 10:00-16:00
-            },
-            interval: 30, // 30 минут интервал записи
-            breaks: [
-                { start: '13:00', end: '14:00' } // Обеденный перерыв
-            ]
-        };
-
-        // Инициализация при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            initDatePicker();
-            generateTimeSlots();
-            loadBookedSlots();
-        });
-
-        // Настройка выбора даты
-        function initDatePicker() {
-            const datePicker = document.getElementById('bookingDate');
-            const today = new Date();
-            
-            // Минимальная дата - сегодня
-            datePicker.min = today.toISOString().split('T')[0];
-            
-            // Максимальная дата - через 60 дней
-            const maxDate = new Date(today);
-            maxDate.setDate(maxDate.getDate() + 60);
-            datePicker.max = maxDate.toISOString().split('T')[0];
-            
-            // Установить завтрашнюю дату по умолчанию
-            const tomorrow = new Date(today);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            datePicker.value = tomorrow.toISOString().split('T')[0];
-            
-            // Обновлять слоты при изменении даты
-            datePicker.addEventListener('change', generateTimeSlots);
-        }
-
-        // Генерация временных слотов с интервалом 30 минут
-        function generateTimeSlots() {
-            const dateStr = document.getElementById('bookingDate').value;
-            if (!dateStr) return;
-            
-            const date = new Date(dateStr);
-            const dayOfWeek = date.getDay(); // 0-воскресенье, 1-понедельник...
-            
-            // Определение рабочих часов для дня недели
-            let workHours;
-            if (dayOfWeek === 0) { // Воскресенье
-                workHours = CONFIG.workHours.sunday;
-            } else if (dayOfWeek === 6) { // Суббота
-                workHours = CONFIG.workHours.saturday;
-            } else { // Будни
-                workHours = CONFIG.workHours.weekday;
+        // Инициализация приложения
+        class SinkaApp {
+            constructor() {
+                this.editor = document.getElementById('editor');
+                this.settings = this.loadSettings();
+                this.lastSaveTime = null;
+                this.autoSaveTimer = null;
+                this.init();
             }
             
-            const container = document.getElementById('timeSlots');
-            container.innerHTML = '';
+            // Загрузка настроек
+            loadSettings() {
+                const defaultSettings = {
+                    theme: 'auto',
+                    interval: 30 * 60 * 1000, // 30 минут по умолчанию
+                    fontSize: 16,
+                    autoSave: true
+                };
+                
+                const saved = localStorage.getItem('sinka-settings');
+                return saved ? { ...defaultSettings, ...JSON.parse(saved) } : defaultSettings;
+            }
             
-            // Генерация слотов с 9:00 до 20:00 с интервалом 30 минут
-            for (let hour = workHours.start; hour < workHours.end; hour++) {
-                // Два слота в час: :00 и :30
-                ['00', '30'].forEach(minutes => {
-                    const timeString = `${hour.toString().padStart(2, '0')}:${minutes}`;
+            // Сохранение настроек
+            saveSettings() {
+                localStorage.setItem('sinka-settings', JSON.stringify(this.settings));
+                this.applySettings();
+                this.showNotification('Настройки сохранены');
+            }
+            
+            // Применение настроек
+            applySettings() {
+                // Применяем тему
+                if (this.settings.theme === 'dark' || 
+                    (this.settings.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+                
+                // Применяем размер шрифта
+                this.editor.style.fontSize = this.settings.fontSize + 'px';
+                
+                // Настраиваем автосохранение
+                this.setupAutoSave();
+                
+                // Обновляем UI
+                this.updateUI();
+            }
+            
+            // Настройка автосохранения
+            setupAutoSave() {
+                if (this.autoSaveTimer) {
+                    clearInterval(this.autoSaveTimer);
+                }
+                
+                if (this.settings.autoSave) {
+                    this.autoSaveTimer = setInterval(() => {
+                        this.saveToStorage();
+                        this.showNotification('Автосохранение выполнено');
+                    }, this.settings.interval);
+                }
+            }
+            
+            // Сохранение текста
+            saveToStorage() {
+                const text = this.editor.value;
+                localStorage.setItem('sinka-text', text);
+                this.lastSaveTime = new Date();
+                this.updateLastSave();
+            }
+            
+            // Загрузка текста
+            loadText() {
+                const savedText = localStorage.getItem('sinka-text');
+                if (savedText) {
+                    this.editor.value = savedText;
+                }
+                this.updateCharCount();
+            }
+            
+            // Обновление счетчика символов
+            updateCharCount() {
+                const count = this.editor.value.length;
+                const words = this.editor.value.trim() ? this.editor.value.trim().split(/\s+/).length : 0;
+                document.getElementById('charCount').textContent = 
+                    `${count} символов, ${words} слов`;
+            }
+            
+            // Обновление времени последнего сохранения
+            updateLastSave() {
+                if (this.lastSaveTime) {
+                    const now = new Date();
+                    const diff = Math.floor((now - this.lastSaveTime) / 1000);
                     
-                    // Проверка на обеденный перерыв
-                    let isBreak = false;
-                    CONFIG.breaks.forEach(breakTime => {
-                        if (timeString >= breakTime.start && timeString < breakTime.end) {
-                            isBreak = true;
-                        }
-                    });
-                    
-                    // Пропускаем слоты после 20:00
-                    if (hour === workHours.end && minutes === '30') return;
-                    
-                    const slot = document.createElement('div');
-                    slot.className = 'time-slot';
-                    slot.textContent = timeString;
-                    slot.dataset.time = timeString;
-                    
-                    if (isBreak) {
-                        slot.classList.add('booked');
-                        slot.title = 'Обеденный перерыв';
+                    let text = '';
+                    if (diff < 60) {
+                        text = 'Сохранено только что';
+                    } else if (diff < 3600) {
+                        text = `Сохранено ${Math.floor(diff / 60)} мин назад`;
                     } else {
-                        // Проверка, занят ли слот
-                        const isBooked = isTimeSlotBooked(dateStr, timeString);
-                        if (isBooked) {
-                            slot.classList.add('booked');
-                            slot.title = 'Время занято';
-                        } else {
-                            slot.addEventListener('click', function() {
-                                selectTimeSlot(timeString);
-                            });
-                        }
+                        text = `Сохранено ${Math.floor(diff / 3600)} ч назад`;
                     }
                     
-                    container.appendChild(slot);
+                    document.getElementById('lastSave').textContent = text;
+                }
+            }
+            
+            // Показать уведомление
+            showNotification(message) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.style.display = 'block';
+                
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            }
+            
+            // Обновление UI
+            updateUI() {
+                // Обновляем селекторы настроек
+                document.getElementById('themeSelect').value = this.settings.theme;
+                document.getElementById('intervalSelect').value = this.settings.interval / 60000;
+                document.getElementById('fontSizeSlider').value = this.settings.fontSize;
+                document.getElementById('fontSizeValue').textContent = this.settings.fontSize + 'px';
+                document.getElementById('autoSaveCheckbox').checked = this.settings.autoSave;
+                
+                // Обновляем статус бар
+                const intervalMinutes = this.settings.interval / 60000;
+                document.getElementById('saveStatus').textContent = 
+                    `Автосохранение каждые ${intervalMinutes} минут`;
+            }
+            
+            // Экспорт текста
+            exportText() {
+                const text = this.editor.value;
+                const blob = new Blob([text], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `sinka-${new Date().toISOString().split('T')[0]}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                this.showNotification('Текст экспортирован');
+            }
+            
+            // Очистка текста
+            clearText() {
+                if (confirm('Очистить весь текст? Это действие нельзя отменить.')) {
+                    this.editor.value = '';
+                    this.saveToStorage();
+                    this.updateCharCount();
+                    this.showNotification('Текст очищен');
+                }
+            }
+            
+            // Показать статистику
+            showStats() {
+                const text = this.editor.value;
+                const chars = text.length;
+                const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+                const lines = text.split('\n').length;
+                const paragraphs = text.split('\n\n').filter(p => p.trim()).length;
+                
+                const statsHTML = `
+                    <div style="margin-bottom: 15px;">
+                        <strong>Символы:</strong> ${chars.toLocaleString()}
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <strong>Слова:</strong> ${words.toLocaleString()}
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <strong>Строки:</strong> ${lines.toLocaleString()}
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <strong>Абзацы:</strong> ${paragraphs.toLocaleString()}
+                    </div>
+                    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+                        <small>Статистика обновляется в реальном времени</small>
+                    </div>
+                `;
+                
+                document.getElementById('statsContent').innerHTML = statsHTML;
+                document.getElementById('statsModal').style.display = 'flex';
+            }
+            
+            // Инициализация приложения
+            init() {
+                // Загружаем текст
+                this.loadText();
+                
+                // Применяем настройки
+                this.applySettings();
+                
+                // События редактора
+                this.editor.addEventListener('input', () => {
+                    this.updateCharCount();
+                    this.saveToStorage();
                 });
+                
+                // События настроек
+                document.getElementById('fontSizeSlider').addEventListener('input', (e) => {
+                    document.getElementById('fontSizeValue').textContent = e.target.value + 'px';
+                });
+                
+                // Обновляем время сохранения каждую минуту
+                setInterval(() => this.updateLastSave(), 60000);
+                
+                // Показываем приветственное сообщение
+                setTimeout(() => {
+                    if (!localStorage.getItem('sinka-welcome-shown')) {
+                        this.showNotification('Добро пожаловать в Sinka! Текст сохраняется автоматически каждые 30 минут');
+                        localStorage.setItem('sinka-welcome-shown', 'true');
+                    }
+                }, 1000);
             }
         }
-
-        // Проверка, занят ли временной слот
-        function isTimeSlotBooked(date, time) {
-            const bookings = JSON.parse(localStorage.getItem('shinkaBookings') || '[]');
-            return bookings.some(booking => 
-                booking.date === date && booking.time === time
-            );
+        
+        // Глобальные функции для кнопок
+        function showSettings() {
+            document.getElementById('settingsModal').style.display = 'flex';
         }
-
-        // Загрузка забронированных слотов
-        function loadBookedSlots() {
-            // В реальном приложении здесь будет запрос к серверу
-            const bookings = JSON.parse(localStorage.getItem('shinkaBookings') || '[]');
-            return bookings;
+        
+        function hideSettings() {
+            document.getElementById('settingsModal').style.display = 'none';
         }
-
-        // Выбор временного слота
-        function selectTimeSlot(time) {
-            document.getElementById('bookingTime').value = time;
+        
+        function showStats() {
+            window.sinka.showStats();
+        }
+        
+        function hideStats() {
+            document.getElementById('statsModal').style.display = 'none';
+        }
+        
+        function exportText() {
+            window.sinka.exportText();
+        }
+        
+        function clearText() {
+            window.sinka.clearText();
+        }
+        
+        function saveSettings() {
+            window.sinka.settings.theme = document.getElementById('themeSelect').value;
+            window.sinka.settings.interval = document.getElementById('intervalSelect').value * 60 * 1000;
+            window.sinka.settings.fontSize = parseInt(document.getElementById('fontSizeSlider').value);
+            window.sinka.settings.autoSave = document.getElementById('autoSaveCheckbox').checked;
             
-            // Снимаем выделение со всех слотов
-            document.querySelectorAll('.time-slot').forEach(slot => {
-                slot.classList.remove('selected');
-            });
-            
-            // Выделяем выбранный слот
-            document.querySelectorAll('.time-slot').forEach(slot => {
-                if (slot.dataset.time === time && !slot.classList.contains('booked')) {
-                    slot.classList.add('selected');
+            window.sinka.saveSettings();
+            hideSettings();
+        }
+        
+        // Запуск приложения
+        document.addEventListener('DOMContentLoaded', () => {
+            window.sinka = new SinkaApp();
+        });
+        
+        // Закрытие модальных окон при клике на оверлей
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.style.display = 'none';
                 }
             });
-        }
-
-        // Показать уведомление
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            const textElement = document.getElementById('notificationText');
-            
-            textElement.textContent = message;
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 5000);
-        }
-
-        // Обработка отправки формы
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Сбор данных формы
-            const formData = {
-                name: document.getElementById('clientName').value.trim(),
-                phone: document.getElementById('clientPhone').value.trim(),
-                date: document.getElementById('bookingDate').value,
-                time: document.getElementById('bookingTime').value,
-                service: document.getElementById('serviceType').value,
-                serviceName: document.getElementById('serviceType').options[document.getElementById('serviceType').selectedIndex].text,
-                comment: document.getElementById('comment').value.trim(),
-                bookingId: 'SHINKA-' + Date.now()
-            };
-            
-            // Валидация
-            if (!formData.time) {
-                showNotification('Пожалуйста, выберите время записи');
-                return;
-            }
-            
-            if (!formData.service) {
-                showNotification('Пожалуйста, выберите услугу');
-                return;
-            }
-            
-            // Сохранение в localStorage (в реальном приложении - отправка на сервер)
-            const bookings = loadBookedSlots();
-            bookings.push(formData);
-            localStorage.setItem('shinkaBookings', JSON.stringify(bookings));
-            
-            // Показать подтверждение
-            const confirmationMessage = `Уважаемый(ая) ${formData.name}, вы записаны на ${formData.date} в ${formData.time}. Услуга: ${formData.serviceName}. Мы свяжемся с вами для подтверждения.`;
-            showNotification(confirmationMessage);
-            
-            // Очистка формы
-            document.getElementById('bookingForm').reset();
-            initDatePicker();
-            generateTimeSlots();
-            
-            // Вывод в консоль (для отладки)
-            console.log('Бронирование создано:', formData);
-            
-            // Здесь можно добавить отправку данных на сервер
-            // sendToServer(formData);
         });
-
-        // Функция для отправки данных на сервер
-        function sendToServer(formData) {
-            fetch('https://ваш-сервер.ru/api/bookings', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Успешно отправлено на сервер:', data);
-            })
-            .catch(error => {
-                console.error('Ошибка:', error);
-            });
-        }
-
-        // Маска для телефона
-        document.getElementById('clientPhone').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.startsWith('7') || value.startsWith('8')) {
-                value = '+7' + value.substring(1);
+        
+        // Обработка клавиш
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key.toLowerCase()) {
+                    case 's':
+                        e.preventDefault();
+                        window.sinka.saveToStorage();
+                        window.sinka.showNotification('Сохранено вручную');
+                        break;
+                    case 'e':
+                        e.preventDefault();
+                        exportText();
+                        break;
+                    case 'l':
+                        e.preventDefault();
+                        clearText();
+                        break;
+                }
             }
-            
-            if (value.length > 2) {
-                value = value.substring(0, 2) + ' ' + value.substring(2);
-            }
-            if (value.length > 6) {
-                value = value.substring(0, 6) + value.substring(6);
-            }
-            if (value.length > 10) {
-                value = value.substring(0, 10) + '-' + value.substring(10);
-            }
-            if (value.length > 13) {
-                value = value.substring(0, 13) + '-' + value.substring(13, 15);
-            }
-            
-            e.target.value = value;
         });
     </script>
 </body>
