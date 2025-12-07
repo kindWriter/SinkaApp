@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Шинка - Онлайн запись</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -260,25 +259,6 @@
             margin: 20px 0;
             font-weight: 800;
         }
-        .qr-section {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 20, 0.9) 100%);
-            padding: 35px 20px;
-            text-align: center;
-            border-top: 2px solid var(--neon-green);
-            border-bottom: 2px solid var(--neon-blue);
-            margin-top: 40px;
-        }
-        .qr-container {
-            max-width: 300px;
-            margin: 0 auto;
-        }
-        #qrcode {
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 0 30px var(--neon-green), 0 10px 30px rgba(57, 255, 20, 0.3);
-            border: 3px solid var(--neon-green);
-        }
         .notification {
             position: fixed;
             bottom: 20px;
@@ -472,16 +452,6 @@
         </div>
     </div>
     
-    <div class="qr-section">
-        <h2 class="qr-title"><i class="fas fa-qrcode"></i> СКАЧАТЬ ПРИЛОЖЕНИЕ</h2>
-        <div class="qr-container">
-            <div id="qrcode"></div>
-            <p class="qr-text" style="color: var(--neon-blue); margin-top: 15px;">
-                Отсканируйте QR-код, чтобы сохранить ссылку
-            </p>
-        </div>
-    </div>
-    
     <div class="app-footer">
         <p>© 2025 Шинка – шиномонтаж. Все права защищены.</p>
         <button class="admin-btn" onclick="openAdmin()">
@@ -501,7 +471,6 @@
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-      // 🔑 Ваши Supabase-данные (уже подставлены!)
       const supabaseUrl = 'https://ahdcfaaczxbkbqldzell.supabase.co';
       const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoZGNmYWFjenhia2JxbGR6ZWxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMjM4NjAsImV4cCI6MjA4MDY5OTg2MH0.Ym239Oba2nmyU94qK8cf9-NtWbO876-eG2J_WtA7a-0';
       const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
@@ -530,7 +499,6 @@
         });
         generateTimeSlots();
         generateBookingServices();
-        generateQRCode();
       });
 
       function showTab(tabName, event) {
@@ -607,22 +575,6 @@
           };
           container.appendChild(el);
         });
-      }
-
-      function generateQRCode() {
-        const url = window.location.href;
-        const qr = document.getElementById('qrcode');
-        QRCode.toCanvas(qr, url, { width: 200, height: 200 });
-        qr.onclick = () => {
-          const canvas = qr.querySelector('canvas');
-          if (canvas) {
-            const a = document.createElement('a');
-            a.href = canvas.toDataURL();
-            a.download = 'shinka-qrcode.png';
-            a.click();
-            showNotification('QR-код сохранён!');
-          }
-        };
       }
 
       async function submitBooking() {
