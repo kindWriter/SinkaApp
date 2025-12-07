@@ -6,6 +6,11 @@
     <title>Шинка - Онлайн запись</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+    <!-- Firebase SDK (опционально для backend) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
     <style>
         /* СБРОС */
         * {
@@ -619,18 +624,18 @@
     <!-- ШАПКА -->
     <div class="app-header">
         <div class="logo neon-text">ШИНКА</div>
-        <div class="tagline"шиномонтаж/div>
+        <div class="tagline">шиномонтаж</div>
     </div>
     
     <!-- НАВИГАЦИЯ -->
     <div class="app-nav">
-        <a href="#" class="nav-tab active" onclick="showTab('booking')">
+        <a href="#" class="nav-tab active" onclick="showTab('booking', event)">
             <i class="fas fa-calendar-alt"></i> ЗАПИСЬ
         </a>
-        <a href="#" class="nav-tab" onclick="showTab('services')">
+        <a href="#" class="nav-tab" onclick="showTab('services', event)">
             <i class="fas fa-wrench"></i> УСЛУГИ
         </a>
-        <a href="#" class="nav-tab" onclick="showTab('contacts')">
+        <a href="#" class="nav-tab" onclick="showTab('contacts', event)">
             <i class="fas fa-phone"></i> КОНТАКТЫ
         </a>
     </div>
@@ -814,21 +819,16 @@
     <!-- FOOTER -->
     <div class="app-footer">
         <p>© 2025 Шинка – шиномонтаж. Все права защищены.</p>
-        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">
-            
-        </p>
     </div>
-    
+
     <script>
         // КОНФИГУРАЦИЯ
         const CONFIG = {
-            // Рабочие часы (с 30-минутными интервалами)
             workHours: { 
-                weekday: { start: 9, end: 20 },   // Пн-Пт: 9:00-20:00
-                saturday: { start: 10, end: 18 },  // Сб: 10:00-18:00
-                sunday: { start: 10, end: 16 }     // Вс: 10:00-16:00
+                weekday: { start: 9, end: 20 },
+                saturday: { start: 10, end: 18 },
+                sunday: { start: 10, end: 16 }
             },
-            // Услуги
             services: [
                 { id: 1, name: 'Сезонная замена шин', price: 'от 1500 руб.' },
                 { id: 2, name: 'Балансировка колес', price: 'от 800 руб.' },
@@ -849,44 +849,108 @@
             initDatePicker();
             generateTimeSlots();
             generateServices();
-            loadBookings();
             generateQRCode();
         });
+
+        // ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК
+        function showTab(tabName, event) {
+            event.preventDefault();
+            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            event.currentTarget.classList.add('active');
+        }
+
+        // ИНИЦИАЛИЗАЦИЯ ВЫБОРА ДАТЫ
+        function initDatePicker() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('bookingDate').min = today;
+            document.getElementById('bookingDate').value = today;
+            document.getElementById('bookingDate').addEventListener('change', function(e) {
+                selectedDate = e.target.value;
+                generateTimeSlots();
+            });
+            selectedDate = today;
+        }
+
+        // ГЕНЕРАЦИЯ ВРЕМЕННЫХ СЛОТОВ (30-МИНУТНЫХ)
+        function generateTimeSlots() {
+            const container = document.getElementById('timeSlots');
+            container.innerHTML = '';
+            if (!selectedDate) return;
+
+            const date = new Date(selectedDate);
+            const day = date.getDay(); // 0 = воскресенье
+
+            let hoursConfig;
+            if (day === 0) {
+                hoursConfig = CONFIG.workHours.sunday;
+            } else if (day === 6) {
+                hoursConfig = CONFIG.workHours.saturday;
+            } else {
+                hoursConfig = CONFIG.workHours.weekday;
+            }
+
+            const slots = [];
+            for (let h = hoursConfig.start; h < hoursConfig.end; h++) {
+                slots.push(`${h.toString().padStart(2, '0')}:00`);
+                slots.push(`${h.toString().padStart(2, '0')}:30`);
+            }
+
+            slots.forEach(slot => {
+                const btn = document.createElement('div');
+                btn.className = 'time-slot';
+                btn.textContent = slot;
+                btn.onclick = () => {
+                    document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedTime = slot;
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // ГЕНЕРАЦИЯ УСЛУГ В ФОРМЕ
+        function generateServices() {
+            const container = document.getElementById('servicesList');
+            container.innerHTML = '';
+            CONFIG.services.forEach(service => {
+                const el = document.createElement('div');
+                el.className = 'service-card';
+                el.innerHTML = `
+                    <div class="service-name">${service.name}</div>
+                    <div class="service-price">${service.price}</div>
+                `;
+                el.onclick = () => {
+                    document.querySelectorAll('.service-card').forEach(s => s.classList.remove('selected'));
+                    el.classList.add('selected');
+                    selectedService = service;
+                };
+                container.appendChild(el);
+            });
+        }
 
         // ГЕНЕРАЦИЯ QR-КОДА
         function generateQRCode() {
             const currentUrl = window.location.href;
             const qrContainer = document.getElementById('qrcode');
-            
-            // Очищаем контейнер
             qrContainer.innerHTML = '';
-            
-            // Генерируем QR-код
             QRCode.toCanvas(qrContainer, currentUrl, {
                 width: 200,
                 height: 200,
-                color: {
-                    dark: '#00ffff',
-                    light: '#000000'
-                },
+                color: { dark: '#00ffff', light: '#000000' },
                 margin: 1
             }, function(error) {
                 if (error) {
-                    console.error('Ошибка генерации QR-кода:', error);
-                    qrContainer.innerHTML = `
-                        <div style="padding: 20px; text-align: center; color: white;">
-                            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ff00ff;"></i>
-                            <p style="margin-top: 10px;">QR-код не сгенерирован</p>
-                            <p style="font-size: 0.8rem;">Ссылка: ${currentUrl}</p>
-                        </div>
-                    `;
+                    qrContainer.innerHTML = `<div style="padding:20px;color:white;text-align:center;">
+                        <i class="fas fa-exclamation-triangle" style="font-size:2rem;color:#ff00ff;"></i>
+                        <p>QR-код не сгенерирован</p>
+                    </div>`;
                 }
             });
-            
-            // Добавляем событие клика для скачивания
             qrContainer.style.cursor = 'pointer';
             qrContainer.title = 'Нажмите для скачивания QR-кода';
-            qrContainer.onclick = function() {
+            qrContainer.onclick = () => {
                 const canvas = qrContainer.querySelector('canvas');
                 if (canvas) {
                     const link = document.createElement('a');
@@ -898,7 +962,70 @@
             };
         }
 
-        // ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК
-        function showTab(tabName) {
-            // Скрыть все вкладки
-            document.querySelectorAll('.
+        // ОТПРАВКА ЗАПИСИ (с поддержкой Firebase ИЛИ console.log как fallback)
+        function submitBooking() {
+            const name = document.getElementById('clientName').value.trim();
+            const phone = document.getElementById('clientPhone').value.trim();
+            const comment = document.getElementById('comment').value.trim();
+
+            if (!name || !phone || !selectedDate || !selectedTime || !selectedService) {
+                showNotification('Заполните все поля!', true);
+                return;
+            }
+
+            // 🔥 ПОПЫТКА ОТПРАВКИ В FIREBASE
+            if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+                const db = firebase.firestore();
+                db.collection('bookings').add({
+                    name, phone, date: selectedDate, time: selectedTime,
+                    service: selectedService.name, comment,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    resetForm();
+                    showNotification(`Запись подтверждена!\n${selectedDate} в ${selectedTime}\nУслуга: ${selectedService.name}`);
+                }).catch(err => {
+                    console.error('Firebase error:', err);
+                    showNotification('Ошибка отправки. Проверьте подключение.', true);
+                });
+            } else {
+                // 🔽 Fallback: лог в консоль (для теста без Firebase)
+                console.log('Новая запись:', { name, phone, selectedDate, selectedTime, service: selectedService.name, comment });
+                resetForm();
+                showNotification(`✅ Тест: запись в консоли!\n${selectedDate} в ${selectedTime}`, false);
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('clientName').value = '';
+            document.getElementById('clientPhone').value = '';
+            document.getElementById('comment').value = '';
+            selectedTime = null;
+            selectedService = null;
+            document.querySelectorAll('.time-slot.selected, .service-card.selected').forEach(el => el.classList.remove('selected'));
+        }
+
+        // УВЕДОМЛЕНИЕ
+        function showNotification(text, isError = false) {
+            const el = document.getElementById('notification');
+            el.innerHTML = `<h3><i class="fas fa-${isError ? 'exclamation-triangle' : 'check-circle'}"></i> ${isError ? 'Ошибка' : 'Запись подтверждена!'}</h3><p>${text}</p>`;
+            el.style.background = isError ? 'linear-gradient(135deg, #ff3300, #ff6600)' : 'linear-gradient(135deg, rgba(57, 255, 20, 0.95), rgba(0, 255, 100, 0.95))';
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 5000);
+        }
+
+        // 🔥 Firebase инициализация — ЗАМЕНИТЕ НА СВОЙ CONFIG ИЗ FIREBASE CONSOLE
+        /*
+        const firebaseConfig = {
+            apiKey: "ВАШ_API_KEY",
+            authDomain: "shinka-app.firebaseapp.com",
+            projectId: "shinka-app",
+            storageBucket: "shinka-app.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456789"
+        };
+        firebase.initializeApp(firebaseConfig);
+        */
+
+    </script>
+</body>
+</html>
