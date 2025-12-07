@@ -2,747 +2,378 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Шинка - Онлайн запись</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        :root {
-            --neon-red: #ff00ff;
-            --neon-blue: #00ffff;
-            --neon-green: #39ff14;
-            --neon-yellow: #ffff00;
-            --neon-purple: #ff00ff;
-            --dark-bg: #0a0a0a;
-            --darker-bg: #050505;
-            --card-bg: rgba(20, 20, 20, 0.8);
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--dark-bg);
-            color: white;
-            line-height: 1.5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 0;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 40% 40%, rgba(57, 255, 20, 0.05) 0%, transparent 30%);
-        }
-        .neon-text {
-            text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red), 0 0 30px var(--neon-red);
-            color: white;
-        }
-        /* ШАПКА С ЛОГОТИПОМ И ИЗОБРАЖЕНИЕМ */
-        .app-header {
-            background: linear-gradient(135deg, rgba(255, 0, 255, 0.9) 0%, rgba(0, 255, 255, 0.9) 100%);
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 0 30px var(--neon-purple), 0 4px 12px rgba(0,0,0,0.8);
-            border-bottom: 3px solid var(--neon-yellow);
-        }
-        .header-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .header-logo img {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-        .header-title {
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: white;
-            text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-red), 0 0 30px var(--neon-red);
-            letter-spacing: 1px;
-        }
-        .header-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://i.imgur.com/9ZzL1Xs.png') no-repeat center center;
-            background-size: cover;
-            opacity: 0.3;
-            z-index: -1;
-        }
-        .app-nav {
-            display: flex;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--neon-blue);
-            position: sticky;
-            top: 0;
-            z-index: 99;
-            box-shadow: 0 0 15px var(--neon-blue);
-        }
-        .nav-tab {
-            flex: 1;
-            padding: 16px 10px;
-            text-align: center;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-            text-shadow: 0 0 5px currentColor;
-        }
-        .nav-tab:hover {
-            background: rgba(0, 255, 255, 0.1);
-        }
-        .nav-tab.active {
-            background: rgba(255, 0, 255, 0.15);
-            border-bottom-color: var(--neon-yellow);
-            color: var(--neon-yellow);
-            text-shadow: 0 0 10px var(--neon-yellow);
-        }
-        .app-content {
             padding: 20px;
-            max-width: 100%;
+        }
+        .container {
+            max-width: 500px;
             margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        .section-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
         }
-        .section-title {
-            color: var(--neon-yellow);
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-shadow: 0 0 10px var(--neon-yellow);
+        .header h1 {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 10px;
         }
         .form-group {
             margin-bottom: 20px;
         }
-        .form-label {
+        label {
             display: block;
-            margin-bottom: 10px;
-            color: var(--neon-blue);
-            font-weight: 600;
-            font-size: 1rem;
-            text-shadow: 0 0 5px var(--neon-blue);
-        }
-        .form-input {
-            width: 100%;
-            padding: 16px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid rgba(0, 255, 255, 0.4);
-            border-radius: 12px;
-            color: white;
-            font-size: 16px;
-            transition: all 0.3s;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(0, 255, 255, 0.1);
-        }
-        .form-input:focus {
-            outline: none;
-            border-color: var(--neon-yellow);
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 0 20px var(--neon-yellow), inset 0 0 20px rgba(255, 255, 0, 0.1);
-        }
-        .services-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        @media (max-width: 480px) {
-            .services-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        .service-card {
-            background: rgba(30, 30, 30, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 18px;
-            border-left: 4px solid var(--neon-red);
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        .service-card.selected {
-            border-left-color: var(--neon-yellow);
-            box-shadow: 0 0 25px rgba(255, 255, 0, 0.4), inset 0 0 15px rgba(255, 255, 0, 0.1);
-            background: rgba(57, 255, 20, 0.1);
-        }
-        .service-name {
-            font-weight: 700;
             margin-bottom: 8px;
-            color: white;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
         }
-        .service-price {
-            color: var(--neon-green);
-            font-weight: 700;
-            font-size: 1.1rem;
+        input[type="text"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="time"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
         }
-        .time-info {
-            background: rgba(57, 255, 20, 0.1);
-            border: 1px solid var(--neon-green);
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3), inset 0 0 15px rgba(57, 255, 20, 0.1);
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-        .time-slots-container {
-            max-height: 320px;
-            overflow-y: auto;
-            margin-top: 15px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-        .time-slots-grid {
+        .time-slots {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-        @media (max-width: 480px) {
-            .time-slots-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
         }
         .time-slot {
-            padding: 16px 5px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             text-align: center;
-            background: rgba(0, 255, 255, 0.1);
-            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 600;
-            border: 2px solid transparent;
+            font-size: 13px;
+        }
+        .time-slot:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
         }
         .time-slot.selected {
-            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
-            color: black;
-            border-color: var(--neon-yellow);
-            font-weight: 800;
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        .time-slot.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .services {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .service-item {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 13px;
+        }
+        .service-item:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        .service-item.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
         }
         .submit-btn {
             width: 100%;
-            padding: 22px;
-            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
-            color: black;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 1.3rem;
-            font-weight: 800;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 0 30px var(--neon-purple), 0 12px 35px rgba(255, 0, 255, 0.4);
+            margin-top: 20px;
+            transition: transform 0.3s;
         }
-        .contacts-section {
-            text-align: center;
-            padding: 35px 20px;
-            background: rgba(10, 10, 10, 0.9);
-            margin-top: 40px;
-            border-top: 2px solid var(--neon-red);
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
-        .phone-number {
-            font-size: 2rem;
-            color: var(--neon-yellow);
-            margin: 20px 0;
-            font-weight: 800;
-        }
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, rgba(57, 255, 20, 0.95) 0%, rgba(0, 255, 100, 0.95) 100%);
-            color: black;
-            padding: 22px;
-            border-radius: 15px;
-            box-shadow: 0 0 40px var(--neon-green), 0 15px 40px rgba(57, 255, 20, 0.5);
-            z-index: 1000;
-            transform: translateY(150%);
-            transition: transform 0.4s;
-            border: 2px solid var(--neon-yellow);
-        }
-        .notification.show {
+        .submit-btn:active {
             transform: translateY(0);
         }
-        .admin-panel {
-            background: rgba(10, 0, 30, 0.9);
-            padding: 25px;
-            margin-top: 40px;
-            border-top: 2px solid var(--neon-purple);
+        .success {
+            background: #10b981;
+            color: white;
+            padding: 16px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
             display: none;
         }
-        .admin-title {
-            color: var(--neon-purple);
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.4rem;
-        }
-        .bookings-table {
-            width: 100%;
-            border-collapse: collapse;
+        .error {
+            background: #ef4444;
             color: white;
-        }
-        .bookings-table th,
-        .bookings-table td {
             padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: left;
-        }
-        .bookings-table th {
-            color: var(--neon-yellow);
-        }
-        .app-footer {
-            text-align: center;
-            padding: 20px;
-            color: #aaa;
-            font-size: 0.9rem;
-            background: rgba(5, 5, 5, 0.95);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .admin-btn {
-            background: rgba(255, 0, 255, 0.2);
-            color: var(--neon-purple);
-            border: 1px solid var(--neon-purple);
-            padding: 12px 20px;
             border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
             margin-top: 10px;
-            display: block;
-            width: fit-content;
-            margin: 20px auto 0;
-            transition: all 0.3s;
-        }
-        .admin-btn:hover {
-            background: rgba(255, 0, 255, 0.4);
-            box-shadow: 0 0 15px var(--neon-purple);
-        }
-        /* ЧЕКБОКСЫ ДЛЯ ДАТЫ И ВРЕМЕНИ */
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(0, 255, 255, 0.05);
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            border-radius: 8px;
-        }
-        .checkbox-container input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--neon-yellow);
-        }
-        .checkbox-container label {
-            color: white;
-            font-size: 0.9rem;
+            font-size: 14px;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- ШАПКА С ЛОГОТИПОМ И ИЗОБРАЖЕНИЕМ -->
-    <div class="app-header">
-        <div class="header-logo">
-            <img src="https://i.imgur.com/9ZzL1Xs.png" alt="Логотип">
-            <div class="header-title">ШИНКА</div>
+    <div class="container">
+        <div class="header">
+            <h1>ШИНКА</h1>
+            <p>Онлайн запись на услуги</p>
         </div>
-        <div class="header-bg"></div>
-    </div>
-    
-    <div class="app-nav">
-        <a href="#" class="nav-tab active" onclick="showTab('booking', event)">
-            <i class="fas fa-calendar-alt"></i> ЗАПИСЬ
-        </a>
-        <a href="#" class="nav-tab" onclick="showTab('services', event)">
-            <i class="fas fa-wrench"></i> УСЛУГИ
-        </a>
-        <a href="#" class="nav-tab" onclick="showTab('contacts', event)">
-            <i class="fas fa-phone"></i> КОНТАКТЫ
-        </a>
-    </div>
-    
-    <div class="app-content">
-        <div id="booking-tab" class="tab-content">
-            <div class="section-card">
-                <h2 class="section-title"><i class="fas fa-user"></i> Ваши данные</h2>
-                <div class="form-group">
-                    <label class="form-label">ИМЯ</label>
-                    <input type="text" class="form-input" id="clientName" placeholder="Иван" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">ТЕЛЕФОН</label>
-                    <input type="tel" class="form-input" id="clientPhone" placeholder="+7 123-456-78-90" required>
-                </div>
-            </div>
-            
-            <div class="section-card">
-                <h2 class="section-title"><i class="fas fa-calendar-day"></i> Дата и время</h2>
-                <div class="form-group">
-                    <label class="form-label">ДАТА</label>
-                    <input type="date" class="form-input" id="bookingDate" required>
-                </div>
-                <div class="time-info">
-                    <i class="fas fa-clock pulse"></i>
-                    <strong>Интервал записи: 30 минут</strong>
-                </div>
-                <div class="time-slots-container">
-                    <div class="time-slots-grid" id="timeSlots"></div>
-                </div>
-                <!-- ЧЕКБОКСЫ -->
-                <div class="checkbox-container">
-                    <input type="checkbox" id="confirmDate" onchange="toggleDateCheckbox()">
-                    <label for="confirmDate">Подтвердить дату</label>
-                </div>
-                <div class="checkbox-container">
-                    <input type="checkbox" id="confirmTime" onchange="toggleTimeCheckbox()">
-                    <label for="confirmTime">Подтвердить время</label>
-                </div>
-            </div>
-            
-            <div class="section-card">
-                <h2 class="section-title"><i class="fas fa-wrench"></i> Выбор услуги</h2>
-                <div class="services-container" id="servicesList"></div>
-            </div>
-            
-            <div class="section-card">
-                <h2 class="section-title"><i class="fas fa-comment-alt"></i> Комментарий</h2>
-                <div class="form-group">
-                    <textarea class="form-input" id="comment" rows="3" placeholder="Госномер, марка авто..."></textarea>
-                </div>
-            </div>
-            
-            <button class="submit-btn" onclick="submitBooking()">
-                <i class="fas fa-calendar-check"></i> ПОДТВЕРДИТЬ ЗАПИСЬ
-            </button>
-        </div>
-        
-        <div id="services-tab" class="tab-content" style="display: none;">
-            <div class="section-card">
-                <h2 class="section-title"><i class="fas fa-check-circle"></i> Наши услуги</h2>
-                <div style="display: flex; flex-direction: column; gap: 18px;">
-                    <div class="service-card">
-                        <div class="service-name">Сезонная замена шин</div>
-                        <div class="service-price">от 1500 руб.</div>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-name">Балансировка колес</div>
-                        <div class="service-price">от 800 руб.</div>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-name">Ремонт шин</div>
-                        <div class="service-price">от 500 руб.</div>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-name">Диагностика кондиционера</div>
-                        <div class="service-price">от 1000 руб.</div>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-name">Заправка кондиционера</div>
-                        <div class="service-price">от 2500 руб.</div>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-name">Проточка тормозных дисков</div>
-                        <div class="service-price">от 1200 руб.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="contacts-tab" class="tab-content" style="display: none;">
-            <div class="contacts-section">
-                <h2 class="section-title"><i class="fas fa-address-book"></i> Контакты</h2>
-                <div class="phone-number">
-                    <i class="fas fa-phone-alt"></i> +7 927 711-78-86
-                </div>
-                <div style="margin: 25px 0;">
-                    <h3 style="color: var(--neon-yellow); margin-bottom: 15px;">
-                        <i class="fas fa-clock"></i> Часы работы:
-                    </h3>
-                    <p>Пн–Пт: <strong style="color: var(--neon-green);">9:00 – 20:00</strong></p>
-                    <p>Сб: <strong style="color: var(--neon-green);">10:00 – 18:00</strong></p>
-                    <p>Вс: <strong style="color: var(--neon-green);">10:00 – 16:00</strong></p>
-                </div>
-                <p style="color: var(--neon-blue);">
-                    <i class="fas fa-map-marker-alt"></i> г. Горячий Ключ, ул. Ярославского 123/1
-                </p>
-                <p style="margin-top: 12px; color: var(--neon-blue);">
-                    <i class="fas fa-envelope"></i> Email: info@shinka.ru
-                </p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="app-footer">
-        <p>© 2025 Шинка – шиномонтаж. Все права защищены.</p>
-        <button class="admin-btn" onclick="openAdmin()">
-            <i class="fas fa-lock"></i> Админка
-        </button>
-    </div>
-    
-    <div class="admin-panel" id="adminPanel">
-        <h2 class="admin-title">ПАНЕЛЬ АДМИНИСТРАТОРА</h2>
-        <div id="adminContent">
-            <p>Загрузка...</p>
-        </div>
-    </div>
-    
-    <div class="notification" id="notification"></div>
 
-    <!-- Supabase SDK -->
+        <form id="bookingForm">
+            <!-- ИМЯ -->
+            <div class="form-group">
+                <label for="name">Имя *</label>
+                <input type="text" id="name" placeholder="Иван" required>
+            </div>
+
+            <!-- ТЕЛЕФОН -->
+            <div class="form-group">
+                <label for="phone">Телефон *</label>
+                <input type="tel" id="phone" placeholder="+7 (999) 999-99-99" required>
+            </div>
+
+            <!-- ДАТА -->
+            <div class="form-group">
+                <label for="date">Дата *</label>
+                <input type="date" id="date" required>
+            </div>
+
+            <!-- ВРЕМЯ (30-минутные интервалы) -->
+            <div class="form-group">
+                <label>Время (30 минут) *</label>
+                <div class="time-slots" id="timeSlots"></div>
+                <input type="hidden" id="selectedTime">
+            </div>
+
+            <!-- УСЛУГА -->
+            <div class="form-group">
+                <label>Услуга *</label>
+                <div class="services" id="services"></div>
+                <input type="hidden" id="selectedService">
+            </div>
+
+            <!-- КОММЕНТАРИЙ -->
+            <div class="form-group">
+                <label for="comment">Комментарий</label>
+                <textarea id="comment" rows="3" placeholder="Марка авто, размер шин..."></textarea>
+            </div>
+
+            <!-- КНОПКА -->
+            <button type="submit" class="submit-btn">Подтвердить запись</button>
+
+            <!-- СООБЩЕНИЯ -->
+            <div class="success" id="success">✓ Запись успешно создана!</div>
+            <div class="error" id="error"></div>
+        </form>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-      const supabaseUrl = 'https://ahdcfaaczxbkbqldzell.supabase.co';
-      const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoZGNmYWFjenhia2JxbGR6ZWxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMjM4NjAsImV4cCI6MjA4MDY5OTg2MH0.Ym239Oba2nmyU94qK8cf9-NtWbO876-eG2J_WtA7a-0';
-      const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+        const supabaseUrl = 'https://ahdcfaaczxbkbqldzell.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoZGNmYWFjenhia2JxbGR6ZWxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMjM4NjAsImV4cCI6MjA4MDY5OTg2MH0.Ym239Oba2nmyU94qK8cf9-NtWbO876-eG2J_WtA7a-0';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-      let selectedDate = null;
-      let selectedTime = null;
-      let selectedService = null;
-      const SERVICES = [
-        { name: 'Сезонная замена шин', price: 'от 1500 руб.' },
-        { name: 'Балансировка колес', price: 'от 800 руб.' },
-        { name: 'Ремонт шин', price: 'от 500 руб.' },
-        { name: 'Диагностика кондиционера', price: 'от 1000 руб.' },
-        { name: 'Заправка кондиционера', price: 'от 2500 руб.' },
-        { name: 'Проточка тормозных дисков', price: 'от 1200 руб.' }
-      ];
+        const SERVICES = [
+            'Сезонная замена шин',
+            'Балансировка колёс',
+            'Ремонт шин',
+            'Диагностика кондиционера',
+            'Заправка кондиционера',
+            'Проточка тормозных дисков'
+        ];
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const today = new Date().toISOString().split('T')[0];
-        const dateInput = document.getElementById('bookingDate');
-        if (!dateInput) return;
-        dateInput.min = today;
-        dateInput.value = today;
-        selectedDate = today;
-        dateInput.addEventListener('change', e => {
-          selectedDate = e.target.value;
-          generateTimeSlots();
+        let selectedTime = null;
+        let selectedService = null;
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDate();
+            renderServices();
+            document.getElementById('date').addEventListener('change', generateTimeSlots);
+            document.getElementById('bookingForm').addEventListener('submit', handleSubmit);
         });
-        generateTimeSlots();
-        generateBookingServices();
-      });
 
-      function showTab(tabName, event) {
-        event.preventDefault();
-        document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
-        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-        const tab = document.getElementById(tabName + '-tab');
-        if (tab) tab.style.display = 'block';
-        event.currentTarget.classList.add('active');
-      }
-
-      function generateTimeSlots() {
-        const container = document.getElementById('timeSlots');
-        if (!container) return;
-        container.innerHTML = '';
-        if (!selectedDate) return;
-
-        const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const selectedDateObj = new Date(selectedDate);
-        const isToday = selectedDateObj.getTime() === today.getTime();
-        const currentHours = now.getHours();
-        const currentMinutes = now.getMinutes();
-
-        const day = selectedDateObj.getDay();
-        let start, end;
-        if (day === 0) { start = 10; end = 16; }
-        else if (day === 6) { start = 10; end = 18; }
-        else { start = 9; end = 20; }
-
-        const slots = [];
-        for (let h = start; h < end; h++) {
-          slots.push(`${h.toString().padStart(2, '0')}:00`);
-          slots.push(`${h.toString().padStart(2, '0')}:30`);
+        // 1. Установить минимальную дату на сегодня
+        function initializeDate() {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('date');
+            dateInput.min = today;
+            dateInput.value = today;
+            generateTimeSlots();
         }
 
-        const filteredSlots = isToday
-          ? slots.filter(slot => {
-              const [slotH, slotM] = slot.split(':').map(Number);
-              if (slotH < currentHours) return false;
-              if (slotH === currentHours && slotM <= currentMinutes) return false;
-              return true;
-            })
-          : slots;
+        // 2. Генерировать слоты времени (30-минутные интервалы)
+        function generateTimeSlots() {
+            const container = document.getElementById('timeSlots');
+            const dateInput = document.getElementById('date').value;
+            container.innerHTML = '';
+            selectedTime = null;
 
-        if (filteredSlots.length === 0 && isToday) {
-          container.innerHTML = '<div style="color: var(--neon-yellow); text-align: center; padding: 20px;">Нет доступных слотов на сегодня</div>';
-          return;
+            if (!dateInput) return;
+
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString().split('T')[0];
+            const isToday = dateInput === today;
+            const currentHour = now.getHours();
+            const currentMin = now.getMinutes();
+
+            // Рабочие часы: 9:00-20:00 (пн-пт), 10:00-18:00 (сб), 10:00-16:00 (вс)
+            const selectedDate = new Date(dateInput + 'T00:00:00');
+            const dayOfWeek = selectedDate.getDay();
+            let startHour, endHour;
+
+            if (dayOfWeek === 0) { startHour = 10; endHour = 16; } // Вс
+            else if (dayOfWeek === 6) { startHour = 10; endHour = 18; } // Сб
+            else { startHour = 9; endHour = 20; } // Пн-Пт
+
+            // Генерируем слоты по 30 минут
+            for (let h = startHour; h < endHour; h++) {
+                for (let m = 0; m < 60; m += 30) {
+                    const timeStr = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+                    
+                    // Если сегодня, пропускаем прошедшее время
+                    if (isToday && (h < currentHour || (h === currentHour && m <= currentMin))) {
+                        continue;
+                    }
+
+                    const btn = document.createElement('div');
+                    btn.className = 'time-slot';
+                    btn.textContent = timeStr;
+                    btn.onclick = () => selectTime(btn, timeStr);
+                    container.appendChild(btn);
+                }
+            }
         }
 
-        filteredSlots.forEach(slot => {
-          const btn = document.createElement('div');
-          btn.className = 'time-slot';
-          btn.textContent = slot;
-          btn.onclick = () => {
+        // 3. Выбор времени
+        function selectTime(element, time) {
             document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
-            btn.classList.add('selected');
-            selectedTime = slot;
-            // Автоматически отмечаем чекбокс времени
-            document.getElementById('confirmTime').checked = true;
-          };
-          container.appendChild(btn);
-        });
-      }
+            element.classList.add('selected');
+            selectedTime = time;
+            document.getElementById('selectedTime').value = time;
+        }
 
-      function generateBookingServices() {
-        const container = document.getElementById('servicesList');
-        if (!container) return;
-        container.innerHTML = '';
-        SERVICES.forEach(service => {
-          const el = document.createElement('div');
-          el.className = 'service-card';
-          el.innerHTML = `<div class="service-name">${service.name}</div><div class="service-price">${service.price}</div>`;
-          el.onclick = () => {
-            document.querySelectorAll('.service-card').forEach(s => s.classList.remove('selected'));
-            el.classList.add('selected');
+        // 4. Рендерить услуги
+        function renderServices() {
+            const container = document.getElementById('services');
+            container.innerHTML = '';
+            SERVICES.forEach(service => {
+                const btn = document.createElement('div');
+                btn.className = 'service-item';
+                btn.textContent = service;
+                btn.onclick = () => selectService(btn, service);
+                container.appendChild(btn);
+            });
+        }
+
+        // 5. Выбор услуги
+        function selectService(element, service) {
+            document.querySelectorAll('.service-item').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
             selectedService = service;
-          };
-          container.appendChild(el);
-        });
-      }
-
-      async function submitBooking() {
-        const name = document.getElementById('clientName')?.value?.trim();
-        const phone = document.getElementById('clientPhone')?.value?.trim();
-        const comment = document.getElementById('comment')?.value?.trim();
-        const confirmDate = document.getElementById('confirmDate').checked;
-        const confirmTime = document.getElementById('confirmTime').checked;
-        
-        if (!name || !phone || !selectedDate || !selectedTime || !selectedService) {
-          showNotification('Заполните все поля!', true);
-          return;
-        }
-        if (!confirmDate || !confirmTime) {
-          showNotification('Подтвердите дату и время!', true);
-          return;
+            document.getElementById('selectedService').value = service;
         }
 
-        const { error } = await supabase.from('bookings').insert([
-          {
-            name,
-            phone,
-            date: selectedDate,
-            time: selectedTime,
-            service: selectedService.name,
-            comment
-          }
-        ]);
+        // 6. Отправка формы
+        async function handleSubmit(e) {
+            e.preventDefault();
 
-        if (error) {
-          console.error('Supabase error:', error);
-          showNotification('Ошибка отправки. Попробуйте позже.', true);
-        } else {
-          document.getElementById('clientName').value = '';
-          document.getElementById('clientPhone').value = '';
-          document.getElementById('comment').value = '';
-          document.getElementById('confirmDate').checked = false;
-          document.getElementById('confirmTime').checked = false;
-          selectedTime = null;
-          selectedService = null;
-          document.querySelectorAll('.time-slot.selected, .service-card.selected').forEach(el => el.classList.remove('selected'));
-          showNotification(`Запись подтверждена!\n${selectedDate} в ${selectedTime}`);
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const date = document.getElementById('date').value;
+            const time = selectedTime;
+            const service = selectedService;
+            const comment = document.getElementById('comment').value.trim();
+
+            // Валидация
+            if (!name || !phone || !date || !time || !service) {
+                showError('Заполните все обязательные поля!');
+                return;
+            }
+
+            try {
+                // Сохраняем в Supabase
+                const { error } = await supabase
+                    .from('bookings')
+                    .insert([{ name, phone, date, time, service, comment }]);
+
+                if (error) throw error;
+
+                // Успех
+                document.getElementById('bookingForm').reset();
+                selectedTime = null;
+                selectedService = null;
+                document.querySelectorAll('.time-slot.selected, .service-item.selected').forEach(el => el.classList.remove('selected'));
+                
+                showSuccess();
+                generateTimeSlots();
+            } catch (error) {
+                console.error(error);
+                showError('Ошибка отправки. Попробуйте позже.');
+            }
         }
-      }
 
-      function toggleDateCheckbox() {
-        const checkbox = document.getElementById('confirmDate');
-        if (checkbox.checked) {
-          showNotification('Дата подтверждена', false);
-        } else {
-          showNotification('Дата отменена', true);
+        function showError(msg) {
+            const errorEl = document.getElementById('error');
+            errorEl.textContent = msg;
+            errorEl.style.display = 'block';
+            setTimeout(() => errorEl.style.display = 'none', 4000);
         }
-      }
 
-      function toggleTimeCheckbox() {
-        const checkbox = document.getElementById('confirmTime');
-        if (checkbox.checked) {
-          showNotification('Время подтверждено', false);
-        } else {
-          showNotification('Время отменено', true);
+        function showSuccess() {
+            const successEl = document.getElementById('success');
+            successEl.style.display = 'block';
+            setTimeout(() => successEl.style.display = 'none', 4000);
         }
-      }
-
-      function showNotification(text, isError = false) {
-        const n = document.getElementById('notification');
-        if (!n) return;
-        n.innerHTML = `<h3><i class="fas fa-${isError ? 'exclamation-triangle' : 'check-circle'}"></i> ${isError ? 'Ошибка' : 'Успех!'}</h3><p>${text}</p>`;
-        n.style.background = isError ? '#ff3366' : 'linear-gradient(135deg, #39ff14, #00ff80)';
-        n.classList.add('show');
-        setTimeout(() => n.classList.remove('show'), 4000);
-      }
-
-      function openAdmin() {
-        const password = prompt('Введите пароль администратора:');
-        if (password === 'НеонШинка') {
-          showAdminPanel();
-        } else if (password !== null) {
-          alert('Неверный пароль!');
-        }
-      }
-
-      async function showAdminPanel() {
-        const panel = document.getElementById('adminPanel');
-        const content = document.getElementById('adminContent');
-        if (!panel || !content) return;
-        
-        const { data, error } = await supabase.from('bookings').select('*').order('created_at', { ascending: false });
-        
-        if (error) {
-          content.innerHTML = `<p style="color: red;">Ошибка загрузки: ${error.message}</p>`;
-        } else if (!data || data.length === 0) {
-          content.innerHTML = '<p>Нет записей.</p>';
-        } else {
-          let html = `<table class="bookings-table">
-            <thead><tr>
-              <th>Дата</th><th>Время</th><th>Имя</th><th>Телефон</th><th>Услуга</th>
-            </tr></thead><tbody>`;
-          data.forEach(b => {
-            html += `<tr>
-              <td>${b.date}</td>
-              <td>${b.time}</td>
-              <td>${b.name}</td>
-              <td>${b.phone}</td>
-              <td>${b.service}</td>
-            </tr>`;
-          });
-          html += '</tbody></table>';
-          content.innerHTML = html;
-        }
-        panel.style.display = 'block';
-      }
     </script>
 </body>
 </html>
