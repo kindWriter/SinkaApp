@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -46,4 +48,1298 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-          
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 0 30px var(--neon-purple), 0 4px 12px rgba(0,0,0,0.8);
+            border-bottom: 3px solid var(--neon-yellow);
+        }
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-red);
+            letter-spacing: 1px;
+        }
+        .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+        .header-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .header-btn:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        .app-nav {
+            display: flex;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--neon-blue);
+            position: sticky;
+            top: 65px;
+            z-index: 99;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+        .nav-tab {
+            flex: 1;
+            padding: 16px 10px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px currentColor;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        .nav-tab.active {
+            background: rgba(255, 0, 255, 0.15);
+            border-bottom-color: var(--neon-yellow);
+            color: var(--neon-yellow);
+            text-shadow: 0 0 10px var(--neon-yellow);
+        }
+        .app-content {
+            padding: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .section-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+        .section-title {
+            color: var(--neon-yellow);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 10px var(--neon-yellow);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--neon-blue);
+            font-weight: 600;
+            font-size: 1rem;
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+        .form-input {
+            width: 100%;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(0, 255, 255, 0.1);
+            font-family: inherit;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--neon-yellow);
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 20px var(--neon-yellow), inset 0 0 20px rgba(255, 255, 0, 0.1);
+        }
+        .time-info {
+            background: rgba(57, 255, 20, 0.1);
+            border: 1px solid var(--neon-green);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+        }
+        .time-slots-container {
+            max-height: 320px;
+            overflow-y: auto;
+            margin-top: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        .time-slots-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        @media (max-width: 480px) {
+            .time-slots-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .time-slot {
+            padding: 16px 5px;
+            text-align: center;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            border: 2px solid transparent;
+        }
+        .time-slot:hover {
+            background: rgba(0, 255, 255, 0.2);
+        }
+        .time-slot.selected {
+            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
+            color: black;
+            border-color: var(--neon-yellow);
+            font-weight: 800;
+        }
+        .services-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        .service-card {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 12px;
+            padding: 18px;
+            border-left: 4px solid var(--neon-red);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .service-card:hover {
+            background: rgba(40, 40, 40, 0.9);
+            transform: translateX(5px);
+        }
+        .service-card.selected {
+            border-left-color: var(--neon-yellow);
+            box-shadow: 0 0 25px rgba(255, 255, 0, 0.4);
+            background: rgba(57, 255, 20, 0.1);
+        }
+        .service-info {
+            flex: 1;
+        }
+        .service-name {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: white;
+        }
+        .service-price {
+            color: var(--neon-green);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .service-star {
+            font-size: 24px;
+            cursor: pointer;
+            margin-left: 15px;
+            color: var(--neon-yellow);
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+        .service-star.favorited {
+            opacity: 1;
+            text-shadow: 0 0 10px var(--neon-yellow);
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 22px;
+            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
+            color: black;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 0 30px var(--neon-purple);
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px var(--neon-purple);
+        }
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.95) 0%, rgba(0, 255, 100, 0.95) 100%);
+            color: black;
+            padding: 22px;
+            border-radius: 15px;
+            box-shadow: 0 0 40px var(--neon-green);
+            z-index: 1000;
+            transform: translateY(150%);
+            transition: transform 0.4s;
+            border: 2px solid var(--neon-yellow);
+        }
+        .notification.show {
+            transform: translateY(0);
+        }
+        .notification.error {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.95) 0%, rgba(255, 0, 150, 0.95) 100%);
+            color: white;
+        }
+        /* АДМИНКА */
+        .admin-panel {
+            background: rgba(10, 0, 30, 0.9);
+            padding: 25px;
+            border-top: 2px solid var(--neon-purple);
+            display: none;
+        }
+        .admin-panel.active {
+            display: block;
+        }
+        .admin-title {
+            color: var(--neon-purple);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.4rem;
+        }
+        .admin-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .admin-btn {
+            background: rgba(255, 0, 255, 0.2);
+            color: var(--neon-purple);
+            border: 1px solid var(--neon-purple);
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .admin-btn:hover {
+            background: rgba(255, 0, 255, 0.4);
+            box-shadow: 0 0 15px var(--neon-purple);
+        }
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: white;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+        .bookings-table th,
+        .bookings-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+        .bookings-table th {
+            color: var(--neon-yellow);
+            background: rgba(255, 255, 0, 0.1);
+        }
+        .booking-row {
+            transition: all 0.3s;
+        }
+        .booking-row:hover {
+            background: rgba(0, 255, 255, 0.1);
+        }
+        .booking-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .action-btn.confirm {
+            background: var(--neon-green);
+            color: black;
+        }
+        .action-btn.cancel {
+            background: var(--neon-red);
+            color: white;
+        }
+        .action-btn.edit {
+            background: var(--neon-blue);
+            color: black;
+        }
+        /* ИСТОРИЯ */
+        .history-card {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 12px;
+            padding: 18px;
+            border-left: 4px solid var(--neon-blue);
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .history-card:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .history-service {
+            color: var(--neon-green);
+            font-weight: 700;
+        }
+        .history-date {
+            color: var(--neon-yellow);
+            font-weight: 600;
+        }
+        .history-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status-pending {
+            background: rgba(255, 200, 0, 0.2);
+            color: var(--neon-yellow);
+        }
+        .status-confirmed {
+            background: rgba(0, 255, 0, 0.2);
+            color: var(--neon-green);
+        }
+        .status-cancelled {
+            background: rgba(255, 0, 0, 0.2);
+            color: var(--neon-red);
+        }
+        .offline-badge {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            display: none;
+            z-index: 50;
+        }
+        .offline-badge.show {
+            display: block;
+        }
+        .sync-badge {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(0, 255, 100, 0.9);
+            color: black;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            display: none;
+            z-index: 50;
+        }
+        .sync-badge.show {
+            display: block;
+        }
+        .app-footer {
+            text-align: center;
+            padding: 20px;
+            color: #aaa;
+            font-size: 0.9rem;
+            background: rgba(5, 5, 5, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+        .install-prompt {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.9) 0%, rgba(0, 255, 255, 0.9) 100%);
+            color: black;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px;
+            display: none;
+            text-align: center;
+            box-shadow: 0 0 30px var(--neon-purple);
+        }
+        .install-prompt.show {
+            display: block;
+        }
+        .install-prompt button {
+            background: white;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .install-prompt button:hover {
+            transform: scale(1.05);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: var(--dark-bg);
+            padding: 30px;
+            border: 1px solid var(--neon-blue);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 50px var(--neon-purple);
+        }
+        .modal-close {
+            color: var(--neon-yellow);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-close:hover {
+            color: var(--neon-red);
+        }
+        .sync-queue {
+            background: rgba(0, 255, 100, 0.1);
+            border: 1px solid var(--neon-green);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            color: var(--neon-green);
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <div class="header-title">🛞 ШИНКА</div>
+        <div class="header-icons">
+            <button class="header-btn" id="notifBtn" title="Уведомления">
+                <i class="fas fa-bell"></i>
+            </button>
+            <button class="header-btn" id="settingsBtn" title="Настройки">
+                <i class="fas fa-cog"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="offline-badge" id="offlineBadge">
+        <i class="fas fa-wifi-slash"></i> Без интернета
+    </div>
+    <div class="sync-badge" id="syncBadge">
+        <i class="fas fa-sync-alt"></i> Синхронизация...
+    </div>
+
+    <div class="install-prompt" id="installPrompt">
+        <h3>Установить приложение?</h3>
+        <p>Получайте уведомления и используйте оффлайн</p>
+        <button id="installBtn">Установить</button>
+        <button onclick="document.getElementById('installPrompt').classList.remove('show')">Отмена</button>
+    </div>
+    
+    <div class="app-nav">
+        <button class="nav-tab active" onclick="showTab('booking', this)">
+            <i class="fas fa-calendar-alt"></i> ЗАПИСЬ
+        </button>
+        <button class="nav-tab" onclick="showTab('history', this)">
+            <i class="fas fa-history"></i> ИСТОРИЯ
+        </button>
+        <button class="nav-tab" onclick="showTab('favorites', this)">
+            <i class="fas fa-star"></i> ИЗБРАННОЕ
+        </button>
+        <button class="nav-tab" onclick="showTab('admin', this)">
+            <i class="fas fa-lock"></i> АДМИНКА
+        </button>
+    </div>
+    
+    <div class="app-content">
+        <!-- ВКЛАДКА ЗАПИСЬ -->
+        <div id="booking-tab" class="tab-content active">
+            <div class="section-card">
+                <h2 class="section-title"><i class="fas fa-user"></i> Ваши данные</h2>
+                <div class="form-group">
+                    <label class="form-label">ИМЯ</label>
+                    <input type="text" class="form-input" id="clientName" placeholder="Иван" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">ТЕЛЕФОН</label>
+                    <input type="tel" class="form-input" id="clientPhone" placeholder="+7 999 999 99 99" required>
+                </div>
+            </div>
+            
+            <div class="section-card">
+                <h2 class="section-title"><i class="fas fa-calendar-day"></i> Дата и время</h2>
+                <div class="form-group">
+                    <label class="form-label">ДАТА</label>
+                    <input type="date" class="form-input" id="bookingDate" required>
+                </div>
+                <div class="time-info">
+                    <i class="fas fa-clock"></i>
+                    <strong>Интервал записи: 30 минут (уведомление за 1 час)</strong>
+                </div>
+                <div class="time-slots-container">
+                    <div class="time-slots-grid" id="timeSlots"></div>
+                </div>
+            </div>
+            
+            <div class="section-card">
+                <h2 class="section-title"><i class="fas fa-wrench"></i> Выбор услуги</h2>
+                <div class="services-container" id="servicesList"></div>
+            </div>
+            
+            <div class="section-card">
+                <h2 class="section-title"><i class="fas fa-comment-alt"></i> Комментарий</h2>
+                <div class="form-group">
+                    <textarea class="form-input" id="comment" rows="3" placeholder="Госномер, марка авто..."></textarea>
+                </div>
+            </div>
+            
+            <button class="submit-btn" id="submitBtn" onclick="submitBooking()">
+                <i class="fas fa-calendar-check"></i> ПОДТВЕРДИТЬ ЗАПИСЬ
+            </button>
+            <div id="syncQueue" class="sync-queue" style="display:none;">
+                ⏳ Ваша запись ждёт отправки при подключении интернета
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА ИСТОРИЯ -->
+        <div id="history-tab" class="tab-content">
+            <div class="section-card">
+                <h2 class="section-title"><i class="fas fa-history"></i> Ваши записи</h2>
+                <div id="historyContainer">
+                    <p style="text-align: center; color: var(--neon-blue);">Нет записей</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА ИЗБРАННОЕ -->
+        <div id="favorites-tab" class="tab-content">
+            <div class="section-card">
+                <h2 class="section-title"><i class="fas fa-star"></i> Избранные услуги</h2>
+                <div id="favoritesContainer">
+                    <p style="text-align: center; color: var(--neon-blue);">Нет избранных услуг</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА АДМИНКА -->
+        <div id="admin-tab" class="tab-content">
+            <div class="admin-panel">
+                <h2 class="admin-title">ПАНЕЛЬ АДМИНИСТРАТОРА</h2>
+                <div class="admin-controls">
+                    <button class="admin-btn" onclick="loadAllBookings()">
+                        <i class="fas fa-list"></i> Все записи
+                    </button>
+                    <button class="admin-btn" onclick="loadTodayBookings()">
+                        <i class="fas fa-calendar-today"></i> Сегодня
+                    </button>
+                    <button class="admin-btn" onclick="loadPendingBookings()">
+                        <i class="fas fa-hourglass"></i> В ожидании
+                    </button>
+                    <button class="admin-btn" onclick="exportToCSV()">
+                        <i class="fas fa-download"></i> Экспорт CSV
+                    </button>
+                </div>
+                <div id="adminContent" style="overflow-x: auto;">
+                    <p>Нажмите кнопку для загрузки данных</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="app-footer">
+        <p>© 2025 Шинка – шиномонтаж. Все права защищены.</p>
+        <button class="admin-btn" onclick="openAdminPanel()" style="margin-top: 15px;">
+            <i class="fas fa-lock"></i> Открыть админку
+        </button>
+    </div>
+
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeAdminModal()">&times;</span>
+            <h2 style="color: var(--neon-yellow); margin-bottom: 20px;">Вход в админку</h2>
+            <div class="form-group">
+                <label class="form-label">Пароль администратора</label>
+                <input type="password" class="form-input" id="adminPassword" placeholder="Введите пароль">
+            </div>
+            <button class="submit-btn" onclick="validateAdmin()" style="margin-top: 20px;">Вход</button>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeEditModal()">&times;</span>
+            <h2 style="color: var(--neon-yellow); margin-bottom: 20px;">Редактирование записи</h2>
+            <div class="form-group">
+                <label class="form-label">Статус</label>
+                <select class="form-input" id="editStatus">
+                    <option value="pending">В ожидании</option>
+                    <option value="confirmed">Подтверждена</option>
+                    <option value="cancelled">Отменена</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Примечание мастера</label>
+                <textarea class="form-input" id="editNotes" rows="3" placeholder="Добавьте примечание..."></textarea>
+            </div>
+            <button class="submit-btn" onclick="saveEditedBooking()" style="margin-top: 20px;">Сохранить</button>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ============ КОНФИГ ============
+        const supabaseUrl = 'https://ahdcfaaczxbkbqldzell.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoZGNmYWFjenhia2JxbGR6ZWxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMjM4NjAsImV4cCI6MjA4MDY5OTg2MH0.Ym239Oba2nmyU94qK8cf9-NtWbO876-eG2J_WtA7a-0';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const ADMIN_PASSWORD_HASH = 'admin123'; // В проде использовать хеш!
+        const SERVICES = [
+            { id: 1, name: 'Сезонная замена шин', price: 'от 1500 ₽' },
+            { id: 2, name: 'Балансировка колёс', price: 'от 800 ₽' },
+            { id: 3, name: 'Ремонт шин', price: 'от 500 ₽' },
+            { id: 4, name: 'Диагностика кондиционера', price: 'от 1000 ₽' },
+            { id: 5, name: 'Заправка кондиционера', price: 'от 2500 ₽' },
+            { id: 6, name: 'Проточка тормозных дисков', price: 'от 1200 ₽' }
+        ];
+
+        let selectedTime = null;
+        let selectedService = null;
+        let isOnline = navigator.onLine;
+        let currentUser = null;
+        let editingBookingId = null;
+
+        // ============ PWA / SERVICE WORKER ============
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(e => console.log('SW error:', e));
+        }
+
+        // ============ ПУШІ УВЕДОМЛЕНИЯ ============
+        if ('Notification' in window && Notification.permission === 'granted') {
+            console.log('✓ Уведомления разрешены');
+        }
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installPrompt').classList.add('show');
+        });
+
+        document.getElementById('installBtn')?.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`Пользователь ${outcome === 'accepted' ? 'принял' : 'отклонил'} установку`);
+                deferredPrompt = null;
+                document.getElementById('installPrompt').classList.remove('show');
+            }
+        });
+
+        // ============ OFFLINE / ONLINE ============
+        window.addEventListener('online', () => {
+            isOnline = true;
+            document.getElementById('offlineBadge').classList.remove('show');
+            showNotification('✓ Интернет восстановлен!', false);
+            syncOfflineData();
+        });
+
+        window.addEventListener('offline', () => {
+            isOnline = false;
+            document.getElementById('offlineBadge').classList.add('show');
+            showNotification('⚠️ Нет интернета. Данные будут отправлены позже.', true);
+        });
+
+        // ============ ИНИЦИАЛИЗАЦИЯ ============
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDate();
+            renderServices();
+            loadUserHistory();
+            loadFavorites();
+            checkNotifications();
+        });
+
+        // ============ ФУНКЦИИ ============
+
+        function initializeDate() {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('bookingDate');
+            dateInput.min = today;
+            dateInput.value = today;
+            dateInput.addEventListener('change', generateTimeSlots);
+            generateTimeSlots();
+        }
+
+        function generateTimeSlots() {
+            const container = document.getElementById('timeSlots');
+            const dateInput = document.getElementById('bookingDate').value;
+            container.innerHTML = '';
+            selectedTime = null;
+
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString().split('T')[0];
+            const isToday = dateInput === today;
+            const currentHour = now.getHours();
+            const currentMin = now.getMinutes();
+
+            const selectedDate = new Date(dateInput + 'T00:00:00');
+            const dayOfWeek = selectedDate.getDay();
+            let startHour, endHour;
+
+            if (dayOfWeek === 0) { startHour = 10; endHour = 16; }
+            else if (dayOfWeek === 6) { startHour = 10; endHour = 18; }
+            else { startHour = 9; endHour = 20; }
+
+            for (let h = startHour; h < endHour; h++) {
+                for (let m = 0; m < 60; m += 30) {
+                    const timeStr = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+                    
+                    if (isToday && (h < currentHour || (h === currentHour && m <= currentMin))) {
+                        continue;
+                    }
+
+                    const btn = document.createElement('div');
+                    btn.className = 'time-slot';
+                    btn.textContent = timeStr;
+                    btn.onclick = () => {
+                        document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        selectedTime = timeStr;
+                    };
+                    container.appendChild(btn);
+                }
+            }
+        }
+
+        function renderServices() {
+            const container = document.getElementById('servicesList');
+            container.innerHTML = '';
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            
+            SERVICES.forEach(service => {
+                const el = document.createElement('div');
+                el.className = 'service-card';
+                const isFavorite = favorites.includes(service.id);
+                el.innerHTML = `
+                    <div class="service-info">
+                        <div class="service-name">${service.name}</div>
+                        <div class="service-price">${service.price}</div>
+                    </div>
+                    <div class="service-star ${isFavorite ? 'favorited' : ''}" onclick="toggleFavorite(event, ${service.id})">
+                        <i class="fas fa-star"></i>
+                    </div>
+                `;
+                el.onclick = (e) => {
+                    if (e.target.closest('.service-star')) return;
+                    document.querySelectorAll('.service-card').forEach(s => s.classList.remove('selected'));
+                    el.classList.add('selected');
+                    selectedService = service;
+                };
+                container.appendChild(el);
+            });
+        }
+
+        function toggleFavorite(e, serviceId) {
+            e.stopPropagation();
+            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            if (favorites.includes(serviceId)) {
+                favorites = favorites.filter(id => id !== serviceId);
+            } else {
+                favorites.push(serviceId);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            renderServices();
+            loadFavorites();
+        }
+
+        function loadFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const container = document.getElementById('favoritesContainer');
+            
+            if (favorites.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--neon-blue);">Нет избранных услуг</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            favorites.forEach(id => {
+                const service = SERVICES.find(s => s.id === id);
+                if (service) {
+                    const el = document.createElement('div');
+                    el.className = 'service-card';
+                    el.innerHTML = `
+                        <div class="service-info">
+                            <div class="service-name">${service.name}</div>
+                            <div class="service-price">${service.price}</div>
+                        </div>
+                        <button onclick="removeFavorite(${service.id})" style="background: var(--neon-red); border: none; color: white; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600;">Удалить</button>
+                    `;
+                    container.appendChild(el);
+                }
+            });
+        }
+
+        function removeFavorite(id) {
+            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            favorites = favorites.filter(fid => fid !== id);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            loadFavorites();
+        }
+
+        async function submitBooking() {
+            const name = document.getElementById('clientName').value.trim();
+            const phone = document.getElementById('clientPhone').value.trim();
+            const date = document.getElementById('bookingDate').value;
+            const time = selectedTime;
+            const service = selectedService?.name;
+            const comment = document.getElementById('comment').value.trim();
+
+            if (!name || !phone || !date || !time || !service) {
+                showNotification('Заполните все обязательные поля!', true);
+                return;
+            }
+
+            // Валидация телефона
+            if (!/^\+?7\d{10}$/.test(phone.replace(/[\s\-()]/g, ''))) {
+                showNotification('Некорректный номер телефона!', true);
+                return;
+            }
+
+            const booking = {
+                name,
+                phone: phone.replace(/[\s\-()]/g, ''),
+                date,
+                time,
+                service,
+                comment,
+                status: 'pending',
+                notes_admin: '',
+                created_at: new Date().toISOString()
+            };
+
+            // Сохраняем текущего пользователя
+            localStorage.setItem('currentUserPhone', booking.phone);
+
+            if (isOnline) {
+                document.getElementById('submitBtn').disabled = true;
+                try {
+                    const { error } = await supabase.from('bookings').insert([booking]);
+                    if (error) throw error;
+                    
+                    clearForm();
+                    showNotification(`✓ Запись создана на ${date} в ${time}! Ожидайте подтверждения.`, false);
+                    
+                    // Отправляем пуш
+                    if ('Notification' in window && Notification.permission === 'granted') {
+                        new Notification('Запись создана!', {
+                            body: `Ваша запись на ${date} в ${time}`,
+                            icon: 'icon-192x192.png'
+                        });
+                    }
+
+                    loadUserHistory();
+                } catch (error) {
+                    console.error(error);
+                    showNotification('Ошибка отправки!', true);
+                } finally {
+                    document.getElementById('submitBtn').disabled = false;
+                }
+            } else {
+                // Сохраняем оффлайн
+                const queue = JSON.parse(localStorage.getItem('syncQueue') || '[]');
+                queue.push(booking);
+                localStorage.setItem('syncQueue', JSON.stringify(queue));
+                document.getElementById('syncQueue').style.display = 'block';
+                
+                clearForm();
+                showNotification('⏳ Запись сохранена локально. Отправится при интернете.', false);
+                loadUserHistory();
+            }
+        }
+
+        async function syncOfflineData() {
+            const queue = JSON.parse(localStorage.getItem('syncQueue') || '[]');
+            if (queue.length === 0) return;
+
+            document.getElementById('syncBadge').classList.add('show');
+            
+            for (const booking of queue) {
+                try {
+                    const { error } = await supabase.from('bookings').insert([booking]);
+                    if (error) throw error;
+                } catch (error) {
+                    console.error('Sync error:', error);
+                    return;
+                }
+            }
+
+            localStorage.setItem('syncQueue', '[]');
+            document.getElementById('syncQueue').style.display = 'none';
+            showNotification('✓ Все записи синхронизированы!', false);
+            setTimeout(() => document.getElementById('syncBadge').classList.remove('show'), 2000);
+            loadUserHistory();
+        }
+
+        async function loadUserHistory() {
+            const phone = localStorage.getItem('currentUserPhone');
+            const container = document.getElementById('historyContainer');
+            
+            if (!phone) {
+                container.innerHTML = '<p style="text-align: center; color: var(--neon-blue);">Введите номер телефона для просмотра истории</p>';
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase
+                    .from('bookings')
+                    .select('*')
+                    .eq('phone', phone)
+                    .order('date', { ascending: false });
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: var(--neon-blue);">Нет записей</p>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                data.forEach(booking => {
+                    const el = document.createElement('div');
+                    el.className = 'history-card';
+                    const statusClass = `status-${booking.status}`;
+                    const statusText = booking.status === 'pending' ? 'В ожидании' : 
+                                      booking.status === 'confirmed' ? 'Подтверждена' : 'Отменена';
+                    
+                    el.innerHTML = `
+                        <div class="history-header">
+                            <div>
+                                <div class="history-service">${booking.service}</div>
+                                <div style="color: var(--neon-blue); font-size: 14px;">📅 ${booking.date} ⏰ ${booking.time}</div>
+                            </div>
+                            <div class="history-status ${statusClass}">${statusText}</div>
+                        </div>
+                        ${booking.notes_admin ? `<div style="color: var(--neon-yellow); font-size: 12px; margin-top: 8px;">📝 ${booking.notes_admin}</div>` : ''}
+                    `;
+                    container.appendChild(el);
+                });
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = '<p style="color: var(--neon-red);">Ошибка загрузки истории</p>';
+            }
+        }
+
+        function clearForm() {
+            document.getElementById('clientName').value = '';
+            document.getElementById('comment').value = '';
+            selectedTime = null;
+            selectedService = null;
+            document.querySelectorAll('.time-slot.selected, .service-card.selected').forEach(el => el.classList.remove('selected'));
+            generateTimeSlots();
+        }
+
+        function showTab(tabName, element) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(tabName + '-tab').classList.add('active');
+            element.classList.add('active');
+
+            if (tabName === 'history') loadUserHistory();
+            if (tabName === 'favorites') loadFavorites();
+        }
+
+        function showNotification(text, isError = false) {
+            const n = document.getElementById('notification');
+            n.textContent = text;
+            n.classList.toggle('error', isError);
+            n.classList.add('show');
+            setTimeout(() => n.classList.remove('show'), 4000);
+        }
+
+        // ============ АДМИНКА ============
+
+        function openAdminPanel() {
+            document.getElementById('adminModal').classList.add('active');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.remove('active');
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function validateAdmin() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD_HASH) {
+                closeAdminModal();
+                document.querySelector('.admin-panel').classList.add('active');
+                showTab('admin', document.querySelectorAll('.nav-tab')[3]);
+                showNotification('✓ Добро пожаловать, администратор!', false);
+                loadAllBookings();
+            } else {
+                showNotification('Неверный пароль!', true);
+            }
+        }
+
+        async function loadAllBookings() {
+            const container = document.getElementById('adminContent');
+            container.innerHTML = '<p>Загрузка...</p>';
+
+            try {
+                const { data, error } = await supabase
+                    .from('bookings')
+                    .select('*')
+                    .order('date', { ascending: false });
+
+                if (error) throw error;
+                renderBookingsTable(data);
+            } catch (error) {
+                container.innerHTML = '<p style="color: var(--neon-red);">Ошибка загрузки!</p>';
+            }
+        }
+
+        async function loadTodayBookings() {
+            const today = new Date().toISOString().split('T')[0];
+            const container = document.getElementById('adminContent');
+            container.innerHTML = '<p>Загрузка...</p>';
+
+            try {
+                const { data, error } = await supabase
+                    .from('bookings')
+                    .select('*')
+                    .eq('date', today)
+                    .order('time', { ascending: true });
+
+                if (error) throw error;
+                renderBookingsTable(data);
+            } catch (error) {
+                container.innerHTML = '<p style="color: var(--neon-red);">Ошибка загрузки!</p>';
+            }
+        }
+
+        async function loadPendingBookings() {
+            const container = document.getElementById('adminContent');
+            container.innerHTML = '<p>Загрузка...</p>';
+
+            try {
+                const { data, error } = await supabase
+                    .from('bookings')
+                    .select('*')
+                    .eq('status', 'pending')
+                    .order('date', { ascending: true });
+
+                if (error) throw error;
+                renderBookingsTable(data);
+            } catch (error) {
+                container.innerHTML = '<p style="color: var(--neon-red);">Ошибка загрузки!</p>';
+            }
+        }
+
+        function renderBookingsTable(data) {
+            const container = document.getElementById('adminContent');
+            
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p style="text-align: center;">Нет записей</p>';
+                return;
+            }
+
+            let html = `<table class="bookings-table">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Время</th>
+                        <th>Имя</th>
+                        <th>Телефон</th>
+                        <th>Услуга</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            data.forEach(b => {
+                const statusText = b.status === 'pending' ? '⏳ В ожидании' : 
+                                  b.status === 'confirmed' ? '✓ Подтверждена' : '✗ Отменена';
+                
+                html += `<tr class="booking-row">
+                    <td>${b.date}</td>
+                    <td>${b.time}</td>
+                    <td>${b.name}</td>
+                    <td><a href="tel:${b.phone}" style="color: var(--neon-blue);">${b.phone}</a></td>
+                    <td>${b.service}</td>
+                    <td>${statusText}</td>
+                    <td>
+                        <div class="booking-actions">
+                            <button class="action-btn confirm" onclick="openEditModal('${b.id}', '${b.status}', '${(b.notes_admin || '').replace(/'/g, "\\'")}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn cancel" onclick="cancelBooking('${b.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function openEditModal(bookingId, status, notes) {
+            editingBookingId = bookingId;
+            document.getElementById('editStatus').value = status;
+            document.getElementById('editNotes').value = notes;
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+            editingBookingId = null;
+        }
+
+        async function saveEditedBooking() {
+            const status = document.getElementById('editStatus').value;
+            const notes = document.getElementById('editNotes').value;
+
+            try {
+                const { error } = await supabase
+                    .from('bookings')
+                    .update({ status, notes_admin: notes })
+                    .eq('id', editingBookingId);
+
+                if (error) throw error;
+                closeEditModal();
+                showNotification('✓ Запись обновлена!', false);
+                loadAllBookings();
+            } catch (error) {
+                showNotification('Ошибка сохранения!', true);
+            }
+        }
+
+        async function cancelBooking(bookingId) {
+            if (confirm('Отменить запись?')) {
+                try {
+                    const { error } = await supabase
+                        .from('bookings')
+                        .update({ status: 'cancelled' })
+                        .eq('id', bookingId);
+
+                    if (error) throw error;
+                    showNotification('✓ Запись отменена!', false);
+                    loadAllBookings();
+                } catch (error) {
+                    showNotification('Ошибка отмены!', true);
+                }
+            }
+        }
+
+        function exportToCSV() {
+            supabase.from('bookings').select('*').then(({ data }) => {
+                if (!data) return;
+                
+                let csv = 'Дата,Время,Имя,Телефон,Услуга,Статус,Примечание\n';
+                data.forEach(b => {
+                    csv += `"${b.date}","${b.time}","${b.name}","${b.phone}","${b.service}","${b.status}","${b.notes_admin || ''}"\n`;
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `shinka-bookings-${new Date().toISOString().split('T')[0]}.csv`;
+                link.click();
+            });
+        }
+
+        // ============ ПРОВЕРКА УВЕДОМЛЕНИЙ (каждый час) ============
+        async function checkNotifications() {
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+
+            setInterval(async () => {
+                const phone = localStorage.getItem('currentUserPhone');
+                if (!phone) return;
+
+                const now = new Date();
+                const today = now.toISOString().split('T')[0];
+                const currentTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+                try {
+                    const { data } = await supabase
+                        .from('bookings')
+                        .select('*')
+                        .eq('phone', phone)
+                        .eq('date', today)
+                        .eq('status', 'confirmed');
+
+                    data?.forEach(b => {
+                        const [bH, bM] = b.time.split(':').map(Number);
+                        const [cH, cM] = currentTime.split(':').map(Number);
+                        const bookingMinutes = bH * 60 + bM;
+                        const currentMinutes = cH * 60 + cM;
+                        
+                        // Напоминание за 1 час
+                        if (bookingMinutes - currentMinutes === 60 || (bookingMinutes - currentMinutes > 50 && bookingMinutes - currentMinutes < 65)) {
+                            if ('Notification' in window && Notification.permission === 'granted') {
+                                new Notification('⏰ Напоминание!', {
+                                    body: `Ваша запись на ${b.service} через 1 час в ${b.time}`,
+                                    icon: 'icon-192x192.png'
+                                });
+                            }
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            }, 60000); // проверяем каждую минуту
+        }
+    </script>
+</body>
+</html>
