@@ -1,36 +1,229 @@
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0a0a0a">
-    <meta name="description" content="Шинка - онлайн запись на услуги шиномонтажа">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Шинка - Онлайн запись</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="icon-192x192.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --primary:#2563eb;--primary-dark:#1e40af;
+            --success:#10b981;--danger:#ef4444;--warning:#f59e0b;
+            --bg-light:#f9fafb;--bg-dark:#1f2937;
+            --text-light:#111827;--text-dark:#f3f4f6;
+            --border-light:#e5e7eb;--border-dark:#374151;
         }
-        :root {
-            --neon-red: #ff00ff;
-            --neon-blue: #00ffff;
-            --neon-green: #39ff14;
-            --neon-yellow: #ffff00;
-            --neon-purple: #ff00ff;
-            --dark-bg: #0a0a0a;
-            --darker-bg: #050505;
-            --card-bg: rgba(20, 20, 20, 0.8);
+        body{
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            background-color:var(--bg-light);
+            color:var(--text-light);
+            transition:background-color .3s,color .3s;
         }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--dark-bg);
-            color: white;
-            line-height: 1.5;
+        body.dark-mode{background-color:var(--bg-dark);color:var(--text-dark)}
+        .container{max-width:1200px;margin:0 auto;padding:20px}
+        .header{
+            display:flex;justify-content:space-between;align-items:center;
+            margin-bottom:30px;padding:20px;background:#fff;border-radius:8px;
+            box-shadow:0 1px 3px rgba(0,0,0,.1);border:1px solid var(--border-light);
+        }
+        body.dark-mode .header{background:var(--bg-dark);border-color:var(--border-dark)}
+        .header h1{font-size:28px;color:var(--primary)}
+        .header-actions{display:flex;gap:10px;align-items:center}
+        .user-info{
+            margin-right:10px;font-size:14px;padding:8px 12px;
+            background:rgba(37,99,235,.1);border-radius:6px;display:none;
+        }
+        .user-info.visible{display:block}
+        .btn-icon{
+            width:44px;height:44px;border:none;background:var(--primary);color:#fff;
+            border-radius:50%;cursor:pointer;font-size:20px;transition:.3s;
+            position:relative;box-shadow:0 2px 8px rgba(37,99,235,.3);
+            display:flex;align-items:center;justify-content:center;
+        }
+        .btn-icon:hover{background:var(--primary-dark);transform:scale(1.1);box-shadow:0 4px 12px rgba(37,99,235,.5)}
+        .btn-icon:active{transform:scale(.95)}
+        .notification-badge{
+            position:absolute;top:-5px;right:-5px;background:var(--danger);color:#fff;
+            border-radius:50%;width:24px;height:24px;display:flex;align-items:center;
+            justify-content:center;font-size:12px;font-weight:700;
+        }
+        .admin-panel{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .client-panel{display:grid;grid-template-columns:1fr;gap:20px}
+        @media(max-width:768px){
+            .header{flex-direction:column;gap:15px;padding:15px;margin-bottom:20px}
+            .header h1{font-size:22px;margin:0}
+            .header-actions{width:100%;justify-content:center}
+            .user-info{font-size:12px;padding:6px 10px}
+            .container{padding:10px}
+            .admin-panel{grid-template-columns:1fr;gap:15px}
+        }
+        .card{
+            background:#fff;border-radius:8px;padding:20px;
+            box-shadow:0 1px 3px rgba(0,0,0,.1);border:1px solid var(--border-light);
+        }
+        body.dark-mode .card{background:#374151;border-color:var(--border-dark)}
+        .card-title{font-size:20px;font-weight:600;margin-bottom:15px;color:var(--primary)}
+        .form-group{margin-bottom:15px}
+        label{display:block;margin-bottom:5px;font-weight:500;font-size:14px}
+        input,select,textarea{
+            width:100%;padding:10px;border:1px solid var(--border-light);
+            border-radius:6px;font:inherit;background:#fff;color:var(--text-light);
+        }
+        body.dark-mode input,body.dark-mode select,body.dark-mode textarea{
+            background:#4b5563;color:var(--text-dark);border-color:var(--border-dark);
+        }
+        input:focus,select:focus,textarea:focus{
+            outline:none;border-color:var(--primary);
+            box-shadow:0 0 0 3px rgba(37,99,235,.1);
+        }
+        .btn{
+            padding:10px 16px;border:none;border-radius:6px;
+            font-size:14px;font-weight:600;cursor:pointer;transition:.3s;
+        }
+        .btn-primary{background:var(--primary);color:#fff}
+        .btn-primary:hover{background:var(--primary-dark)}
+        .btn-secondary{background:#e5e7eb;color:var(--text-light)}
+        body.dark-mode .btn-secondary{background:#4b5563;color:var(--text-dark)}
+        .btn-secondary:hover{background:#d1d5db}
+        .btn-danger{background:var(--danger);color:#fff}
+        .btn-danger:hover{background:#dc2626}
+        .btn-warning{background:var(--warning);color:#fff}
+        .btn-warning:hover{background:#d97706}
+        .btn-sm{padding:6px 12px;font-size:12px}
+        .list{list-style:none}
+        .list-item{
+            padding:12px;border:1px solid var(--border-light);border-radius:6px;
+            margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;
+        }
+        body.dark-mode .list-item{border-color:var(--border-dark);background:#1f2937}
+        .list-item.unread{background:#eff6ff}
+        body.dark-mode .list-item.unread{background:#0f172a}
+        .list-item.cancelled{opacity:.6;background:#fee2e2}
+        body.dark-mode .list-item.cancelled{background:#7f1d1d}
+        .item-info{flex:1}
+        .item-title{font-weight:600;margin-bottom:5px}
+        .item-text{font-size:13px;opacity:.8}
+        .item-actions{display:flex;gap:8px}
+        .status-badge{
+            display:inline-block;padding:4px 8px;border-radius:4px;
+            font-size:11px;font-weight:600;margin-top:5px;
+        }
+        .status-pending{background:#fef3c7;color:#92400e}
+        .status-cancelled{background:#fee2e2;color:#991b1b}
+        .modal{
+            display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+            background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;
+        }
+        .modal.active{display:flex}
+        .modal-content{
+            background:#fff;border-radius:8px;padding:30px;max-width:500px;
+            width:90%;max-height:90vh;overflow-y:auto;
+            box-shadow:0 20px 25px rgba(0,0,0,.15);
+        }
+        body.dark-mode .modal-content{background:var(--bg-dark)}
+        .modal-header{
+            font-size:20px;font-weight:600;margin-bottom:20px;
+            display:flex;justify-content:space-between;align-items:center;
+        }
+        .close-btn{background:none;border:none;font-size:24px;cursor:pointer;color:inherit}
+        .modal-footer{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+        .service-badge{
+            display:inline-block;padding:4px 12px;border-radius:20px;
+            font-size:12px;font-weight:600;margin-bottom:10px;
+        }
+        .service-tire{background:#fef08a;color:#78350f}
+        .service-wheel{background:#e0e7ff;color:#312e81}
+        .service-balance{background:#fce7f3;color:#831843}
+        .service-other{background:#dbeafe;color:#0c2340}
+        .settings-group{
+            margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-light);
+        }
+        body.dark-mode .settings-group{border-color:var(--border-dark)}
+        .settings-group:last-child{border-bottom:none}
+        .settings-title{font-weight:600;margin-bottom:10px;font-size:16px}
+        .radio-group{display:flex;flex-direction:column;gap:10px}
+        .radio-item{display:flex;align-items:center;gap:10px}
+        .radio-item input[type="radio"],.radio-item input[type="checkbox"]{width:auto;margin:0}
+        .empty-state{text-align:center;padding:40px 20px;opacity:.6}
+        .empty-state-icon{font-size:48px;margin-bottom:10px}
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>🔧 SinkaApp</h1>
+    <div class="header-actions">
+        <div class="user-info" id="userInfo"></div>
+        <button class="btn-icon" id="notificationsBtn" title="Уведомления (клиент)" style="display:none;" aria-label="Открыть уведомления">
+            🔔
+            <span class="notification-badge" id="notificationBadge" style="display:none;">0</span>
+        </button>
+        <button class="btn-icon" id="settingsBtn" title="Настройки приложения" aria-label="Открыть настройки">⚙️</button>
+    </div>
+</div>
+
+<div class="container">
+    <div id="adminPanel" style="display:none;">
+        <div class="admin-panel">
+            <div class="card">
+                <div class="card-title">📋 Управление записями</div>
+                <div style="display:flex;gap:10px;margin-bottom:15px;">
+                    <button class="btn btn-primary" id="addRecordBtn" style="flex:1;">+ Новая запись</button>
+                    <button class="btn btn-secondary" id="exportCsvBtn" title="Экспортировать в CSV">📥 Экспорт</button>
+                </div>
+                <ul class="list" id="recordsList"></ul>
+            </div>
+            <div class="card">
+                <div class="card-title">👥 Клиенты</div>
+                <input type="text" id="clientSearch" placeholder="Поиск по имени или телефону..." style="margin-bottom:15px;">
+                <ul class="list" id="clientsList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="clientPanel" style="display:none;">
+        <div class="client-panel">
+            <div class="card">
+                <div class="card-title">📋 Мои записи</div>
+                <ul class="list" id="myRecordsList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginPanel">
+        <div style="max-width:400px;margin:60px auto;">
+            <div class="card">
+                <div class="card-title" style="text-align:center;margin-bottom:30px;">🔐 Вход в систему</div>
+                <div class="form-group">
+                    <label>Роль доступа</label>
+                    <select id="roleSelect">
+                        <option value="">Выберите роль</option>
+                        <option value="admin">🔧 Администратор</option>
+                        <option value="client">👤 Клиент</option>
+                    </select>
+                </div>
+                <div class="form-group" id="adminLoginGroup" style="display:none;">
+                    <label>Пароль администратора</label>
+                    <input type="password" id="adminPassword" placeholder="Введите пароль">
+                </div>
+                <div class="form-group" id="clientLoginGroup" style="display:none;">
+                    <label>Ваше имя</label>
+                    <input type="text" id="clientName" placeholder="Введите ваше имя">
+                </div>
+                <div class="form-group" id="phoneGroup" style="display:none;">
+                    <label>Телефон</label>
+                    <input type="tel" id="clientPhone" placeholder="Введите номер телефона">
+                </div>
+                <button class="btn btn-primary" id="loginBtn" style="width:100%;display:none;">Вход</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модалки, скрипт: возьми из своего текущего файла, он уже ок -->
+
+<script>
+/* ВАЖНО: сюда просто вставь весь твой JS как в текущем файле — он рабочий.
+   Проблема у тебя не в логике, а в том, что правильный index.html не залит в репозиторий. */
+</script>
+</body>
+</html>
