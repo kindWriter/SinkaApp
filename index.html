@@ -35,15 +35,9 @@
                 radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 40% 40%, rgba(57, 255, 20, 0.05) 0%, transparent 30%);
         }
-        .neon-text {
-            text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red), 0 0 30px var(--neon-red);
-            color: white;
-        }
-        /* ШАПКА С ФОНОМ И ТЕКСТОМ */
         .app-header {
-            background: url('https://i.imgur.com/9ZzL1Xs.png') no-repeat center center;
-            background-size: cover;
-            height: 120px;
+            background: linear-gradient(135deg, rgba(255,0,255,0.2), rgba(0,255,255,0.2));
+            height: 100px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -52,17 +46,10 @@
             justify-content: center;
             box-shadow: 0 0 30px var(--neon-purple), 0 4px 12px rgba(0,0,0,0.8);
             border-bottom: 3px solid var(--neon-yellow);
-        }
-        .header-title {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            color: white;
-            text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-red), 0 0 30px var(--neon-red);
-            letter-spacing: 2px;
-            background: linear-gradient(to right, var(--neon-red), var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 20px var(--neon-yellow), 0 0 40px var(--neon-purple);
         }
         .app-nav {
             display: flex;
@@ -85,6 +72,7 @@
             transition: all 0.3s;
             font-size: 0.9rem;
             text-shadow: 0 0 5px currentColor;
+            cursor: pointer;
         }
         .nav-tab:hover {
             background: rgba(0, 255, 255, 0.1);
@@ -230,6 +218,10 @@
             border-color: var(--neon-yellow);
             font-weight: 800;
         }
+        .time-slot.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
         .submit-btn {
             width: 100%;
             padding: 22px;
@@ -247,6 +239,10 @@
             align-items: center;
             gap: 15px;
             box-shadow: 0 0 30px var(--neon-purple), 0 12px 35px rgba(255, 0, 255, 0.4);
+        }
+        .submit-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 40px var(--neon-purple), 0 16px 40px rgba(255, 0, 255, 0.6);
         }
         .contacts-section {
             text-align: center;
@@ -332,7 +328,6 @@
             background: rgba(255, 0, 255, 0.4);
             box-shadow: 0 0 15px var(--neon-purple);
         }
-        /* ЧЕКБОКСЫ ДЛЯ ДАТЫ И ВРЕМЕНИ */
         .checkbox-container {
             display: flex;
             align-items: center;
@@ -352,84 +347,36 @@
             color: white;
             font-size: 0.9rem;
         }
-        /* МОДАЛЬНЫЙ КАЛЕНДАРЬ (браузерный) */
-        .calendar-input {
-            position: relative;
+        .tab-content {
+            display: none;
         }
-        .calendar-input input[type="date"] {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            padding: 16px;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid rgba(0, 255, 255, 0.4);
-            border-radius: 12px;
-            color: white;
-            font-size: 16px;
-            transition: all 0.3s;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(0, 255, 255, 0.1);
-        }
-        .calendar-input input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
-        }
-        /* СТИЛИ ПО МАКЕТУ */
-        .section-card {
-            border: 2px solid rgba(0, 255, 255, 0.4);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3), inset 0 0 15px rgba(0, 255, 255, 0.1);
-        }
-        .submit-btn {
-            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
-            color: black;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.3rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 0 30px var(--neon-purple), 0 12px 35px rgba(255, 0, 255, 0.4);
-        }
-        .submit-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 0 40px var(--neon-purple), 0 16px 40px rgba(255, 0, 255, 0.6);
-        }
-        .app-footer {
-            background: rgba(5, 5, 5, 0.95);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            text-align: center;
-            color: #aaa;
-            font-size: 0.9rem;
+        .tab-content.active {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <!-- ШАПКА С ФОНОМ И ТЕКСТОМ -->
+    <!-- ШАПКА -->
     <div class="app-header">
-        <div class="header-title">НеоШинка</div>
+        🔧 ШИНКА
     </div>
     
     <div class="app-nav">
         <a href="#" class="nav-tab active" onclick="showTab('booking', event)">
-            <i class="fas fa-calendar-alt"></i> ЗАПИСЬ
+            📅 ЗАПИСЬ
         </a>
         <a href="#" class="nav-tab" onclick="showTab('services', event)">
-            <i class="fas fa-wrench"></i> УСЛУГИ
+            🔧 УСЛУГИ
         </a>
         <a href="#" class="nav-tab" onclick="showTab('contacts', event)">
-            <i class="fas fa-phone"></i> КОНТАКТЫ
+            ☎️ КОНТАКТЫ
         </a>
     </div>
     
     <div class="app-content">
-        <div id="booking-tab" class="tab-content">
+        <div id="booking-tab" class="tab-content active">
             <div class="section-card">
-                <h2 class="section-title"><i class="fas fa-user"></i> Ваши данные</h2>
+                <h2 class="section-title">👤 Ваши данные</h2>
                 <div class="form-group">
                     <label class="form-label">ИМЯ</label>
                     <input type="text" class="form-input" id="clientName" placeholder="Иван" required>
@@ -441,51 +388,47 @@
             </div>
             
             <div class="section-card">
-                <h2 class="section-title"><i class="fas fa-calendar-day"></i> Дата и время</h2>
+                <h2 class="section-title">📅 Дата и время</h2>
                 <div class="form-group">
                     <label class="form-label">ДАТА</label>
-                    <div class="calendar-input">
-                        <input type="date" class="form-input" id="bookingDate" required>
-                    </div>
+                    <input type="date" class="form-input" id="bookingDate" required>
                 </div>
                 <div class="time-info">
-                    <i class="fas fa-clock pulse"></i>
-                    <strong>Интервал записи: 30 минут</strong>
+                    ⏱️ <strong>Интервал записи: 30 минут</strong>
                 </div>
                 <div class="time-slots-container">
                     <div class="time-slots-grid" id="timeSlots"></div>
                 </div>
-                <!-- ЧЕКБОКСЫ -->
                 <div class="checkbox-container">
-                    <input type="checkbox" id="confirmDate" onchange="toggleDateCheckbox()">
+                    <input type="checkbox" id="confirmDate">
                     <label for="confirmDate">Подтвердить дату</label>
                 </div>
                 <div class="checkbox-container">
-                    <input type="checkbox" id="confirmTime" onchange="toggleTimeCheckbox()">
+                    <input type="checkbox" id="confirmTime">
                     <label for="confirmTime">Подтвердить время</label>
                 </div>
             </div>
             
             <div class="section-card">
-                <h2 class="section-title"><i class="fas fa-wrench"></i> Выбор услуги</h2>
+                <h2 class="section-title">🔧 Выбор услуги</h2>
                 <div class="services-container" id="servicesList"></div>
             </div>
             
             <div class="section-card">
-                <h2 class="section-title"><i class="fas fa-comment-alt"></i> Комментарий</h2>
+                <h2 class="section-title">💬 Комментарий</h2>
                 <div class="form-group">
                     <textarea class="form-input" id="comment" rows="3" placeholder="Госномер, марка авто..."></textarea>
                 </div>
             </div>
             
             <button class="submit-btn" onclick="submitBooking()">
-                <i class="fas fa-calendar-check"></i> ПОДТВЕРДИТЬ ЗАПИСЬ
+                ✅ ПОДТВЕРДИТЬ ЗАПИСЬ
             </button>
         </div>
         
-        <div id="services-tab" class="tab-content" style="display: none;">
+        <div id="services-tab" class="tab-content">
             <div class="section-card">
-                <h2 class="section-title"><i class="fas fa-check-circle"></i> Наши услуги</h2>
+                <h2 class="section-title">✅ Наши услуги</h2>
                 <div style="display: flex; flex-direction: column; gap: 18px;">
                     <div class="service-card">
                         <div class="service-name">Сезонная замена шин</div>
@@ -515,25 +458,25 @@
             </div>
         </div>
         
-        <div id="contacts-tab" class="tab-content" style="display: none;">
+        <div id="contacts-tab" class="tab-content">
             <div class="contacts-section">
-                <h2 class="section-title"><i class="fas fa-address-book"></i> Контакты</h2>
+                <h2 class="section-title">📞 Контакты</h2>
                 <div class="phone-number">
-                    <i class="fas fa-phone-alt"></i> +7 927 711-78-86
+                    📱 +7 927 711-78-86
                 </div>
                 <div style="margin: 25px 0;">
                     <h3 style="color: var(--neon-yellow); margin-bottom: 15px;">
-                        <i class="fas fa-clock"></i> Часы работы:
+                        🕐 Часы работы:
                     </h3>
                     <p>Пн–Пт: <strong style="color: var(--neon-green);">9:00 – 20:00</strong></p>
                     <p>Сб: <strong style="color: var(--neon-green);">10:00 – 18:00</strong></p>
                     <p>Вс: <strong style="color: var(--neon-green);">10:00 – 16:00</strong></p>
                 </div>
                 <p style="color: var(--neon-blue);">
-                    <i class="fas fa-map-marker-alt"></i> г. Горячий Ключ, ул. Ярославского 123/1
+                    📍 г. Горячий Ключ, ул. Ярославского 123/1
                 </p>
                 <p style="margin-top: 12px; color: var(--neon-blue);">
-                    <i class="fas fa-envelope"></i> Email: info@shinka.ru
+                    📧 Email: info@shinka.ru
                 </p>
             </div>
         </div>
@@ -542,7 +485,7 @@
     <div class="app-footer">
         <p>© 2025 Шинка – шиномонтаж. Все права защищены.</p>
         <button class="admin-btn" onclick="openAdmin()">
-            <i class="fas fa-lock"></i> Админка
+            🔐 Админка
         </button>
     </div>
     
@@ -560,11 +503,15 @@
     <script>
       const supabaseUrl = 'https://ahdcfaaczxbkbqldzell.supabase.co';
       const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoZGNmYWFjenhia2JxbGR6ZWxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMjM4NjAsImV4cCI6MjA4MDY5OTg2MH0.Ym239Oba2nmyU94qK8cf9-NtWbO876-eG2J_WtA7a-0';
-      const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+      
+      // ПРАВИЛЬНАЯ инициализация Supabase
+      const { createClient } = window.supabase;
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
       let selectedDate = null;
       let selectedTime = null;
       let selectedService = null;
+      
       const SERVICES = [
         { name: 'Сезонная замена шин', price: 'от 1500 руб.' },
         { name: 'Балансировка колес', price: 'от 800 руб.' },
@@ -577,33 +524,33 @@
       document.addEventListener('DOMContentLoaded', () => {
         const today = new Date().toISOString().split('T')[0];
         const dateInput = document.getElementById('bookingDate');
-        if (!dateInput) return;
-        dateInput.min = today;
-        dateInput.value = today;
-        selectedDate = today;
-        dateInput.addEventListener('change', e => {
-          selectedDate = e.target.value;
+        if (dateInput) {
+          dateInput.min = today;
+          dateInput.value = today;
+          selectedDate = today;
+          dateInput.addEventListener('change', e => {
+            selectedDate = e.target.value;
+            generateTimeSlots();
+          });
           generateTimeSlots();
-        });
-        generateTimeSlots();
+        }
         generateBookingServices();
       });
 
       function showTab(tabName, event) {
         event.preventDefault();
-        document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
         const tab = document.getElementById(tabName + '-tab');
-        if (tab) tab.style.display = 'block';
+        if (tab) tab.classList.add('active');
         event.currentTarget.classList.add('active');
       }
 
       function generateTimeSlots() {
         const container = document.getElementById('timeSlots');
-        if (!container) return;
+        if (!container || !selectedDate) return;
+        
         container.innerHTML = '';
-        if (!selectedDate) return;
-
         const now = new Date();
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const selectedDateObj = new Date(selectedDate);
@@ -645,7 +592,6 @@
             document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
             btn.classList.add('selected');
             selectedTime = slot;
-            // Автоматически отмечаем чекбокс времени
             document.getElementById('confirmTime').checked = true;
           };
           container.appendChild(btn);
@@ -677,13 +623,16 @@
         const confirmTime = document.getElementById('confirmTime').checked;
         
         if (!name || !phone || !selectedDate || !selectedTime || !selectedService) {
-          showNotification('Заполните все поля!', true);
+          showNotification('❌ Заполните все поля!', true);
           return;
         }
         if (!confirmDate || !confirmTime) {
-          showNotification('Подтвердите дату и время!', true);
+          showNotification('❌ Подтвердите дату и время!', true);
           return;
         }
+
+        // Сохраняем выбранный сервис перед отправкой
+        const serviceToSubmit = selectedService.name;
 
         const { error } = await supabase.from('bookings').insert([
           {
@@ -691,15 +640,16 @@
             phone,
             date: selectedDate,
             time: selectedTime,
-            service: selectedService.name,
-            comment
+            service: serviceToSubmit,
+            comment: comment || ''
           }
         ]);
 
         if (error) {
           console.error('Supabase error:', error);
-          showNotification('Ошибка отправки. Попробуйте позже.', true);
+          showNotification('❌ Ошибка отправки. Попробуйте позже.', true);
         } else {
+          // Очищаем форму
           document.getElementById('clientName').value = '';
           document.getElementById('clientPhone').value = '';
           document.getElementById('comment').value = '';
@@ -708,33 +658,17 @@
           selectedTime = null;
           selectedService = null;
           document.querySelectorAll('.time-slot.selected, .service-card.selected').forEach(el => el.classList.remove('selected'));
-          showNotification(`Запись подтверждена!\n${selectedDate} в ${selectedTime}`);
-        }
-      }
-
-      function toggleDateCheckbox() {
-        const checkbox = document.getElementById('confirmDate');
-        if (checkbox.checked) {
-          showNotification('Дата подтверждена', false);
-        } else {
-          showNotification('Дата отменена', true);
-        }
-      }
-
-      function toggleTimeCheckbox() {
-        const checkbox = document.getElementById('confirmTime');
-        if (checkbox.checked) {
-          showNotification('Время подтверждено', false);
-        } else {
-          showNotification('Время отменено', true);
+          showNotification(`✅ Запись подтверждена!\n${selectedDate} в ${selectedTime}`);
         }
       }
 
       function showNotification(text, isError = false) {
         const n = document.getElementById('notification');
         if (!n) return;
-        n.innerHTML = `<h3><i class="fas fa-${isError ? 'exclamation-triangle' : 'check-circle'}"></i> ${isError ? 'Ошибка' : 'Успех!'}</h3><p>${text}</p>`;
-        n.style.background = isError ? '#ff3366' : 'linear-gradient(135deg, #39ff14, #00ff80)';
+        n.innerHTML = text;
+        n.style.background = isError 
+          ? 'linear-gradient(135deg, #ff3366, #ff6699)' 
+          : 'linear-gradient(135deg, #39ff14, #00ff80)';
         n.classList.add('show');
         setTimeout(() => n.classList.remove('show'), 4000);
       }
@@ -744,7 +678,7 @@
         if (password === 'НеонШинка') {
           showAdminPanel();
         } else if (password !== null) {
-          alert('Неверный пароль!');
+          alert('❌ Неверный пароль!');
         }
       }
 
@@ -756,9 +690,9 @@
         const { data, error } = await supabase.from('bookings').select('*').order('created_at', { ascending: false });
         
         if (error) {
-          content.innerHTML = `<p style="color: red;">Ошибка загрузки: ${error.message}</p>`;
+          content.innerHTML = `<p style="color: #ff6699;">❌ Ошибка загрузки: ${error.message}</p>`;
         } else if (!data || data.length === 0) {
-          content.innerHTML = '<p>Нет записей.</p>';
+          content.innerHTML = '<p>📭 Нет записей.</p>';
         } else {
           let html = `<table class="bookings-table">
             <thead><tr>
