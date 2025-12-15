@@ -504,7 +504,6 @@
       const supabaseUrl = 'https://ahdcfaaczxbkbqldzell.supabase.co';
       const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoZGNmYWFjenhia2JxbGR6ZWxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMjM4NjAsImV4cCI6MjA4MDY5OTg2MH0.Ym239Oba2nmyU94qK8cf9-NtWbO876-eG2J_WtA7a-0';
       
-      // ПРАВИЛЬНАЯ инициализация Supabase
       const { createClient } = window.supabase;
       const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -631,25 +630,43 @@
           return;
         }
 
-        // Сохраняем выбранный сервис перед отправкой
         const serviceToSubmit = selectedService.name;
 
-        const { error } = await supabase.from('bookings').insert([
-          {
+        try {
+          console.log('📤 Отправляю данные:', {
             name,
             phone,
             date: selectedDate,
             time: selectedTime,
             service: serviceToSubmit,
-            comment: comment || ''
-          }
-        ]);
+            comment
+          });
 
-        if (error) {
-          console.error('Supabase error:', error);
-          showNotification('❌ Ошибка отправки. Попробуйте позже.', true);
-        } else {
-          // Очищаем форму
+          const { data, error } = await supabase
+            .from('bookings')
+            .insert([
+              {
+                name,
+                phone,
+                date: selectedDate,
+                time: selectedTime,
+                service: serviceToSubmit,
+                comment: comment || ''
+              }
+            ]);
+
+          if (error) {
+            console.error('❌ Supabase error code:', error.code);
+            console.error('❌ Supabase error message:', error.message);
+            console.error('❌ Supabase error details:', error.details);
+            console.error('❌ Supabase error hint:', error.hint);
+            
+            showNotification(`❌ Ошибка: ${error.message}`, true);
+            return;
+          }
+
+          console.log('✅ Данные успешно отправлены:', data);
+
           document.getElementById('clientName').value = '';
           document.getElementById('clientPhone').value = '';
           document.getElementById('comment').value = '';
@@ -658,7 +675,11 @@
           selectedTime = null;
           selectedService = null;
           document.querySelectorAll('.time-slot.selected, .service-card.selected').forEach(el => el.classList.remove('selected'));
+          
           showNotification(`✅ Запись подтверждена!\n${selectedDate} в ${selectedTime}`);
+        } catch (err) {
+          console.error('❌ Ошибка соединения:', err);
+          showNotification(`❌ Ошибка: ${err.message}`, true);
         }
       }
 
@@ -714,4 +735,4 @@
       }
     </script>
 </body>
-</html>
+    </html>
