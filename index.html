@@ -667,6 +667,10 @@
 
           console.log('✅ Данные успешно отправлены:', data);
 
+          // Сохраняем время перед очисткой
+          const confirmedTime = selectedTime;
+          const confirmedDate = selectedDate;
+
           document.getElementById('clientName').value = '';
           document.getElementById('clientPhone').value = '';
           document.getElementById('comment').value = '';
@@ -676,7 +680,7 @@
           selectedService = null;
           document.querySelectorAll('.time-slot.selected, .service-card.selected').forEach(el => el.classList.remove('selected'));
           
-          showNotification(`✅ Запись подтверждена!\n${selectedDate} в ${selectedTime}`);
+          showNotification(`✅ Запись подтверждена!\n${confirmedDate} в ${confirmedTime}`);
         } catch (err) {
           console.error('❌ Ошибка соединения:', err);
           showNotification(`❌ Ошибка: ${err.message}`, true);
@@ -735,4 +739,4 @@
       }
     </script>
 </body>
-    </html>
+</html>
