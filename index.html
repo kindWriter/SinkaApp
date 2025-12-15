@@ -39,47 +39,30 @@
             text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red), 0 0 30px var(--neon-red);
             color: white;
         }
-        /* ШАПКА С ЛОГОТИПОМ И ИЗОБРАЖЕНИЕМ */
+        /* ШАПКА С ФОНОМ И ТЕКСТОМ */
         .app-header {
-            background: linear-gradient(135deg, rgba(255, 0, 255, 0.9) 0%, rgba(0, 255, 255, 0.9) 100%);
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            background: url('https://i.imgur.com/9ZzL1Xs.png') no-repeat center center;
+            background-size: cover;
+            height: 120px;
             position: sticky;
             top: 0;
             z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             box-shadow: 0 0 30px var(--neon-purple), 0 4px 12px rgba(0,0,0,0.8);
             border-bottom: 3px solid var(--neon-yellow);
         }
-        .header-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .header-logo img {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
         .header-title {
-            font-size: 1.2rem;
+            font-size: 2rem;
             font-weight: 900;
             color: white;
             text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-red), 0 0 30px var(--neon-red);
-            letter-spacing: 1px;
-        }
-        .header-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://i.imgur.com/9ZzL1Xs.png') no-repeat center center;
-            background-size: cover;
-            opacity: 0.3;
-            z-index: -1;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, var(--neon-red), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .app-nav {
             display: flex;
@@ -369,16 +352,66 @@
             color: white;
             font-size: 0.9rem;
         }
+        /* МОДАЛЬНЫЙ КАЛЕНДАРЬ (браузерный) */
+        .calendar-input {
+            position: relative;
+        }
+        .calendar-input input[type="date"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 16px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(0, 255, 255, 0.1);
+        }
+        .calendar-input input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
+        /* СТИЛИ ПО МАКЕТУ */
+        .section-card {
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3), inset 0 0 15px rgba(0, 255, 255, 0.1);
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
+            color: black;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 0 30px var(--neon-purple), 0 12px 35px rgba(255, 0, 255, 0.4);
+        }
+        .submit-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 40px var(--neon-purple), 0 16px 40px rgba(255, 0, 255, 0.6);
+        }
+        .app-footer {
+            background: rgba(5, 5, 5, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
-    <!-- ШАПКА С ЛОГОТИПОМ И ИЗОБРАЖЕНИЕМ -->
+    <!-- ШАПКА С ФОНОМ И ТЕКСТОМ -->
     <div class="app-header">
-        <div class="header-logo">
-            <img src="https://i.imgur.com/9ZzL1Xs.png" alt="Логотип">
-            <div class="header-title">ШИНКА</div>
-        </div>
-        <div class="header-bg"></div>
+        <div class="header-title">НеоШинка</div>
     </div>
     
     <div class="app-nav">
@@ -411,7 +444,9 @@
                 <h2 class="section-title"><i class="fas fa-calendar-day"></i> Дата и время</h2>
                 <div class="form-group">
                     <label class="form-label">ДАТА</label>
-                    <input type="date" class="form-input" id="bookingDate" required>
+                    <div class="calendar-input">
+                        <input type="date" class="form-input" id="bookingDate" required>
+                    </div>
                 </div>
                 <div class="time-info">
                     <i class="fas fa-clock pulse"></i>
