@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Шинка - Онлайн запись</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#0a0a0a">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Шинка">
-    <link rel="manifest" href="/manifest.json">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23ff00ff' width='192' height='192'/><text x='50%' y='50%' font-size='120' fill='%23ffff00' text-anchor='middle' dominant-baseline='middle' font-weight='bold'>🔧</text></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%23ff00ff' width='180' height='180' rx='40'/><text x='50%' y='50%' font-size='100' fill='%23ffff00' text-anchor='middle' dominant-baseline='middle' font-weight='bold'>🔧</text></svg>">
     <style>
         * {
             margin: 0;
@@ -66,7 +66,7 @@
             backdrop-filter: blur(10px);
             border-bottom: 2px solid var(--neon-blue);
             position: sticky;
-            top: 0;
+            top: 100px;
             z-index: 99;
             box-shadow: 0 0 15px var(--neon-blue);
         }
@@ -82,6 +82,9 @@
             font-size: 0.9rem;
             text-shadow: 0 0 5px currentColor;
             cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
         }
         .nav-tab:hover {
             background: rgba(0, 255, 255, 0.1);
@@ -144,6 +147,9 @@
             border-color: var(--neon-yellow);
             background: rgba(0, 0, 0, 0.8);
             box-shadow: 0 0 20px var(--neon-yellow), inset 0 0 20px rgba(255, 255, 0, 0.1);
+        }
+        textarea.form-input {
+            font-family: inherit;
         }
         .services-container {
             display: grid;
@@ -220,6 +226,10 @@
             transition: all 0.3s;
             font-weight: 600;
             border: 2px solid transparent;
+            color: white;
+        }
+        .time-slot:hover {
+            background: rgba(0, 255, 255, 0.2);
         }
         .time-slot.selected {
             background: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
@@ -280,6 +290,8 @@
             transform: translateY(150%);
             transition: transform 0.4s;
             border: 2px solid var(--neon-yellow);
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
         .notification.show {
             transform: translateY(0);
@@ -287,9 +299,9 @@
         .admin-panel {
             background: rgba(10, 0, 30, 0.9);
             padding: 25px;
-            margin-top: 40px;
+            margin-bottom: 20px;
             border-top: 2px solid var(--neon-purple);
-            display: none;
+            border-radius: 15px;
         }
         .admin-title {
             color: var(--neon-purple);
@@ -301,15 +313,21 @@
             width: 100%;
             border-collapse: collapse;
             color: white;
+            font-size: 0.9rem;
         }
         .bookings-table th,
         .bookings-table td {
             padding: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: left;
+            word-break: break-word;
         }
         .bookings-table th {
             color: var(--neon-yellow);
+            background: rgba(255, 255, 0, 0.1);
+        }
+        .bookings-table tr:hover {
+            background: rgba(0, 255, 255, 0.1);
         }
         .app-footer {
             text-align: center;
@@ -332,6 +350,7 @@
             width: fit-content;
             margin: 20px auto 0;
             transition: all 0.3s;
+            font-size: 1rem;
         }
         .admin-btn:hover {
             background: rgba(255, 0, 255, 0.4);
@@ -351,10 +370,12 @@
             width: 20px;
             height: 20px;
             accent-color: var(--neon-yellow);
+            cursor: pointer;
         }
         .checkbox-container label {
             color: white;
             font-size: 0.9rem;
+            cursor: pointer;
         }
         .tab-content {
             display: none;
@@ -362,24 +383,42 @@
         .tab-content.active {
             display: block;
         }
+        .close-admin-btn {
+            background: rgba(255, 0, 255, 0.2);
+            color: var(--neon-red);
+            border: 1px solid var(--neon-red);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            float: right;
+        }
+        .close-admin-btn:hover {
+            background: rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 10px var(--neon-red);
+        }
+        .admin-content-wrapper {
+            clear: both;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <!-- ШАПКА -->
     <div class="app-header">
         🔧 ШИНКА
     </div>
     
     <div class="app-nav">
-        <a href="#" class="nav-tab active" onclick="showTab('booking', event)">
+        <button class="nav-tab active" data-tab="booking">
             📅 ЗАПИСЬ
-        </a>
-        <a href="#" class="nav-tab" onclick="showTab('services', event)">
+        </button>
+        <button class="nav-tab" data-tab="services">
             🔧 УСЛУГИ
-        </a>
-        <a href="#" class="nav-tab" onclick="showTab('contacts', event)">
+        </button>
+        <button class="nav-tab" data-tab="contacts">
             ☎️ КОНТАКТЫ
-        </a>
+        </button>
     </div>
     
     <div class="app-content">
@@ -440,27 +479,27 @@
                 <h2 class="section-title">✅ Наши услуги</h2>
                 <div style="display: flex; flex-direction: column; gap: 18px;">
                     <div class="service-card">
-                        <div class="service-name">Сезонная замена шин</div>
+                        <div class="service-name">🔄 Сезонная замена шин</div>
                         <div class="service-price">от 1500 руб.</div>
                     </div>
                     <div class="service-card">
-                        <div class="service-name">Балансировка колес</div>
+                        <div class="service-name">⚙️ Балансировка колес</div>
                         <div class="service-price">от 800 руб.</div>
                     </div>
                     <div class="service-card">
-                        <div class="service-name">Ремонт шин</div>
+                        <div class="service-name">🔨 Ремонт шин</div>
                         <div class="service-price">от 500 руб.</div>
                     </div>
                     <div class="service-card">
-                        <div class="service-name">Диагностика кондиционера</div>
+                        <div class="service-name">❄️ Диагностика кондиционера</div>
                         <div class="service-price">от 1000 руб.</div>
                     </div>
                     <div class="service-card">
-                        <div class="service-name">Заправка кондиционера</div>
+                        <div class="service-name">🌬️ Заправка кондиционера</div>
                         <div class="service-price">от 2500 руб.</div>
                     </div>
                     <div class="service-card">
-                        <div class="service-name">Проточка тормозных дисков</div>
+                        <div class="service-name">🛠️ Проточка тормозных дисков</div>
                         <div class="service-price">от 1200 руб.</div>
                     </div>
                 </div>
@@ -468,26 +507,36 @@
         </div>
         
         <div id="contacts-tab" class="tab-content">
-            <div class="contacts-section">
+            <div class="section-card">
                 <h2 class="section-title">📞 Контакты</h2>
-                <div class="phone-number">
-                    📱 +7 927 711-78-86
+                <div class="contacts-section">
+                    <div class="phone-number">
+                        📱 +7 927 711-78-86
+                    </div>
+                    <div style="margin: 25px 0;">
+                        <h3 style="color: var(--neon-yellow); margin-bottom: 15px;">
+                            🕐 Часы работы:
+                        </h3>
+                        <p>Пн–Пт: <strong style="color: var(--neon-green);">9:00 – 20:00</strong></p>
+                        <p>Сб: <strong style="color: var(--neon-green);">10:00 – 18:00</strong></p>
+                        <p>Вс: <strong style="color: var(--neon-green);">10:00 – 16:00</strong></p>
+                    </div>
+                    <p style="color: var(--neon-blue);">
+                        📍 г. Горячий Ключ, ул. Ярославского 123/1
+                    </p>
+                    <p style="margin-top: 12px; color: var(--neon-blue);">
+                        📧 Email: <a href="mailto:info@shinka.ru" style="color: var(--neon-blue);">info@shinka.ru</a>
+                    </p>
                 </div>
-                <div style="margin: 25px 0;">
-                    <h3 style="color: var(--neon-yellow); margin-bottom: 15px;">
-                        🕐 Часы работы:
-                    </h3>
-                    <p>Пн–Пт: <strong style="color: var(--neon-green);">9:00 – 20:00</strong></p>
-                    <p>Сб: <strong style="color: var(--neon-green);">10:00 – 18:00</strong></p>
-                    <p>Вс: <strong style="color: var(--neon-green);">10:00 – 16:00</strong></p>
-                </div>
-                <p style="color: var(--neon-blue);">
-                    📍 г. Горячий Ключ, ул. Ярославского 123/1
-                </p>
-                <p style="margin-top: 12px; color: var(--neon-blue);">
-                    📧 Email: info@shinka.ru
-                </p>
             </div>
+        </div>
+    </div>
+    
+    <div id="admin-panel" class="admin-panel" style="display: none;">
+        <button class="close-admin-btn" onclick="closeAdmin()">✕ Закрыть</button>
+        <h2 class="admin-title">🔐 ПАНЕЛЬ АДМИНИСТРАТОРА</h2>
+        <div class="admin-content-wrapper" id="adminContent">
+            <p>⏳ Загрузка данных...</p>
         </div>
     </div>
     
@@ -498,18 +547,12 @@
         </button>
     </div>
     
-    <div class="admin-panel" id="adminPanel">
-        <h2 class="admin-title">ПАНЕЛЬ АДМИНИСТРАТОРА</h2>
-        <div id="adminContent">
-            <p>Загрузка...</p>
-        </div>
-    </div>
-    
     <div class="notification" id="notification"></div>
 
-    <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+      console.log('🚀 Скрипт загружен. Версия: 2025-12-18-v3-FIXED');
+      
       const supabaseUrl = 'https://ahdcfaaczxbkbqldzell.supabase.co';
       const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoZGNmYWFjenhia2JxbGR6ZWxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMjM4NjAsImV4cCI6MjA4MDY5OTg2MH0.Ym239Oba2nmyU94qK8cf9-NtWbO876-eG2J_WtA7a-0';
       
@@ -530,6 +573,8 @@
       ];
 
       document.addEventListener('DOMContentLoaded', () => {
+        console.log('✅ DOM загружен');
+        
         const today = new Date().toISOString().split('T')[0];
         const dateInput = document.getElementById('bookingDate');
         if (dateInput) {
@@ -542,16 +587,52 @@
           });
           generateTimeSlots();
         }
+        
         generateBookingServices();
+        setupTabs();
+        console.log('✅ Инициализация завершена');
       });
 
-      function showTab(tabName, event) {
-        event.preventDefault();
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      function setupTabs() {
+        console.log('🔧 Инициализирую табы...');
+        const navTabs = document.querySelectorAll('.nav-tab');
+        console.log('📊 Найдено табов:', navTabs.length);
+        
+        navTabs.forEach((tab, index) => {
+          console.log(`  Таб ${index}:`, tab.dataset.tab);
+          tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            const tabName = tab.dataset.tab;
+            console.log('🖱️  Клик по табу:', tabName);
+            showTab(tabName);
+          });
+        });
+      }
+
+      function showTab(tabName) {
+        console.log('📌 Переключаюсь на таб:', tabName);
+        
+        document.querySelectorAll('.tab-content').forEach(t => {
+          t.classList.remove('active');
+        });
+        
+        document.querySelectorAll('.nav-tab').forEach(t => {
+          t.classList.remove('active');
+        });
+        
         const tab = document.getElementById(tabName + '-tab');
-        if (tab) tab.classList.add('active');
-        event.currentTarget.classList.add('active');
+        if (tab) {
+          tab.classList.add('active');
+          console.log('✅ Таб активирован:', tabName);
+        } else {
+          console.error('❌ Таб не найден:', tabName + '-tab');
+        }
+        
+        const btn = document.querySelector(`.nav-tab[data-tab="${tabName}"]`);
+        if (btn) {
+          btn.classList.add('active');
+          console.log('✅ Кнопка таба активирована');
+        }
       }
 
       function generateTimeSlots() {
@@ -588,7 +669,7 @@
           : slots;
 
         if (filteredSlots.length === 0 && isToday) {
-          container.innerHTML = '<div style="color: var(--neon-yellow); text-align: center; padding: 20px;">Нет доступных слотов на сегодня</div>';
+          container.innerHTML = '<div style="color: var(--neon-yellow); text-align: center; padding: 20px; grid-column: 1/-1;">Нет доступных слотов на сегодня</div>';
           return;
         }
 
@@ -615,7 +696,7 @@
           el.className = 'service-card';
           el.innerHTML = `<div class="service-name">${service.name}</div><div class="service-price">${service.price}</div>`;
           el.onclick = () => {
-            document.querySelectorAll('.service-card').forEach(s => s.classList.remove('selected'));
+            document.querySelectorAll('#servicesList .service-card').forEach(s => s.classList.remove('selected'));
             el.classList.add('selected');
             selectedService = service;
           };
@@ -665,18 +746,13 @@
             ]);
 
           if (error) {
-            console.error('❌ Supabase error code:', error.code);
-            console.error('❌ Supabase error message:', error.message);
-            console.error('❌ Supabase error details:', error.details);
-            console.error('❌ Supabase error hint:', error.hint);
-            
+            console.error('❌ Supabase error:', error);
             showNotification(`❌ Ошибка: ${error.message}`, true);
             return;
           }
 
           console.log('✅ Данные успешно отправлены:', data);
 
-          // Сохраняем время перед очисткой
           const confirmedTime = selectedTime;
           const confirmedDate = selectedDate;
 
@@ -689,9 +765,9 @@
           selectedService = null;
           document.querySelectorAll('.time-slot.selected, .service-card.selected').forEach(el => el.classList.remove('selected'));
           
-          showNotification(`✅ Запись подтверждена!\n${confirmedDate} в ${confirmedTime}`);
+          showNotification(`✅ Запись подтверждена!\\n${confirmedDate} в ${confirmedTime}`);
         } catch (err) {
-          console.error('❌ Ошибка соединения:', err);
+          console.error('❌ Ошибка:', err);
           showNotification(`❌ Ошибка: ${err.message}`, true);
         }
       }
@@ -708,6 +784,7 @@
       }
 
       function openAdmin() {
+        console.log('🔐 Открываю админку...');
         const password = prompt('Введите пароль администратора:');
         if (password === 'НеонШинка') {
           showAdminPanel();
@@ -716,45 +793,57 @@
         }
       }
 
+      function closeAdmin() {
+        document.getElementById('admin-panel').style.display = 'none';
+      }
+
       async function showAdminPanel() {
-        const panel = document.getElementById('adminPanel');
+        const panel = document.getElementById('admin-panel');
         const content = document.getElementById('adminContent');
         if (!panel || !content) return;
         
-        const { data, error } = await supabase.from('bookings').select('*').order('created_at', { ascending: false });
-        
-        if (error) {
-          content.innerHTML = `<p style="color: #ff6699;">❌ Ошибка загрузки: ${error.message}</p>`;
-        } else if (!data || data.length === 0) {
-          content.innerHTML = '<p>📭 Нет записей.</p>';
-        } else {
-          let html = `<table class="bookings-table">
-            <thead><tr>
-              <th>Дата</th><th>Время</th><th>Имя</th><th>Телефон</th><th>Услуга</th>
-            </tr></thead><tbody>`;
-          data.forEach(b => {
-            html += `<tr>
-              <td>${b.date}</td>
-              <td>${b.time}</td>
-              <td>${b.name}</td>
-              <td>${b.phone}</td>
-              <td>${b.service}</td>
-            </tr>`;
-          });
-          html += '</tbody></table>';
-          content.innerHTML = html;
-        }
         panel.style.display = 'block';
+        content.innerHTML = '<p style="color: var(--neon-yellow);">⏳ Загрузка данных...</p>';
+        
+        try {
+          const { data, error } = await supabase
+            .from('bookings')
+            .select('*')
+            .order('created_at', { ascending: false });
+          
+          if (error) {
+            console.error('❌ Supabase error:', error);
+            content.innerHTML = `<p style="color: #ff6699;">❌ Ошибка загрузки: ${error.message}</p>`;
+          } else if (!data || data.length === 0) {
+            content.innerHTML = '<p style="color: var(--neon-yellow);">📭 Нет записей.</p>';
+          } else {
+            let html = `<table class="bookings-table">
+              <thead><tr>
+                <th>Дата</th><th>Время</th><th>Имя</th><th>Телефон</th><th>Услуга</th><th>Коммент.</th>
+              </tr></thead><tbody>`;
+            data.forEach(b => {
+              html += `<tr>
+                <td>${b.date || '—'}</td>
+                <td>${b.time || '—'}</td>
+                <td>${b.name || '—'}</td>
+                <td>${b.phone || '—'}</td>
+                <td>${b.service || '—'}</td>
+                <td>${b.comment || '—'}</td>
+              </tr>`;
+            });
+            html += '</tbody></table>';
+            content.innerHTML = html;
+          }
+        } catch (err) {
+          console.error('❌ Error:', err);
+          content.innerHTML = `<p style="color: #ff6699;">❌ Ошибка: ${err.message}</p>`;
+        }
       }
 
-      // Регистрация Service Worker для PWA
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js')
-          .then(registration => {
-            console.log('✅ Service Worker зарегистрирован:', registration);
-          })
           .catch(error => {
-            console.log('❌ Service Worker ошибка:', error);
+            console.log('ℹ️ Service Worker недоступен');
           });
       }
     </script>
