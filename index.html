@@ -767,7 +767,7 @@
           selectedService = null;
           document.querySelectorAll('.time-slot.selected, .service-card.selected').forEach(el => el.classList.remove('selected'));
           
-          showNotification(`✅ Запись подтверждена!\\n${confirmedDate} в ${confirmedTime}`);
+          showNotification(`✅ Запись подтверждена! на ${confirmedDate} в ${confirmedTime}`);
         } catch (err) {
           console.error('❌ Ошибка:', err);
           showNotification(`❌ Ошибка: ${err.message}`, true);
