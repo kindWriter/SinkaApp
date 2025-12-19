@@ -712,12 +712,20 @@
         const comment = document.getElementById('comment')?.value?.trim();
         const confirmDate = document.getElementById('confirmDate').checked;
         const confirmTime = document.getElementById('confirmTime').checked;
-        
+      
+
         if (!name || !phone || !selectedDate || !selectedTime || !selectedService) {
           showNotification('❌ Заполните все поля!', true);
           return;
         }
-        if (!confirmDate || !confirmTime) {
+          // ✅ Запрет записи в прошлое
+const bookingDT = new Date(`${selectedDate}T${selectedTime}:00`);
+if (Number.isNaN(bookingDT.getTime()) || bookingDT.getTime() <= Date.now() + 1800_000) {
+
+  showNotification('❌ Нельзя записаться на прошедшее время!', true);
+  return;
+}
+          if (!confirmDate || !confirmTime) {
           showNotification('❌ Подтвердите дату и время!', true);
           return;
         }
