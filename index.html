@@ -733,7 +733,7 @@
             comment
           });
 
-          const { data, error } = await supabase
+          const { data, error } = await window.sb
             .from('bookings')
             .insert([
               {
@@ -807,7 +807,7 @@
         content.innerHTML = '<p style="color: var(--neon-yellow);">⏳ Загрузка данных...</p>';
         
         try {
-          const { data, error } = await supabase
+          const { data, error } = await window.sb
             .from('bookings')
             .select('*')
             .order('created_at', { ascending: false });
