@@ -644,7 +644,8 @@
         container.innerHTML = '';
         const now = new Date();
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const selectedDateObj = new Date(selectedDate);
+        const selectedDateObj = new Date(selectedDate + 'T00:00:00');
+
         const isToday = selectedDateObj.getTime() === today.getTime();
         const currentHours = now.getHours();
         const currentMinutes = now.getMinutes();
