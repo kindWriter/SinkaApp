@@ -1,11 +1,13 @@
-const CACHE_NAME = 'shinka-v1';
+const CACHE_NAME = 'shinka-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
+  '/SinkaApp/',
+  '/SinkaApp/index.html',
+  '/SinkaApp/manifest.json',
+  '/SinkaApp/icon-192x192.png',
+  '/SinkaApp/icon-512x512.png',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
+
 
 // Установка Service Worker
 self.addEventListener('install', event => {
@@ -61,4 +63,5 @@ self.addEventListener('fetch', event => {
       })
   );
 });
+
 
