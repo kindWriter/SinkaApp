@@ -556,8 +556,8 @@
       const supabaseUrl = 'https://ahdcfaaczxbkbqldzell.supabase.co';
       const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoZGNmYWFjenhia2JxbGR6ZWxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMjM4NjAsImV4cCI6MjA4MDY5OTg2MH0.Ym239Oba2nmyU94qK8cf9-NtWbO876-eG2J_WtA7a-0';
       
-      // const { createClient } = window.supabase;
-      // const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      window.sb = window.sb || window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
 
 
       let selectedDate = null;
